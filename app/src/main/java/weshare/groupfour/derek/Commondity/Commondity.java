@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.Commondity;
 
 import java.io.Serializable;
 

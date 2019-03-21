@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import weshare.groupfour.derek.Commondity.Commondity_Browse;
+import weshare.groupfour.derek.Course.Course_Browse;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

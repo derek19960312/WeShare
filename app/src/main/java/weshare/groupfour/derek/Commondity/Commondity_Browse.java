@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.Commondity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import weshare.groupfour.derek.R;
 
 public class Commondity_Browse extends AppCompatActivity {
     StaggeredGridLayoutManager staggeredGridLayoutManager;

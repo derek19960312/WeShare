@@ -1,9 +1,11 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.Commondity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import weshare.groupfour.derek.R;
 
 public class Commondity_Detail extends AppCompatActivity {
 

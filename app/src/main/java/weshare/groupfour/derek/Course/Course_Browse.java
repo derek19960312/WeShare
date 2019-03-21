@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.Course;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import weshare.groupfour.derek.R;
 
 public class Course_Browse extends AppCompatActivity {
 
