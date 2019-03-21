@@ -1,6 +1,8 @@
 package weshare.groupfour.derek;
 
-public class Commondity {
+import java.io.Serializable;
+
+public class Commondity implements Serializable {
     private int icon;
     private String name,price;
 

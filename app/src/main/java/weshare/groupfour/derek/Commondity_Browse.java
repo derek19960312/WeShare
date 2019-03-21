@@ -130,8 +130,10 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
             @Override
             public void onClick(View v) {
                 //Toast.makeText(Commondity_Browse.this,commondity.getName()+"查看詳情",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.setClass(Commondity_Browse.this,Commondity_Detail.class);
+                Intent intent = new Intent(Commondity_Browse.this,Commondity_Detail.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("commondity",commondity);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
