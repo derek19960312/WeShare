@@ -10,4 +10,6 @@
     <string name="log_out">登出</string>
     <string name="sigh_in">註冊</string>
     <string name="forget_password">忘記密碼</string>
+    <string name="drawer_open">draweropen</string>
+    <string name="drawer_close">drawerclose</string>
 </resources>
