@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">WeShare</string>
+    <string name="member">會員</string>
+    <string name="calender">行事曆</string>
+    <string name="cart">購物車</string>
+    <string name="mall">教材商城</string>
+    <string name="course">課程</string>
+    <string name="directory_buy">直接購買</string>
+    <string name="log_in">登入</string>
+    <string name="log_out">登出</string>
+    <string name="sigh_in">註冊</string>
+    <string name="forget_password">忘記密碼</string>
 </resources>
