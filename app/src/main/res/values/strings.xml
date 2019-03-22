@@ -12,4 +12,6 @@
     <string name="forget_password">忘記密碼</string>
     <string name="drawer_open">draweropen</string>
     <string name="drawer_close">drawerclose</string>
+    <string name="search_title">搜尋</string>
+    <string name="action_settings">Settings</string>
 </resources>
