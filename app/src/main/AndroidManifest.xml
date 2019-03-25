@@ -14,6 +14,7 @@
         <activity android:name=".Course.Course_Browse"></activity>
         <activity android:name=".Commondity.Commondity_Detail" />
         <activity android:name=".Commondity.Commondity_Browse" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

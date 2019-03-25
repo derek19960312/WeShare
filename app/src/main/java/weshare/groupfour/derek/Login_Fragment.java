@@ -28,7 +28,9 @@ import java.util.List;
 
 public class Login_Fragment extends Fragment {
 
-    String URL = "http://192.168.168.123:8081/WeShare_web/Login";
+    //String URL = "http://192.168.168.123:8081/WeShare_web/Login";
+
+    String URL = "http://10.120.26.19:8081/WeShare_web/Login";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +64,7 @@ public class Login_Fragment extends Fragment {
                     compareAccount.execute(URL, memId, memPsw);
 
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(500);
 
                         List<String> list = compareAccount.getList();
                         Toast.makeText(view.getContext(), list.get(0).trim(), Toast.LENGTH_SHORT).show();
