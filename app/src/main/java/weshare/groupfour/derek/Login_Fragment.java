@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,9 @@ public class Login_Fragment extends Fragment {
 
     //String URL = "http://192.168.168.123:8081/WeShare_web/Login";
 
-    String URL = "http://10.120.26.19:8081/WeShare_web/Login";
+    //String URL = "http://10.120.26.19:8081/WeShare_web/Login";
+
+    String URL = "http://18.191.251.39:8081/WeShare_web/Login";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +43,6 @@ public class Login_Fragment extends Fragment {
         final EditText etMemPsw = view.findViewById(R.id.etMemPsw);
         final TextInputLayout tilMemId = view.findViewById(R.id.tilMemId);
         final TextInputLayout tilMemPsw = view.findViewById(R.id.tilMemPsw);
-
-
         btnMemSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,9 +103,7 @@ public class Login_Fragment extends Fragment {
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
 
-                con.setDoInput(true);
-                con.setDoOutput(true);
-                con.setUseCaches(false);
+
                 String data = "memId=" + strings[1] + "&memPsw=" + strings[2];
 
                 OutputStream out = con.getOutputStream();

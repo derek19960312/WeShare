@@ -84,14 +84,15 @@ public class MainActivity extends AppCompatActivity{
                 searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
+
     public void addLogin(View v){
         dlMain.closeDrawer(GravityCompat.START);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.cons_login);
+        Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayout);
         if (fragment == null) {
             Login_Fragment loginFragment = new Login_Fragment();
-            fragmentTransaction.add(R.id.cons_login, loginFragment, "LOGIN");
+            fragmentTransaction.add(R.id.frameLayout, loginFragment, "LOGIN");
             fragmentTransaction.commit();
         }else{
             fragmentTransaction.attach(fragment);
