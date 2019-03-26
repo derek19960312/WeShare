@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -66,9 +67,27 @@ public class Login_Fragment extends Fragment {
                         Thread.sleep(500);
 
                         List<String> list = compareAccount.getList();
-                        Toast.makeText(view.getContext(), list.get(0).trim(), Toast.LENGTH_SHORT).show();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+
+                        if( list.get(0).trim().equals("登入成功")){
+
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment fragment = fragmentManager.findFragmentByTag("LOGIN");
+                            fragmentTransaction.detach(fragment);
+                            fragmentTransaction.commit();
+
+                            etMemId.setText("");
+                            etMemPsw.setText("");
+
+                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            etMemId.setText("");
+                            etMemPsw.setText("");
+                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (Exception e) {
+                        Toast.makeText(view.getContext(), "連線錯誤", Toast.LENGTH_SHORT).show();
                     }
 
                 }
