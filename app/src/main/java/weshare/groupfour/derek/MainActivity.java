@@ -20,9 +20,6 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import weshare.groupfour.derek.Commondity.Commondity_Browse;
 import weshare.groupfour.derek.Course.Course_Browse;
@@ -38,11 +35,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         toolbar = findViewById(R.id.toolbar);
         dlMain = findViewById(R.id.dlMain);
         nvMain = findViewById(R.id.nvMain);
-
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,dlMain,toolbar,R.string.drawer_open,R.string.drawer_close);
@@ -69,12 +64,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
-
-
-
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu,menu);
@@ -85,24 +75,18 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
-    public void addLogin(View v){
+    public void onLogin(View v){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
         dlMain.closeDrawer(GravityCompat.START);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayout);
-        if (fragment == null) {
-            Login_Fragment loginFragment = new Login_Fragment();
-            fragmentTransaction.add(R.id.frameLayout, loginFragment, "LOGIN");
-            fragmentTransaction.commit();
-        }else{
-            fragmentTransaction.attach(fragment);
-            fragmentTransaction.commit();
-        }
     }
 
 
-
-
-
-
 }
+
+
+
+
+
+

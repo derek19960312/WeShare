@@ -4,14 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryTextColor"
-    tools:context=".Login_Fragment">
+    android:background="@color/primaryLightColor"
+    tools:context=".LoginActivity">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="50dp"
-        android:background="@color/primaryLightColor">
+
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -80,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="密碼"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -89,9 +85,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="登入" />
+                android:text="登入"
+                />
 
         </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>

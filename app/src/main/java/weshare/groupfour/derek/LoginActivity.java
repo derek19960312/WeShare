@@ -4,18 +4,12 @@ package weshare.groupfour.derek;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Login_Fragment extends Fragment {
+public class LoginActivity extends AppCompatActivity {
 
     //String URL = "http://192.168.168.123:8081/WeShare_web/Login";
 
@@ -35,15 +29,16 @@ public class Login_Fragment extends Fragment {
     String URL = "http://18.191.251.39:8081/WeShare_web/Login";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-        final View view = inflater.inflate(R.layout.fragment_login, container, false);
-        Button btnMemSubmit = view.findViewById(R.id.btnMemSubmit);
-        final EditText etMemId = view.findViewById(R.id.etMemId);
-        final EditText etMemPsw = view.findViewById(R.id.etMemPsw);
-        final TextInputLayout tilMemId = view.findViewById(R.id.tilMemId);
-        final TextInputLayout tilMemPsw = view.findViewById(R.id.tilMemPsw);
+
+        Button btnMemSubmit = findViewById(R.id.btnMemSubmit);
+        final EditText etMemId = findViewById(R.id.etMemId);
+        final EditText etMemPsw = findViewById(R.id.etMemPsw);
+        final TextInputLayout tilMemId = findViewById(R.id.tilMemId);
+        final TextInputLayout tilMemPsw = findViewById(R.id.tilMemPsw);
         btnMemSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +53,7 @@ public class Login_Fragment extends Fragment {
                     tilMemPsw.setError("請輸入密碼");
                     return;
                 } else {
-                    Toast.makeText(view.getContext(), "比對中", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "比對中", Toast.LENGTH_SHORT).show();
 
                     CompareAccount compareAccount = new CompareAccount();
                     compareAccount.execute(URL, memId, memPsw);
@@ -70,42 +65,33 @@ public class Login_Fragment extends Fragment {
 
                         if( list.get(0).trim().equals("登入成功")){
 
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            Fragment fragment = fragmentManager.findFragmentByTag("LOGIN");
-                            fragmentTransaction.detach(fragment);
-                            fragmentTransaction.commit();
 
                             etMemId.setText("");
                             etMemPsw.setText("");
-
-                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
+                            finish();
+                            Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
                         }else{
                             etMemId.setText("");
                             etMemPsw.setText("");
-                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (Exception e) {
-                        Toast.makeText(view.getContext(), "連線錯誤", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "連線錯誤", Toast.LENGTH_SHORT).show();
                     }
 
                 }
             }
         });
 
-        ImageView ivClose = view.findViewById(R.id.ivClose);
+        ImageView ivClose = findViewById(R.id.ivClose);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                Fragment fragment = fragmentManager.findFragmentByTag("LOGIN");
-                fragmentTransaction.detach(fragment);
-                fragmentTransaction.commit();
+                finish();
             }
         });
-        return view;
+
     }
 
 
@@ -147,7 +133,6 @@ public class Login_Fragment extends Fragment {
                     list.add("連線失敗1");
                     return list;
                 }
-
 
             } catch (IOException e) {
                 list.add("連線失敗2");
