@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,10 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
-import weshare.groupfour.derek.Commondity.Commondity_Browse;
-import weshare.groupfour.derek.Course.Course_Browse;
+import weshare.groupfour.derek.Commondity.CommondityBrowseActivity;
+import weshare.groupfour.derek.Course.CourseBrowseActivity;
 
 public class MainActivity extends AppCompatActivity{
     NavigationView nvMain;
@@ -51,11 +47,11 @@ public class MainActivity extends AppCompatActivity{
                 Intent intent = new Intent();
                 switch (menuItem.getItemId()){
                     case R.id.menuCourse:
-                        intent.setClass(MainActivity.this,Course_Browse.class);
+                        intent.setClass(MainActivity.this, CourseBrowseActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.menuMall:
-                        intent.setClass(MainActivity.this, Commondity_Browse.class);
+                        intent.setClass(MainActivity.this, CommondityBrowseActivity.class);
                         startActivity(intent);
                         break;
                 }

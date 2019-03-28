@@ -55,13 +55,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "比對中", Toast.LENGTH_SHORT).show();
 
-                    CompareAccount compareAccount = new CompareAccount();
-                    compareAccount.execute(URL, memId, memPsw);
+                    CallServlet callServlet = new CallServlet();
+                    callServlet.execute(URL, memId, memPsw);
 
                     try {
                         Thread.sleep(500);
 
-                        List<String> list = compareAccount.getList();
+                        List<String> list = callServlet.getList();
 
                         if( list.get(0).trim().equals("登入成功")){
 
@@ -95,65 +95,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    class CompareAccount extends AsyncTask<String, Void, List<String>> {
-        List<String> list;
 
-        @Override
-        protected List<String> doInBackground(String... strings) {
-            list = new ArrayList<>();
-            String strurl = strings[0];
-            HttpURLConnection con = null;
-            try {
-                URL url = new URL(strurl);
-                con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("POST");
-
-
-                String data = "memId=" + strings[1] + "&memPsw=" + strings[2];
-
-                OutputStream out = con.getOutputStream();
-                out.write(data.getBytes());
-                out.flush();
-
-                if (con.getResponseCode() == 200) {
-
-                    InputStream is = con.getInputStream();
-                    ByteArrayOutputStream message = new ByteArrayOutputStream();
-                    int len = 0;
-                    byte buffer[] = new byte[1024];
-                    while ((len = is.read(buffer)) != -1) {
-                        message.write(buffer, 0, len);
-                    }
-                    is.close();
-                    message.close();
-                    String msg = new String(message.toByteArray());
-                    list.add(msg);
-                    return list;
-                } else {
-                    list.add("連線失敗1");
-                    return list;
-                }
-
-            } catch (IOException e) {
-                list.add("連線失敗2");
-                e.printStackTrace();
-            } finally {
-                con.disconnect();
-            }
-
-
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(List<String> strings) {
-            super.onPostExecute(strings);
-
-        }
-
-        public List<String> getList() {
-            return list;
-        }
-    }
 }
 

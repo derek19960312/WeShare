@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CourseDetail">
+    tools:context=".Course.CourseDetailActivity">
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -62,7 +62,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvCourseContent"
+            android:id="@+id/tvCourseDetail"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_weight="1"

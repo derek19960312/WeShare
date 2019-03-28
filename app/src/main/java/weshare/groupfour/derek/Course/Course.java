@@ -2,49 +2,49 @@ package weshare.groupfour.derek.Course;
 
 import android.graphics.drawable.Drawable;
 
-public class Course {
-    private Drawable ivTeacherPic;
-    private String tvCourseName,tvTeacherName,tvCourseDetail;
+public class Course implements java.io.Serializable {
+    private int TeacherPic;
+    private String CourseName, TeacherName, CourseDetail;
 
     public Course() {
     }
 
-    public Course(Drawable ivTeacherPic, String tvCourseName, String tvTeacherName, String tvCourseDetail) {
-        this.ivTeacherPic = ivTeacherPic;
-        this.tvCourseName = tvCourseName;
-        this.tvTeacherName = tvTeacherName;
-        this.tvCourseDetail = tvCourseDetail;
+    public Course(int TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
+        this.TeacherPic = TeacherPic;
+        this.CourseName = CourseName;
+        this.TeacherName = tvTeacherName;
+        this.CourseDetail = CourseDetail;
     }
 
-    public Drawable getIvTeacherPic() {
-        return ivTeacherPic;
+    public int getTeacherPic() {
+        return TeacherPic;
     }
 
-    public void setIvTeacherPic(Drawable ivTeacherPic) {
-        this.ivTeacherPic = ivTeacherPic;
+    public void setTeacherPic(int teacherPic) {
+        this.TeacherPic = teacherPic;
     }
 
-    public String getTvCourseName() {
-        return tvCourseName;
+    public String getCourseName() {
+        return CourseName;
     }
 
-    public void setTvCourseName(String tvCourseName) {
-        this.tvCourseName = tvCourseName;
+    public void setCourseName(String courseName) {
+        this.CourseName = courseName;
     }
 
-    public String getTvTeacherName() {
-        return tvTeacherName;
+    public String getTeacherName() {
+        return TeacherName;
     }
 
-    public void setTvTeacherName(String tvTeacherName) {
-        this.tvTeacherName = tvTeacherName;
+    public void setTeacherName(String teacherName) {
+        this.TeacherName = teacherName;
     }
 
-    public String getTvCourseDetail() {
-        return tvCourseDetail;
+    public String getCourseDetail() {
+        return CourseDetail;
     }
 
-    public void setTvCourseDetail(String tvCourseDetail) {
-        this.tvCourseDetail = tvCourseDetail;
+    public void setCourseDetail(String courseDetail) {
+        this.CourseDetail = courseDetail;
     }
 }

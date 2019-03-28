@@ -13,6 +13,9 @@ public class Commondity implements Serializable {
         this.icon = icon;
         this.name = name;
         this.price = price;
+
+
+        
     }
 
     public int getIcon() {

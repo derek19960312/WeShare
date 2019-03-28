@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import weshare.groupfour.derek.R;
 
-public class Commondity_Detail extends AppCompatActivity {
+public class CommondityDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

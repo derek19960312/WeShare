@@ -1,7 +1,10 @@
 package weshare.groupfour.derek.Course;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +22,7 @@ import java.util.List;
 
 import weshare.groupfour.derek.R;
 
-public class Course_Browse extends AppCompatActivity {
+public class CourseBrowseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +40,13 @@ public class Course_Browse extends AppCompatActivity {
             if(j == 3){
                 j=0;
             }else{
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teacher+j);
+                //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teacher+j);
+
+                //roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+                //roundedBitmapDrawable.setCircular(true);
+                //Drawable drawable = ContextCompat.getDrawable(this, R.drawable.teacher+j);
                 j++;
-                roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-                roundedBitmapDrawable.setCircular(true);
-                courseList.add(new Course(roundedBitmapDrawable,"English","MIMI","英文是值得投資的!!!!"));
+                courseList.add(new Course(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
             }
         }
 
@@ -77,14 +82,27 @@ public class Course_Browse extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder( ViewHolder holder, int position) {
-            Course course = courseList.get(position);
+            final Course course = courseList.get(position);
 
 
 
-            holder.ivTeacherPic.setImageDrawable(course.getIvTeacherPic());
-            holder.tvTeacherName.setText(course.getTvTeacherName());
-            holder.tvCourseName.setText(course.getTvCourseName());
-            holder.tvCourseDetail.setText(course.getTvCourseDetail());
+            holder.ivTeacherPic.setImageResource(course.getTeacherPic());
+            holder.tvTeacherName.setText(course.getTeacherName());
+            holder.tvCourseName.setText(course.getCourseName());
+            holder.tvCourseDetail.setText(course.getCourseDetail());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    intent.setClass(CourseBrowseActivity.this,CourseDetailActivity.class);
+                    bundle.putSerializable("course",course);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+
         }
 
         @Override

@@ -18,7 +18,7 @@ import java.util.List;
 
 import weshare.groupfour.derek.R;
 
-public class Commondity_Browse extends AppCompatActivity {
+public class CommondityBrowseActivity extends AppCompatActivity {
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class Commondity_Browse extends AppCompatActivity {
         ivMyCart.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(Commondity_Browse.this,"查看我的購物車",Toast.LENGTH_LONG).show();
+            Toast.makeText(CommondityBrowseActivity.this,"查看我的購物車",Toast.LENGTH_LONG).show();
         }
     });
 
@@ -108,7 +108,7 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
         holder.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Commondity_Browse.this,"已加入購物車",Toast.LENGTH_LONG).show();
+                Toast.makeText(CommondityBrowseActivity.this,"已加入購物車",Toast.LENGTH_LONG).show();
             }
         });
         holder.ivHeart.setOnClickListener(new View.OnClickListener() {
@@ -117,12 +117,12 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
                 switch(holder.heart){
                     case 0:
                         holder.ivHeart.setImageResource(R.drawable.hearted);
-                        Toast.makeText(Commondity_Browse.this,"已加入收藏",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CommondityBrowseActivity.this,"已加入收藏",Toast.LENGTH_SHORT).show();
                         holder.heart = 1;
                         break;
                     case 1:
                         holder.ivHeart.setImageResource(R.drawable.heart);
-                        Toast.makeText(Commondity_Browse.this,"已取消收藏",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CommondityBrowseActivity.this,"已取消收藏",Toast.LENGTH_SHORT).show();
                         holder.heart = 0;
                         break;
                 }
@@ -131,8 +131,8 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(Commondity_Browse.this,commondity.getName()+"查看詳情",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Commondity_Browse.this,Commondity_Detail.class);
+                //Toast.makeText(CommondityBrowseActivity.this,commondity.getName()+"查看詳情",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CommondityBrowseActivity.this, CommondityDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("commondity",commondity);
                 intent.putExtras(bundle);

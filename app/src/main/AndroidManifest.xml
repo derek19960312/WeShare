@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CourseDetail"></activity>
-        <activity android:name=".Course.Course_Browse" />
-        <activity android:name=".Commondity.Commondity_Detail" />
-        <activity android:name=".Commondity.Commondity_Browse" />
+        <activity android:name=".Course.CourseDetailActivity"></activity>
+        <activity android:name=".Course.CourseBrowseActivity" />
+        <activity android:name=".Commondity.CommondityDetailActivity" />
+        <activity android:name=".Commondity.CommondityBrowseActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
