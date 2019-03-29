@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +35,21 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
         final List<Course> courseList = new ArrayList<>();
 
-        RoundedBitmapDrawable roundedBitmapDrawable;
+        //RoundedBitmapDrawable roundedBitmapDrawable;
         int j = 0;
         for(int i=0; i<6; i++){
             if(j == 3){
                 j=0;
             }else{
-                //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teacher+j);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teacher+j);
 
-                //roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-                //roundedBitmapDrawable.setCircular(true);
-                //Drawable drawable = ContextCompat.getDrawable(this, R.drawable.teacher+j);
+//                roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+//                roundedBitmapDrawable.setCircular(true);
                 j++;
-                courseList.add(new Course(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
+
+
+
+                courseList.add(new Course(compareToByte(bitmap),"English","MIMI","英文是值得投資的!!!!"));
             }
         }
 
@@ -86,7 +89,7 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
 
 
-            holder.ivTeacherPic.setImageResource(course.getTeacherPic());
+            holder.ivTeacherPic.setImage(course.getTeacherPic());
             holder.tvTeacherName.setText(course.getTeacherName());
             holder.tvCourseName.setText(course.getCourseName());
             holder.tvCourseDetail.setText(course.getCourseDetail());
@@ -112,4 +115,11 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
 
     }
+
+    public byte[] compareToByte(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+        return baos.toByteArray();
+    }
+
 }

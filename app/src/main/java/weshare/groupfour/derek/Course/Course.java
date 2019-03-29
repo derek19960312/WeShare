@@ -3,24 +3,24 @@ package weshare.groupfour.derek.Course;
 import android.graphics.drawable.Drawable;
 
 public class Course implements java.io.Serializable {
-    private int TeacherPic;
+    private byte[] TeacherPic;
     private String CourseName, TeacherName, CourseDetail;
 
     public Course() {
     }
 
-    public Course(int TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
+    public Course(byte[] TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
         this.TeacherPic = TeacherPic;
         this.CourseName = CourseName;
         this.TeacherName = tvTeacherName;
         this.CourseDetail = CourseDetail;
     }
 
-    public int getTeacherPic() {
+    public byte[] getTeacherPic() {
         return TeacherPic;
     }
 
-    public void setTeacherPic(int teacherPic) {
+    public void setTeacherPic(byte[] teacherPic) {
         this.TeacherPic = teacherPic;
     }
 
