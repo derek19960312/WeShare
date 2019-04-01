@@ -22,11 +22,11 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    //String URL = "http://192.168.168.123:8081/WeShare_web/Login";
+    String URL = "http://192.168.168.123:8081/WeShare_web/Login";
 
     //String URL = "http://10.120.26.19:8081/WeShare_web/Login";
 
-    String URL = "http://18.191.251.39:8081/WeShare_web/Login";
+//    String URL = "http://18.191.251.39:8081/WeShare_web/Login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

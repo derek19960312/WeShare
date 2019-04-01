@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -44,6 +45,7 @@ public class CallServlet extends AsyncTask<String, Void, List<String>> {
                 message.close();
                 String msg = new String(message.toByteArray());
                 list.add(msg);
+
                 return list;
             } else {
                 list.add("連線失敗1");

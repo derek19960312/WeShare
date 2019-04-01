@@ -49,7 +49,7 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
 
 
-                courseList.add(new Course(compareToByte(bitmap),"English","MIMI","英文是值得投資的!!!!"));
+                courseList.add(new Course(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
             }
         }
 
@@ -85,11 +85,12 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder( ViewHolder holder, int position) {
+
             final Course course = courseList.get(position);
 
 
 
-            holder.ivTeacherPic.setImage(course.getTeacherPic());
+            holder.ivTeacherPic.setImageResource(course.getTeacherPic());
             holder.tvTeacherName.setText(course.getTeacherName());
             holder.tvCourseName.setText(course.getCourseName());
             holder.tvCourseDetail.setText(course.getCourseDetail());
