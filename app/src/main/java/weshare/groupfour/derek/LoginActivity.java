@@ -56,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "比對中", Toast.LENGTH_SHORT).show();
 
                     CallServlet callServlet = new CallServlet();
-                    callServlet.execute(URL, memId, memPsw);
+                    String requestData = "memId=" + memId + "&memPsw=" + memPsw;
+                    callServlet.execute(URL, requestData);
 
                     try {
                         Thread.sleep(500);

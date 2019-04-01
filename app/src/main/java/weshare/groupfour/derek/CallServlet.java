@@ -25,8 +25,7 @@ public class CallServlet extends AsyncTask<String, Void, List<String>> {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
 
-
-            String data = "memId=" + strings[1] + "&memPsw=" + strings[2];
+            String data = strings[1];
 
             OutputStream out = con.getOutputStream();
             out.write(data.getBytes());
