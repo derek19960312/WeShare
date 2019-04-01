@@ -1,15 +1,13 @@
-package weshare.groupfour.derek.Course;
+package weshare.groupfour.derek.InsCourse;
 
-import android.graphics.drawable.Drawable;
-
-public class Course implements java.io.Serializable {
+public class InsCourse implements java.io.Serializable {
     private int TeacherPic;
     private String CourseName, TeacherName, CourseDetail;
 
-    public Course() {
+    public InsCourse() {
     }
 
-    public Course(int TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
+    public InsCourse(int TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
         this.TeacherPic = TeacherPic;
         this.CourseName = CourseName;
         this.TeacherName = tvTeacherName;

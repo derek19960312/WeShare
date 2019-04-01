@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.Commondity;
+package weshare.groupfour.derek.Material;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,12 +18,12 @@ import java.util.List;
 
 import weshare.groupfour.derek.R;
 
-public class CommondityBrowseActivity extends AppCompatActivity {
+public class MaterialBrowseActivity extends AppCompatActivity {
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_commondity__browse);
+        setContentView(R.layout.activity_material__browse);
         RecyclerView recycler = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //recycler.setLayoutManager(layoutManager);
@@ -52,30 +52,30 @@ public class CommondityBrowseActivity extends AppCompatActivity {
         ivMyCart.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(CommondityBrowseActivity.this,"查看我的購物車",Toast.LENGTH_LONG).show();
+            Toast.makeText(MaterialBrowseActivity.this,"查看我的購物車",Toast.LENGTH_LONG).show();
         }
     });
 
-    final List<Commondity> commondityList = new ArrayList<>();
-        commondityList.add(new Commondity(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
-        commondityList.add(new Commondity(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
-        commondityList.add(new Commondity(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
-        commondityList.add(new Commondity(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
-        commondityList.add(new Commondity(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
-        commondityList.add(new Commondity(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
-        commondityList.add(new Commondity(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
-        commondityList.add(new Commondity(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
-        commondityList.add(new Commondity(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
+    final List<Material> materialList = new ArrayList<>();
+        materialList.add(new Material(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
+        materialList.add(new Material(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
+        materialList.add(new Material(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
+        materialList.add(new Material(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
+        materialList.add(new Material(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
+        materialList.add(new Material(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
+        materialList.add(new Material(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
+        materialList.add(new Material(R.drawable.pencil2,"電容式觸控筆 懷舊鉛筆造型款","1200"));
+        materialList.add(new Material(R.drawable.pencil,"百樂色色自動鉛筆","1000"));
 
 
 
-        recycler.setAdapter(new CommondityAdapter(commondityList));
+        recycler.setAdapter(new CommondityAdapter(materialList));
 
 }
 private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.ViewHolder>{
-    private List<Commondity> commondityList;
+    private List<Material> materialList;
 
-    public CommondityAdapter(List<Commondity> commondityList) { this.commondityList = commondityList; }
+    public CommondityAdapter(List<Material> materialList) { this.materialList = materialList; }
 
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tvName,tvPrice;
@@ -95,20 +95,20 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.commondity_card,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.material_card,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Commondity commondity = commondityList.get(position);
-        holder.tvPrice.setText("特價 : "+commondity.getPrice());
-        holder.tvName.setText(commondity.getName());
-        holder.ivIcon.setImageResource(commondity.getIcon());
+        final Material material = materialList.get(position);
+        holder.tvPrice.setText("特價 : "+ material.getPrice());
+        holder.tvName.setText(material.getName());
+        holder.ivIcon.setImageResource(material.getIcon());
         holder.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CommondityBrowseActivity.this,"已加入購物車",Toast.LENGTH_LONG).show();
+                Toast.makeText(MaterialBrowseActivity.this,"已加入購物車",Toast.LENGTH_LONG).show();
             }
         });
         holder.ivHeart.setOnClickListener(new View.OnClickListener() {
@@ -117,12 +117,12 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
                 switch(holder.heart){
                     case 0:
                         holder.ivHeart.setImageResource(R.drawable.hearted);
-                        Toast.makeText(CommondityBrowseActivity.this,"已加入收藏",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MaterialBrowseActivity.this,"已加入收藏",Toast.LENGTH_SHORT).show();
                         holder.heart = 1;
                         break;
                     case 1:
                         holder.ivHeart.setImageResource(R.drawable.heart);
-                        Toast.makeText(CommondityBrowseActivity.this,"已取消收藏",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MaterialBrowseActivity.this,"已取消收藏",Toast.LENGTH_SHORT).show();
                         holder.heart = 0;
                         break;
                 }
@@ -131,10 +131,10 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(CommondityBrowseActivity.this,commondity.getName()+"查看詳情",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(CommondityBrowseActivity.this, CommondityDetailActivity.class);
+                //Toast.makeText(MaterialBrowseActivity.this,material.getName()+"查看詳情",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MaterialBrowseActivity.this, MaterialDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("commondity",commondity);
+                bundle.putSerializable("material", material);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -142,7 +142,7 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
     }
 
     @Override
-    public int getItemCount() { return commondityList.size();}
+    public int getItemCount() { return materialList.size();}
 }
 
 }

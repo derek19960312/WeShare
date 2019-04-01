@@ -1,15 +1,15 @@
-package weshare.groupfour.derek.Commondity;
+package weshare.groupfour.derek.Material;
 
 import java.io.Serializable;
 
-public class Commondity implements Serializable {
+public class Material implements Serializable {
     private int icon;
     private String name,price;
 
-    public Commondity() {
+    public Material() {
     }
 
-    public Commondity(int icon, String name, String price) {
+    public Material(int icon, String name, String price) {
         this.icon = icon;
         this.name = name;
         this.price = price;

@@ -17,8 +17,8 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import weshare.groupfour.derek.Commondity.CommondityBrowseActivity;
-import weshare.groupfour.derek.Course.CourseBrowseActivity;
+import weshare.groupfour.derek.Material.MaterialBrowseActivity;
+import weshare.groupfour.derek.InsCourse.InsCourseBrowseActivity;
 
 public class MainActivity extends AppCompatActivity{
     NavigationView nvMain;
@@ -50,11 +50,11 @@ public class MainActivity extends AppCompatActivity{
                 Intent intent = new Intent();
                 switch (menuItem.getItemId()){
                     case R.id.menuCourse:
-                        intent.setClass(MainActivity.this, CourseBrowseActivity.class);
+                        intent.setClass(MainActivity.this, InsCourseBrowseActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.menuMall:
-                        intent.setClass(MainActivity.this, CommondityBrowseActivity.class);
+                        intent.setClass(MainActivity.this, MaterialBrowseActivity.class);
                         startActivity(intent);
                         break;
                 }

@@ -1,12 +1,8 @@
-package weshare.groupfour.derek.Course;
+package weshare.groupfour.derek.InsCourse;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,17 +19,17 @@ import java.util.List;
 
 import weshare.groupfour.derek.R;
 
-public class CourseBrowseActivity extends AppCompatActivity {
+public class InsCourseBrowseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course__browse);
+        setContentView(R.layout.activity_inscourse__browse);
         RecyclerView recycleView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recycleView.setLayoutManager(layoutManager);
 
-        final List<Course> courseList = new ArrayList<>();
+        final List<InsCourse> insCourseList = new ArrayList<>();
 
         //RoundedBitmapDrawable roundedBitmapDrawable;
         int j = 0;
@@ -49,19 +45,19 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
 
 
-                courseList.add(new Course(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
+                insCourseList.add(new InsCourse(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
             }
         }
 
-        recycleView.setAdapter(new CourseAdapter(courseList));
+        recycleView.setAdapter(new CourseAdapter(insCourseList));
     }
 
     private class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
-        private List<Course> courseList;
+        private List<InsCourse> insCourseList;
 
-        public CourseAdapter(List<Course> courseList) {
-            this.courseList = courseList;
+        public CourseAdapter(List<InsCourse> insCourseList) {
+            this.insCourseList = insCourseList;
         }
         public class ViewHolder extends RecyclerView.ViewHolder {
             private ImageView ivTeacherPic;
@@ -79,29 +75,29 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_card,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inscourse_card,parent,false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder( ViewHolder holder, int position) {
 
-            final Course course = courseList.get(position);
+            final InsCourse insCourse = insCourseList.get(position);
 
 
 
-            holder.ivTeacherPic.setImageResource(course.getTeacherPic());
-            holder.tvTeacherName.setText(course.getTeacherName());
-            holder.tvCourseName.setText(course.getCourseName());
-            holder.tvCourseDetail.setText(course.getCourseDetail());
+            holder.ivTeacherPic.setImageResource(insCourse.getTeacherPic());
+            holder.tvTeacherName.setText(insCourse.getTeacherName());
+            holder.tvCourseName.setText(insCourse.getCourseName());
+            holder.tvCourseDetail.setText(insCourse.getCourseDetail());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
-                    intent.setClass(CourseBrowseActivity.this,CourseDetailActivity.class);
-                    bundle.putSerializable("course",course);
+                    intent.setClass(InsCourseBrowseActivity.this, InsCourseDetailActivity.class);
+                    bundle.putSerializable("insCourse", insCourse);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -111,7 +107,7 @@ public class CourseBrowseActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return courseList.size();
+            return insCourseList.size();
         }
 
 
