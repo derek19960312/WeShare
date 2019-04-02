@@ -17,7 +17,7 @@
         <activity android:name=".InsCourse.InsCourseBrowseActivity" />
         <activity android:name=".Material.MaterialDetailActivity" />
         <activity android:name=".Material.MaterialBrowseActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LogSigninActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,44 +1,38 @@
 package weshare.groupfour.derek;
 
-
-import android.os.AsyncTask;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.List;
 
 
-public class LoginActivity extends AppCompatActivity {
-
+public class LoginFragment extends Fragment {
     String URL = "http://192.168.168.123:8081/WeShare_web/Login";
 
     //String URL = "http://10.120.26.19:8081/WeShare_web/Login";
 
 //    String URL = "http://18.191.251.39:8081/WeShare_web/Login";
+    View view;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-
-        Button btnMemSubmit = findViewById(R.id.btnMemSubmit);
-        final EditText etMemId = findViewById(R.id.etMemId);
-        final EditText etMemPsw = findViewById(R.id.etMemPsw);
-        final TextInputLayout tilMemId = findViewById(R.id.tilMemId);
-        final TextInputLayout tilMemPsw = findViewById(R.id.tilMemPsw);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_login,container,false);
+        Button btnMemSubmit = view.findViewById(R.id.btnMemSubmit);
+        final EditText etMemId = view.findViewById(R.id.etMemId);
+        final EditText etMemPsw = view.findViewById(R.id.etMemPsw);
+        final TextInputLayout tilMemId = view.findViewById(R.id.tilMemId);
+        final TextInputLayout tilMemPsw = view.findViewById(R.id.tilMemPsw);
         btnMemSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                     tilMemPsw.setError("請輸入密碼");
                     return;
                 } else {
-                    Toast.makeText(LoginActivity.this, "比對中", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "比對中", Toast.LENGTH_SHORT).show();
 
                     CallServlet callServlet = new CallServlet();
                     String requestData = "memId=" + memId + "&memPsw=" + memPsw;
@@ -69,33 +63,26 @@ public class LoginActivity extends AppCompatActivity {
 
                             etMemId.setText("");
                             etMemPsw.setText("");
-                            finish();
-                            Toast.makeText(LoginActivity.this, "登入成功", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
                         }else{
                             etMemId.setText("");
                             etMemPsw.setText("");
-                            Toast.makeText(LoginActivity.this, "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (Exception e) {
-                        Toast.makeText(LoginActivity.this, "連線錯誤", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "連線錯誤", Toast.LENGTH_SHORT).show();
                     }
 
                 }
             }
         });
 
-        ImageView ivClose = findViewById(R.id.ivClose);
-        ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
+
+
+        return view;
     }
 
-
-
 }
-

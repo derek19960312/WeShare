@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
-    public void onLogin(View v){
+    public void onLogSignin(View v){
         Intent intent = new Intent();
-        intent.setClass(MainActivity.this,LoginActivity.class);
+        intent.setClass(MainActivity.this, LogSigninActivity.class);
         startActivity(intent);
         dlMain.closeDrawer(GravityCompat.START);
     }
