@@ -1,7 +1,5 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.LogSignin;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -10,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import weshare.groupfour.derek.CallServlet;
+import weshare.groupfour.derek.R;
 
 
 public class LoginFragment extends Fragment {

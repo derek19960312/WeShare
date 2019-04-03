@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.LogSignin;
 
 
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import weshare.groupfour.derek.R;
 
 
 public class LogSigninActivity extends AppCompatActivity {
