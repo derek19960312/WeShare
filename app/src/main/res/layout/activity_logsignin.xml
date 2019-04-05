@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryLightColor"
-    tools:context=".LogSigninActivity">
+    tools:context=".LogSignin.LogSigninActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout5"

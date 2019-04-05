@@ -7,20 +7,29 @@
     tools:context=".MainActivity">
 
 
+    <fragment
+        android:id="@+id/fragment"
+        android:name="weshare.groupfour.derek.ToolbarBackFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/fragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/ivPic"
@@ -70,8 +79,8 @@
                 android:id="@+id/tvDetail"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:text="GROOVE系列榮獲德國reddot紅點設計大獎。孩子能自然無拘束的使用，吸引力十足的造型，還能防止手指滑落~鼓勵孩子大膽自信的書寫。"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:text="GROOVE系列榮獲德國reddot紅點設計大獎。孩子能自然無拘束的使用，吸引力十足的造型，還能防止手指滑落~鼓勵孩子大膽自信的書寫。" />
         </LinearLayout>
     </ScrollView>
 
@@ -79,10 +88,12 @@
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="49dp"
+        android:layout_marginTop="17dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <Button
             android:id="@+id/btnAddCart"

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="weshare.groupfour.derek.ToolbarBackFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -14,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/fragment2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,8 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="搜尋"
                 android:gravity="center"
+                android:text="搜尋"
                 android:textSize="30sp"
                 android:textStyle="bold"
 
@@ -39,8 +49,8 @@
                 android:id="@+id/ivMyCart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
                 android:layout_margin="2dp"
+                android:layout_weight="3"
                 app:srcCompat="@drawable/shopping_cart" />
 
             <ImageView

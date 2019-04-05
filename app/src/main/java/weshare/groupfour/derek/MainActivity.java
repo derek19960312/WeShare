@@ -1,11 +1,14 @@
 package weshare.groupfour.derek;
 
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +20,7 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import weshare.groupfour.derek.LogSignin.LogSigninActivity;
 import weshare.groupfour.derek.Material.MaterialBrowseActivity;
 import weshare.groupfour.derek.InsCourse.InsCourseBrowseActivity;
 
@@ -57,11 +61,33 @@ public class MainActivity extends AppCompatActivity{
                         intent.setClass(MainActivity.this, MaterialBrowseActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.myInsCourse:
+                        intent.setClass(MainActivity.this, MyInsCourseActivity.class);
+                        intent.putExtra("title",R.string.myInsCourse);
+                        startActivity(intent);
+                        break;
+                    case R.id.myLikeInsCourse:
+                        intent.setClass(MainActivity.this, MyLikeInsCourseActivity.class);
+                        intent.putExtra("title",R.string.myLikeInsCourse);
+                        startActivity(intent);
+                        break;
+                    case R.id.CourseCategort:
+                        intent.setClass(MainActivity.this, CourseCategoryActivity.class);
+                        intent.putExtra("title",R.string.CourseCategort);
+                        startActivity(intent);
+                        break;
                 }
                 return false;
             }
         });
 
+        FloatingActionButton fabCalendar = findViewById(R.id.fabCalendar);
+        fabCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
     @Override

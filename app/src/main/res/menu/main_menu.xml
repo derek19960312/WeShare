@@ -4,5 +4,11 @@
         android:title="@string/insCourse"/>
     <item android:id="@+id/menuMall"
         android:title="@string/mall"/>
+    <item android:id="@+id/myInsCourse"
+        android:title="@string/myInsCourse"/>
+    <item android:id="@+id/myLikeInsCourse"
+        android:title="@string/myLikeInsCourse"/>
+    <item android:id="@+id/CourseCategort"
+        android:title="@string/CourseCategort"/>
 
 </menu>
