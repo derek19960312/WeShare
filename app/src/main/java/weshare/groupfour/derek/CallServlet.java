@@ -25,11 +25,16 @@ public class CallServlet extends AsyncTask<String, Void, List<String>> {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
 
-            String data = strings[1];
+            String data;
+            if(strings[1]!=null){
+                data = strings[1];
+                OutputStream out = con.getOutputStream();
+                out.write(data.getBytes());
+                out.flush();
+            }
 
-            OutputStream out = con.getOutputStream();
-            out.write(data.getBytes());
-            out.flush();
+
+
 
             if (con.getResponseCode() == 200) {
 
@@ -51,7 +56,7 @@ public class CallServlet extends AsyncTask<String, Void, List<String>> {
                 return list;
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             list.add("連線失敗2");
             e.printStackTrace();
         } finally {

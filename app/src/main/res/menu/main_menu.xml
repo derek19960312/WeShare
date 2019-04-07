@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuCourse"
-        android:title="@string/insCourse"/>
+    <item android:title="@string/insCourse">
+        <menu>
+            <item android:id="@+id/menuCourse"
+                android:title="@string/InsCourseBrowser" />
+            <item android:id="@+id/myLikeInsCourse"
+                android:title="@string/myLikeInsCourse"/>
+            <item android:id="@+id/CourseCategort"
+                android:title="@string/CourseCategort"/>
+            <item android:id="@+id/myInsCourse"
+                android:title="@string/myInsCourse"/>
+        </menu>
+    </item>
+
     <item android:id="@+id/menuMall"
         android:title="@string/mall"/>
-    <item android:id="@+id/myInsCourse"
-        android:title="@string/myInsCourse"/>
-    <item android:id="@+id/myLikeInsCourse"
-        android:title="@string/myLikeInsCourse"/>
-    <item android:id="@+id/CourseCategort"
-        android:title="@string/CourseCategort"/>
-
 </menu>

@@ -11,15 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CourseCategoryActivity"></activity>
+        <activity
+            android:name=".CalendarActivity"
+            android:label="@string/title_activity_calendar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CourseCategoryActivity" />
         <activity android:name=".MyLikeInsCourseActivity" />
         <activity android:name=".MyInsCourseActivity" />
-        <activity android:name=".InsCourse.CourseReservationActivity" />
         <activity android:name=".InsCourse.InsCourseDetailActivity" />
         <activity android:name=".InsCourse.InsCourseBrowseActivity" />
         <activity android:name=".Material.MaterialDetailActivity" />
         <activity android:name=".Material.MaterialBrowseActivity" />
-        <activity android:name=".LogSignin.LogSigninActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

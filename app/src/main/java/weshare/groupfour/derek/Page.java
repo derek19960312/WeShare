@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.LogSignin;
+package weshare.groupfour.derek;
 
 import android.support.v4.app.Fragment;
 

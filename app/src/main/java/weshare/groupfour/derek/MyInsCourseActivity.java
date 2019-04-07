@@ -11,10 +11,6 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-import weshare.groupfour.derek.LogSignin.LoginFragment;
-import weshare.groupfour.derek.LogSignin.Page;
-import weshare.groupfour.derek.LogSignin.SigninFragment;
-
 public class MyInsCourseActivity extends AppCompatActivity {
 
     @Override

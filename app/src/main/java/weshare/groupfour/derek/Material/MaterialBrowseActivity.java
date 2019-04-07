@@ -25,6 +25,8 @@ public class MaterialBrowseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material__browse);
         RecyclerView recycler = findViewById(R.id.recyclerView);
+
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //recycler.setLayoutManager(layoutManager);
 
