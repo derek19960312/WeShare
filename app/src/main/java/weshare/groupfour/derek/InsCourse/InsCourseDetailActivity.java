@@ -1,9 +1,6 @@
 package weshare.groupfour.derek.InsCourse;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import weshare.groupfour.derek.CourseReservationFragment;
 import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.ToolbarBackFragment;
 
 public class InsCourseDetailActivity extends AppCompatActivity {
     @Override
@@ -33,7 +28,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
     private class CourseDetailAdapter extends RecyclerView.Adapter{
         Intent intent = getIntent();
-        InsCourse insCourse = (InsCourse) intent.getExtras().getSerializable("insCourse");
+        InsCourseVO insCourseVO = (InsCourseVO) intent.getExtras().getSerializable("insCourseVO");
 
 
         class CourseDetailViewHoder extends RecyclerView.ViewHolder{
@@ -75,10 +70,10 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             switch (position){
                 case 0:
-                    ((CourseDetailViewHoder)holder).ivTeacherPic.setImageResource(insCourse.getTeacherPic());
-                    ((CourseDetailViewHoder)holder).tvTeacherName.setText(insCourse.getTeacherName());
-                    ((CourseDetailViewHoder)holder).tvCourseName.setText(insCourse.getCourseName());
-                    ((CourseDetailViewHoder)holder).tvCourseDetail.setText(insCourse.getCourseDetail());
+                    ((CourseDetailViewHoder)holder).ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
+                    ((CourseDetailViewHoder)holder).tvTeacherName.setText(insCourseVO.getTeacherName());
+                    ((CourseDetailViewHoder)holder).tvCourseName.setText(insCourseVO.getCourseName());
+                    ((CourseDetailViewHoder)holder).tvCourseDetail.setText(insCourseVO.getCourseDetail());
                     break;
                 case 1:
                     break;

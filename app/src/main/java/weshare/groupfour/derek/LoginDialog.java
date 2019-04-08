@@ -2,7 +2,6 @@ package weshare.groupfour.derek;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
@@ -13,9 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
-
-import weshare.groupfour.derek.CallServlet;
-import weshare.groupfour.derek.R;
 
 
 public class LoginDialog extends DialogFragment {
@@ -32,7 +28,7 @@ public class LoginDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.fragment_login,null);
+        view = inflater.inflate(R.layout.dialog_login,null);
         etMemId = view.findViewById(R.id.etMemId);
         etMemPsw = view.findViewById(R.id.etMemPsw);
         tilMemId = view.findViewById(R.id.tilMemId);

@@ -15,13 +15,13 @@
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".CourseCategoryActivity" />
-        <activity android:name=".MyLikeInsCourseActivity" />
-        <activity android:name=".MyInsCourseActivity" />
+        <activity android:name=".InsCourse.CourseCategoryActivity" />
+        <activity android:name=".InsCourse.MyLikeCourseActivity" />
+        <activity android:name=".InsCourse.MyCourseActivity" />
         <activity android:name=".InsCourse.InsCourseDetailActivity" />
         <activity android:name=".InsCourse.InsCourseBrowseActivity" />
-        <activity android:name=".Material.MaterialDetailActivity" />
-        <activity android:name=".Material.MaterialBrowseActivity" />
+        <activity android:name=".Goods.GoodsDetailActivity" />
+        <activity android:name=".Goods.GoodsBrowseActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

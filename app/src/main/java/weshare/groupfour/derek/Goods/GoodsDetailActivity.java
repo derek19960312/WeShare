@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.Material;
+package weshare.groupfour.derek.Goods;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import weshare.groupfour.derek.R;
 
-public class MaterialDetailActivity extends AppCompatActivity {
+public class GoodsDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,9 +16,9 @@ public class MaterialDetailActivity extends AppCompatActivity {
         ImageView ivPic = findViewById(R.id.ivPic),ivHeart = findViewById(R.id.ivHeart),ivShare = findViewById(R.id.ivShare);
         TextView tvDetail = findViewById(R.id.tvDetail),tvName = findViewById(R.id.tvName);
 
-        Material material = (Material)getIntent().getExtras().getSerializable("material");
-        ivPic.setImageResource(material.getIcon());
-        tvName.setText(material.getName());
-        tvDetail.setText(material.getPrice());
+        GoodsVO goodsVO = (GoodsVO)getIntent().getExtras().getSerializable("goodsVO");
+        ivPic.setImageResource(goodsVO.getIcon());
+        tvName.setText(goodsVO.getName());
+        tvDetail.setText(goodsVO.getPrice());
     }
 }

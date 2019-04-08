@@ -12,10 +12,7 @@ public class ServerURL {
 
 
 
-
-
-
-    final public static String IP_COURSECATEGORY= IP+PROJECT+"/CourseCategory";
+    final public static String IP_COURSECATEGORY= IP+PROJECT+"/CourseType";
     final public static String IP_LOGIN = IP+PROJECT+"/Login";
 
 

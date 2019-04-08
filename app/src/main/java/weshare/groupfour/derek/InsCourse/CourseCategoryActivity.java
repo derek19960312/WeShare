@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.InsCourse;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +17,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import weshare.groupfour.derek.CallServlet;
+import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.ServerURL;
+
 public class CourseCategoryActivity extends AppCompatActivity {
 
     String URL = ServerURL.IP_COURSECATEGORY;
@@ -34,7 +38,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         CallServlet callServlet = new CallServlet();
         callServlet.execute(URL,"");
         try{
-            Thread.sleep(5000);
+            Thread.sleep(500);
         }catch (Exception e) {
             Toast.makeText( this, "連線錯誤", Toast.LENGTH_SHORT).show();
         }
@@ -79,7 +83,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_category_card,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_course_category,parent,false);
             return new ViewHolder(view);
         }
 

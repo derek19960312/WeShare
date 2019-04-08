@@ -1,8 +1,6 @@
 package weshare.groupfour.derek;
 
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -17,16 +15,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-import weshare.groupfour.derek.Material.MaterialBrowseActivity;
+import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
+import weshare.groupfour.derek.InsCourse.CourseCategoryActivity;
 import weshare.groupfour.derek.InsCourse.InsCourseBrowseActivity;
+import weshare.groupfour.derek.InsCourse.MyCourseActivity;
+import weshare.groupfour.derek.InsCourse.MyLikeCourseActivity;
 
 public class MainActivity extends AppCompatActivity{
     NavigationView nvMain;
@@ -62,16 +60,16 @@ public class MainActivity extends AppCompatActivity{
                         startActivity(intent);
                         break;
                     case R.id.menuMall:
-                        intent.setClass(MainActivity.this, MaterialBrowseActivity.class);
+                        intent.setClass(MainActivity.this, GoodsBrowseActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.myInsCourse:
-                        intent.setClass(MainActivity.this, MyInsCourseActivity.class);
+                        intent.setClass(MainActivity.this, MyCourseActivity.class);
                         intent.putExtra("title",R.string.myInsCourse);
                         startActivity(intent);
                         break;
                     case R.id.myLikeInsCourse:
-                        intent.setClass(MainActivity.this, MyLikeInsCourseActivity.class);
+                        intent.setClass(MainActivity.this, MyLikeCourseActivity.class);
                         intent.putExtra("title",R.string.myLikeInsCourse);
                         startActivity(intent);
                         break;

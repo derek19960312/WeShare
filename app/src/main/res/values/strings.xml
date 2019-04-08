@@ -4,7 +4,7 @@
     <string name="calender">行事曆</string>
     <string name="cart">購物車</string>
     <string name="mall">教材商城</string>
-    <string name="insCourse">課程</string>
+    <string name="insCourseVO">課程</string>
     <string name="myInsCourse">我的課程</string>
     <string name="myLikeInsCourse">課程收藏</string>
     <string name="InsCourseBrowser">課程瀏覽</string>

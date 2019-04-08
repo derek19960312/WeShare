@@ -1,13 +1,13 @@
 package weshare.groupfour.derek.InsCourse;
 
-public class InsCourse implements java.io.Serializable {
+public class InsCourseVO implements java.io.Serializable {
     private int TeacherPic;
     private String CourseName, TeacherName, CourseDetail;
 
-    public InsCourse() {
+    public InsCourseVO() {
     }
 
-    public InsCourse(int TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
+    public InsCourseVO(int TeacherPic, String CourseName, String tvTeacherName, String CourseDetail) {
         this.TeacherPic = TeacherPic;
         this.CourseName = CourseName;
         this.TeacherName = tvTeacherName;

@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.InsCourse;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,10 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyInsCourseActivity extends AppCompatActivity {
+import weshare.groupfour.derek.Page;
+import weshare.groupfour.derek.R;
+
+public class MyCourseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

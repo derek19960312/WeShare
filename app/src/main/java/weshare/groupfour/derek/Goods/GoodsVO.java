@@ -1,15 +1,15 @@
-package weshare.groupfour.derek.Material;
+package weshare.groupfour.derek.Goods;
 
 import java.io.Serializable;
 
-public class Material implements Serializable {
+public class GoodsVO implements Serializable {
     private int icon;
     private String name,price;
 
-    public Material() {
+    public GoodsVO() {
     }
 
-    public Material(int icon, String name, String price) {
+    public GoodsVO(int icon, String name, String price) {
         this.icon = icon;
         this.name = name;
         this.price = price;

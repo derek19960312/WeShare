@@ -29,7 +29,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recycleView.setLayoutManager(layoutManager);
 
-        final List<InsCourse> insCourseList = new ArrayList<>();
+        final List<InsCourseVO> insCourseVOList = new ArrayList<>();
 
         //RoundedBitmapDrawable roundedBitmapDrawable;
         int j = 0;
@@ -45,19 +45,19 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
 
 
-                insCourseList.add(new InsCourse(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
+                insCourseVOList.add(new InsCourseVO(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
             }
         }
 
-        recycleView.setAdapter(new CourseAdapter(insCourseList));
+        recycleView.setAdapter(new CourseAdapter(insCourseVOList));
     }
 
     private class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
-        private List<InsCourse> insCourseList;
+        private List<InsCourseVO> insCourseVOList;
 
-        public CourseAdapter(List<InsCourse> insCourseList) {
-            this.insCourseList = insCourseList;
+        public CourseAdapter(List<InsCourseVO> insCourseVOList) {
+            this.insCourseVOList = insCourseVOList;
         }
         public class ViewHolder extends RecyclerView.ViewHolder {
             private ImageView ivTeacherPic;
@@ -75,21 +75,21 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inscourse_card,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_course_browser,parent,false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder( ViewHolder holder, int position) {
 
-            final InsCourse insCourse = insCourseList.get(position);
+            final InsCourseVO insCourseVO = insCourseVOList.get(position);
 
 
 
-            holder.ivTeacherPic.setImageResource(insCourse.getTeacherPic());
-            holder.tvTeacherName.setText(insCourse.getTeacherName());
-            holder.tvCourseName.setText(insCourse.getCourseName());
-            holder.tvCourseDetail.setText(insCourse.getCourseDetail());
+            holder.ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
+            holder.tvTeacherName.setText(insCourseVO.getTeacherName());
+            holder.tvCourseName.setText(insCourseVO.getCourseName());
+            holder.tvCourseDetail.setText(insCourseVO.getCourseDetail());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,7 +97,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     Bundle bundle = new Bundle();
                     intent.setClass(InsCourseBrowseActivity.this, InsCourseDetailActivity.class);
-                    bundle.putSerializable("insCourse", insCourse);
+                    bundle.putSerializable("insCourseVO", insCourseVO);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -107,7 +107,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return insCourseList.size();
+            return insCourseVOList.size();
         }
 
 
