@@ -42,14 +42,13 @@
             android:layout_weight="2"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivTeacherPic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                app:srcCompat="@drawable/teacher" />
-
+                android:src="@drawable/teacher"
+                app:civ_border_color="#000"
+                app:civ_border_width="1dp"/>
             <TextView
                 android:id="@+id/tvTeacherName"
                 android:layout_width="match_parent"

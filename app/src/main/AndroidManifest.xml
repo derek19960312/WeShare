@@ -14,7 +14,7 @@
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.Dialog"/>
         <activity android:name=".InsCourse.CourseCategoryActivity" />
         <activity android:name=".InsCourse.MyLikeCourseActivity" />
         <activity android:name=".InsCourse.MyCourseActivity" />

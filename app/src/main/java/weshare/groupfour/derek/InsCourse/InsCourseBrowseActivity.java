@@ -2,11 +2,10 @@ package weshare.groupfour.derek.InsCourse;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +19,15 @@ import java.util.List;
 import weshare.groupfour.derek.R;
 
 public class InsCourseBrowseActivity extends AppCompatActivity {
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inscourse__browse);
+        setContentView(R.layout.activity_inscourse_browse);
         RecyclerView recycleView = findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recycleView.setLayoutManager(layoutManager);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        recycleView.setLayoutManager(staggeredGridLayoutManager);
 
         final List<InsCourseVO> insCourseVOList = new ArrayList<>();
 
@@ -37,13 +37,8 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
             if(j == 3){
                 j=0;
             }else{
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.teacher+j);
 
-//                roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-//                roundedBitmapDrawable.setCircular(true);
                 j++;
-
-
 
                 insCourseVOList.add(new InsCourseVO(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
             }
@@ -52,7 +47,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
         recycleView.setAdapter(new CourseAdapter(insCourseVOList));
     }
 
-    private class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
+    public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
         private List<InsCourseVO> insCourseVOList;
 

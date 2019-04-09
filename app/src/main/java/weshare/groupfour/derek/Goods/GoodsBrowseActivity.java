@@ -23,9 +23,8 @@ public class GoodsBrowseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material__browse);
+        setContentView(R.layout.activity_material_browse);
         RecyclerView recycler = findViewById(R.id.recyclerView);
-
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         //recycler.setLayoutManager(layoutManager);
@@ -83,6 +82,7 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
         private TextView tvName,tvPrice;
         private ImageView ivIcon,ivCart,ivHeart;
         private int heart;
+
         public ViewHolder( View view) {
             super(view);
             tvName = view.findViewById(R.id.tvName);
@@ -96,7 +96,7 @@ private class CommondityAdapter extends RecyclerView.Adapter<CommondityAdapter.V
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_goods,parent,false);
         return new ViewHolder(view);
     }

@@ -4,20 +4,18 @@ package weshare.groupfour.derek;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
@@ -87,22 +85,8 @@ public class MainActivity extends AppCompatActivity{
         fabCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                CalendarFragment newFragment = new CalendarFragment();
-
-                if (true) {
-                    // The device is using a large layout, so show the fragment as a dialog
-                    newFragment.show(fragmentManager, "dialog");
-                } else {
-                    // The device is smaller, so show the fragment fullscreen
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    // For a little polish, specify a transition animation
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    // To make it fullscreen, use the 'content' root view as the container
-                    // for the fragment, which is always the root view for the activity
-                    transaction.add(android.R.id.content, newFragment)
-                            .addToBackStack(null).commit();
-                }
+                Intent intent = new Intent(MainActivity.this,CalendarActivity.class);
+                startActivity(intent);
             }
         });
 

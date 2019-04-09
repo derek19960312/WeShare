@@ -12,7 +12,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material__detail);
+        setContentView(R.layout.activity_material_detail);
         ImageView ivPic = findViewById(R.id.ivPic),ivHeart = findViewById(R.id.ivHeart),ivShare = findViewById(R.id.ivShare);
         TextView tvDetail = findViewById(R.id.tvDetail),tvName = findViewById(R.id.tvName);
 
