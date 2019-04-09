@@ -15,9 +15,9 @@
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.Dialog"/>
-        <activity android:name=".InsCourse.CourseCategoryActivity" />
+        <activity android:name=".CourseType.CourseCategoryActivity" />
         <activity android:name=".InsCourse.MyLikeCourseActivity" />
-        <activity android:name=".InsCourse.MyCourseActivity" />
+        <activity android:name=".MyCourse.MyCourseActivity" />
         <activity android:name=".InsCourse.InsCourseDetailActivity" />
         <activity android:name=".InsCourse.InsCourseBrowseActivity" />
         <activity android:name=".Goods.GoodsDetailActivity" />

@@ -2,11 +2,11 @@ package weshare.groupfour.derek;
 
 import android.support.v4.app.Fragment;
 
-public class Page {
+public class PageVO {
     private Fragment fragment;
     private String title;
 
-    public Page(Fragment fragment, String title) {
+    public PageVO(Fragment fragment, String title) {
         this.title = title;
         this.fragment = fragment;
     }

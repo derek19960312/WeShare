@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.InsCourse;
+package weshare.groupfour.derek.CourseReservation;
 
 
 import android.os.Bundle;
@@ -10,14 +10,15 @@ import android.view.ViewGroup;
 import weshare.groupfour.derek.R;
 
 
-public class MyTeachFragment extends Fragment {
+public class CourseReservationFragment extends Fragment {
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_teach, container, false);
+        return inflater.inflate(R.layout.fragment_course_reservation, container, false);
     }
 
 }

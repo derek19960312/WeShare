@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import weshare.groupfour.derek.CallServer.CallServlet;
+import weshare.groupfour.derek.CallServer.ServerURL;
+
 
 public class LoginDialog extends DialogFragment {
 

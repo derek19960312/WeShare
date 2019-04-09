@@ -19,9 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
-import weshare.groupfour.derek.InsCourse.CourseCategoryActivity;
+import weshare.groupfour.derek.CourseType.CourseCategoryActivity;
 import weshare.groupfour.derek.InsCourse.InsCourseBrowseActivity;
-import weshare.groupfour.derek.InsCourse.MyCourseActivity;
+import weshare.groupfour.derek.MyCourse.MyCourseActivity;
 import weshare.groupfour.derek.InsCourse.MyLikeCourseActivity;
 
 public class MainActivity extends AppCompatActivity{

@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.InsCourse;
+package weshare.groupfour.derek.MyCourse;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-import weshare.groupfour.derek.Page;
+import weshare.groupfour.derek.PageVO;
 import weshare.groupfour.derek.R;
 
 public class MyCourseActivity extends AppCompatActivity {
@@ -30,27 +30,27 @@ public class MyCourseActivity extends AppCompatActivity {
 
     }
     private class MypagerAdapter extends FragmentPagerAdapter {
-        List<Page> pageList;
+        List<PageVO> pageVOList;
         public MypagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
-            pageList = new ArrayList<>();
-            pageList.add(new Page(new MyCourseFragment(),"我預約的"));
-            pageList.add(new Page(new MyTeachFragment(),"我教的"));
+            pageVOList = new ArrayList<>();
+            pageVOList.add(new PageVO(new MyCourseFragment(),"我預約的"));
+            pageVOList.add(new PageVO(new MyTeachFragment(),"我教的"));
 
         }
 
         @Override
         public Fragment getItem(int i) {
-            return pageList.get(i).getFragment();
+            return pageVOList.get(i).getFragment();
         }
 
         @Override
         public int getCount() {
-            return pageList.size();
+            return pageVOList.size();
         }
         @Override
         public CharSequence getPageTitle(int position) {
-            return pageList.get(position).getTitle();
+            return pageVOList.get(position).getTitle();
         }
     }
 

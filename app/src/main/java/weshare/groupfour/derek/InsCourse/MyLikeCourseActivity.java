@@ -21,9 +21,22 @@ public class MyLikeCourseActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         rvMyLikeCourse.setLayoutManager(staggeredGridLayoutManager);
 
-        List<InsCourseVO> courseVOList = new ArrayList<>();
 
-        rvMyLikeCourse.setAdapter(new InsCourseBrowseActivity().new CourseAdapter(courseVOList));
+        final List<InsCourseVO> insCourseVOList = new ArrayList<>();
+
+
+        int j = 0;
+        for(int i=0; i<6; i++){
+            if(j == 3){
+                j=0;
+            }else{
+
+                j++;
+
+                insCourseVOList.add(new InsCourseVO(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
+            }
+        }
+        rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList));
 
 
     }

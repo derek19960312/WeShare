@@ -23,7 +23,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_browse);
+        setContentView(R.layout.activity_goods_browse);
         RecyclerView recycler = findViewById(R.id.recyclerView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

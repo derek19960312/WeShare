@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.InsCourse;
+package weshare.groupfour.derek.CourseType;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,9 +17,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import weshare.groupfour.derek.CallServlet;
+import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.ServerURL;
+import weshare.groupfour.derek.CallServer.ServerURL;
 
 public class CourseCategoryActivity extends AppCompatActivity {
 

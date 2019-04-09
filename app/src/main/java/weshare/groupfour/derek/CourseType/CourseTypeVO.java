@@ -1,4 +1,4 @@
-package weshare.groupfour.derek.InsCourse;
+package weshare.groupfour.derek.CourseType;
 
 import java.io.Serializable;
 
