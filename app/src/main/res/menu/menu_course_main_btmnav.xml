@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/myLikeInsCourse"
+        android:icon="@drawable/round_favorite_black_48dp"
+        android:title="@string/myLikeInsCourse"/>
+    <item android:id="@+id/CourseCategort"
+        android:icon="@drawable/round_category_black_48dp"
+        android:title="@string/CourseCategort"/>
+    <item android:id="@+id/myInsCourse"
+        android:icon="@drawable/round_reorder_black_48dp"
+        android:title="@string/myInsCourse"/>
+</menu>

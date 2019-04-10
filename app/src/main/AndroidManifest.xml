@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GoodsMainActivity"></activity>
+        <activity android:name=".CourseMainActivity" />
+        <activity android:name=".MyWalletActivity" />
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
-            android:theme="@style/AppTheme.Dialog"/>
+            android:theme="@style/AppTheme.Dialog" />
         <activity android:name=".CourseType.CourseCategoryActivity" />
         <activity android:name=".InsCourse.MyLikeCourseActivity" />
         <activity android:name=".MyCourse.MyCourseActivity" />

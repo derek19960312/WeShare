@@ -34,7 +34,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_myinscourse,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_mycourse,parent,false);
         return new ViewHolder(view);
     }
 
