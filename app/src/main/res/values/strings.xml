@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">WeShare</string>
+    <string name="main">首頁</string>
     <string name="member">會員</string>
     <string name="calender">行事曆</string>
     <string name="cart">購物車</string>
     <string name="mall">教材商城</string>
+    <string name="GoodsOrder">訂單管理</string>
+    <string name="GoodsLike">教材收藏</string>
     <string name="insCourseVO">課程</string>
     <string name="myInsCourse">我的課程</string>
     <string name="myLikeInsCourse">課程收藏</string>

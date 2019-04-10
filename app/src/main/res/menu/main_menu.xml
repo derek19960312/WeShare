@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/insCourseVO"
-        android:id="@+id/menuCourse">
+        android:id="@+id/menuCourse"/>
+    <item android:id="@+id/menuMall"
+            android:title="@string/mall"/>
 
-    </item>
 
     <item android:title="@string/member">
         <item android:id="@+id/MyWallet"
@@ -13,8 +14,7 @@
         <item android:id="@+id/ChatRoom"
             android:title="@string/ChatRoom"/>
     </item>
-    <item android:id="@+id/menuMall"
-        android:title="@string/mall"/>
+
 
 
 

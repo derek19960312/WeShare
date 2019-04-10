@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,50 +27,77 @@ public class CourseMainActivity extends AppCompatActivity{
     NavigationView nvMain;
     DrawerLayout dlMain;
     Toolbar toolbar;
-
+    BottomNavigationView bnvCourseMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_main);
+        setContentView(R.layout.activity_course_goods_main);
 
         toolbar = findViewById(R.id.toolbar);
         dlMain = findViewById(R.id.dlMain);
         nvMain = findViewById(R.id.nvMain);
-
-
+        bnvCourseMain = findViewById(R.id.bnvMain);
+        bnvCourseMain.inflateMenu(R.menu.menu_course_main_btmnav);
 
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,dlMain,toolbar,R.string.drawer_open,R.string.drawer_close);
         dlMain.addDrawerListener(toggle);
         toggle.syncState();
-
+        //側邊欄
         nvMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 dlMain.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent();
                 switch (menuItem.getItemId()){
-                    case R.id.myInsCourse:
-                        intent.setClass(CourseMainActivity.this, MyCourseActivity.class);
-                        intent.putExtra("title",R.string.myInsCourse);
+                    case R.id.menuCourse:
+                        intent.setClass(CourseMainActivity.this, CourseMainActivity.class);
+                        intent.putExtra("title",R.string.insCourseVO);
                         startActivity(intent);
+                        finish();
                         break;
-                    case R.id.myLikeInsCourse:
-                        intent.setClass(CourseMainActivity.this, MyLikeCourseActivity.class);
-                        intent.putExtra("title",R.string.myLikeInsCourse);
+                    case R.id.menuMall:
+                        intent.setClass(CourseMainActivity.this, GoodsMainActivity.class);
+                        intent.putExtra("title",R.string.mall);
                         startActivity(intent);
+                        finish();
                         break;
-                    case R.id.CourseCategort:
-                        intent.setClass(CourseMainActivity.this, CourseCategoryActivity.class);
-                        intent.putExtra("title",R.string.CourseCategort);
-                        startActivity(intent);
-                        break;
+
                 }
                 return false;
             }
         });
+        //底層欄
+        bnvCourseMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                Intent intent = new Intent();
+                bnvCourseMain.setSelectedItemId(menuItem.getItemId());
+                switch (menuItem.getItemId()){
+                    case R.id.myLikeInsCourse:
+                        intent.setClass(CourseMainActivity.this, MyLikeCourseActivity.class);
+                        intent.putExtra("title",R.string.myLikeInsCourse);
+                        startActivityForResult(intent,1);
+                        break;
+                    case R.id.CourseCategort:
+                        intent.setClass(CourseMainActivity.this, CourseCategoryActivity.class);
+                        intent.putExtra("title",R.string.CourseCategort);
+                        startActivityForResult(intent,2);
+                        break;
+                    case R.id.myInsCourse:
+                        intent.setClass(CourseMainActivity.this, MyCourseActivity.class);
+                        intent.putExtra("title",R.string.myInsCourse);
+                        startActivityForResult(intent,3);
+                        break;
+                }
+                return false;
+            }
+
+        });
+
 
         FloatingActionButton fabCalendar = findViewById(R.id.fabCalendar);
         fabCalendar.setOnClickListener(new View.OnClickListener() {
@@ -97,14 +125,6 @@ public class CourseMainActivity extends AppCompatActivity{
         dlMain.closeDrawer(GravityCompat.START);
 
     }
-
-
-
-
-
-
-
-
 
 
 }

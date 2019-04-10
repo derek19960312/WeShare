@@ -1,12 +1,12 @@
 package weshare.groupfour.derek.MyCourse;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class MyCourseActivity extends AppCompatActivity {
         TabLayout tbMyInsCourse = findViewById(R.id.tbMyInsCourse);
         tbMyInsCourse.setupWithViewPager(vpMyInsCourse);
 
-
+        //onActivityResult(RESULT_OK,,getIntent());
     }
     private class MypagerAdapter extends FragmentPagerAdapter {
         List<PageVO> pageVOList;

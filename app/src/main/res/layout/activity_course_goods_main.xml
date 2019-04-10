@@ -41,10 +41,10 @@
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bnvMain"
+            style="@style/AppTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/menu_course_main_btmnav"
-            android:background="@color/primaryLightColor"
+            android:background="@color/primarySuperLightColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
