@@ -9,4 +9,15 @@
     <item android:id="@+id/myInsCourse"
         android:icon="@drawable/round_reorder_black_48dp"
         android:title="@string/myInsCourse"/>
+
+
+    <item android:title="@string/member">
+        <item android:id="@+id/MyWallet"
+            android:title="@string/MyWallet"/>
+        <item android:id="@+id/Friend"
+            android:title="@string/Friend"/>
+        <item android:id="@+id/ChatRoom"
+            android:title="@string/ChatRoom"/>
+    </item>
+
 </menu>
