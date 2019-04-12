@@ -38,7 +38,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         CallServlet callServlet = new CallServlet();
         callServlet.execute(URL,"");
         try{
-            Thread.sleep(500);
+            Thread.sleep(5000);
         }catch (Exception e) {
             Toast.makeText( this, "連線錯誤", Toast.LENGTH_SHORT).show();
         }

@@ -22,7 +22,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivTeacherPic;
-        private TextView tvCourseName,tvTeacherName,tvCourseDetail;
+        private TextView tvCourseName,tvTeacherName;
 
 
         public ViewHolder(View view) {
@@ -30,13 +30,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             ivTeacherPic = view.findViewById(R.id.ivTeacherPic);
             tvCourseName = view.findViewById(R.id.tvCourseName);
             tvTeacherName = view.findViewById(R.id.tvTeacherName);
-            tvCourseDetail = view.findViewById(R.id.tvCourseDetail);
+
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_course_browser,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_course,parent,false);
         return new ViewHolder(view);
     }
 
@@ -50,7 +50,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
         holder.tvTeacherName.setText(insCourseVO.getTeacherName());
         holder.tvCourseName.setText(insCourseVO.getCourseName());
-        holder.tvCourseDetail.setText(insCourseVO.getCourseDetail());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

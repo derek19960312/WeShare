@@ -4,9 +4,7 @@ package weshare.groupfour.derek;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity{
         dlMain.addDrawerListener(toggle);
         toggle.syncState();
 
-        //側邊欄
+        //側邊藍
         nvMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -106,11 +104,9 @@ public class MainActivity extends AppCompatActivity{
                 switch (menuItem.getItemId()){
                     case R.id.menuCourse:
                         vpMain.setCurrentItem(0);
-                        nvMain.inflateMenu(R.menu.menu_course_main);
                         return true;
                     case R.id.menuMall:
                         vpMain.setCurrentItem(1);
-                        nvMain.inflateMenu(R.menu.menu_goods_main);
                         return true;
                 }
                 return false;
@@ -118,24 +114,29 @@ public class MainActivity extends AppCompatActivity{
 
         });
 
+
+        //滑動時
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
             }
-
             @Override
             public void onPageSelected(int position) {
                 bnvCourseMain.getMenu().getItem(position).setChecked(true);
-
+                nvMain.getMenu().clear();
+                switch (position){
+                    case 0:
+                        nvMain.inflateMenu(R.menu.menu_course_main);
+                        break;
+                    case 1:
+                        nvMain.inflateMenu(R.menu.menu_goods_main);
+                        break;
+                }
             }
-
             @Override
             public void onPageScrollStateChanged(int i) {
-
             }
         });
-
         }
 
 

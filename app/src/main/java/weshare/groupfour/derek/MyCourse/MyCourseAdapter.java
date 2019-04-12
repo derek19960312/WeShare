@@ -11,7 +11,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import weshare.groupfour.derek.R;
 
-public class MyCourseAdapter extends RecyclerView.Adapter {
+public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHolder>{
     private List myCourseList;
     public MyCourseAdapter(List myCourseList) {
         this.myCourseList = myCourseList;
@@ -22,6 +22,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter {
         private TextView tvCourseName;
         private TextView tvCourseTime;
         private TextView tvCoursePlace;
+        private TextView tvQrcode;
+
         public ViewHolder(View view) {
             super(view);
             civTeacherPic = view.findViewById(R.id.civTeacherPic);
@@ -29,24 +31,38 @@ public class MyCourseAdapter extends RecyclerView.Adapter {
             tvCourseName = view.findViewById(R.id.tvCourseName);
             tvCourseTime = view.findViewById(R.id.tvCourseTime);
             tvCoursePlace = view.findViewById(R.id.tvCoursePlace);
+            tvQrcode = view.findViewById(R.id.tvQrcode);
         }
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_mycourse,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        //myCourseList.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        MyCourseVO myCourseVO = (MyCourseVO)myCourseList.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (holder.tvQrcode.getVisibility()){
+                    case View.VISIBLE:
+                        holder.tvQrcode.setVisibility(View.GONE);
+                        break;
+                    case View.GONE:
+                        holder.tvQrcode.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
-        // return myCourseList.size();
+
+        return myCourseList.size();
     }
 }

@@ -7,6 +7,10 @@ public class ServerURL {
 //    final public static String IP = "http://18.191.251.39:8081";
 //    final public static String IP = "http://localhost:8081";
 
+    //模擬器
+//    final public static String IP = "http://10.0.2.2:8081";
+
+
 
     final public static String PROJECT = "/WeShare_web";
 

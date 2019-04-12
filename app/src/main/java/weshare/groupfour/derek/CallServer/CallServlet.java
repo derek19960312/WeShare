@@ -1,10 +1,9 @@
 package weshare.groupfour.derek.CallServer;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -14,7 +13,7 @@ import java.util.List;
 
 public class CallServlet extends AsyncTask<String, Void, List<String>> {
     List<String> list;
-
+    StringBuffer sb = null;
     @Override
     protected List<String> doInBackground(String... strings) {
         list = new ArrayList<>();
@@ -33,27 +32,17 @@ public class CallServlet extends AsyncTask<String, Void, List<String>> {
                 out.flush();
             }
 
-
-
-
-            if (con.getResponseCode() == 200) {
-
-                InputStream is = con.getInputStream();
-                ByteArrayOutputStream message = new ByteArrayOutputStream();
-                int len = 0;
-                byte buffer[] = new byte[1024];
-                while ((len = is.read(buffer)) != -1) {
-                    message.write(buffer, 0, len);
-                }
-                is.close();
-                message.close();
-                String msg = new String(message.toByteArray());
-                list.add(msg);
-
+            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String str;
+                while((str = br.readLine()) != null)
+                    sb.append(str);
+                list.add(sb.toString());
+                Log.e("123123",sb.toString());
                 return list;
+
             } else {
-                list.add("連線失敗1");
-                return list;
+
             }
 
         } catch (Exception e) {
