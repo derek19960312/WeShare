@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.R;
@@ -24,7 +25,7 @@ import weshare.groupfour.derek.CallServer.ServerURL;
 
 public class CourseCategoryActivity extends AppCompatActivity {
 
-    String URL = ServerURL.IP_COURSECATEGORY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         }.getType();
 
         try{
-            List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(URL,"").get(),listType);
+            List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(ServerURL.IP_COURSECATEGORY,"").get(),listType);
             rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
         }catch (Exception e) {
             Log.e("連線錯誤",e.toString());
@@ -75,6 +76,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, int position) {
             final CourseTypeVO courseTypeVO = courseTypeVOS.get(position);
+            final String data = "?param="+courseTypeVO.getCourseTypeName();
             viewHolder.btnCategory.setText(courseTypeVO.getCourseTypeName());
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
