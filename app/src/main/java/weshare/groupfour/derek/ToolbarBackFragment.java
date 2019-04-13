@@ -15,7 +15,8 @@ import android.view.ViewGroup;
 
 public class ToolbarBackFragment extends Fragment {
     Toolbar toolbarBack;
-
+    public static boolean MEMBER = false;
+    public static boolean SEARCH = false;
 
 
     @Override
@@ -23,6 +24,13 @@ public class ToolbarBackFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_toolbar_back, container, false);
         toolbarBack = view.findViewById(R.id.toolbarBack);
+        init();
+        setSearch();
+        setMember();
+
+        return view;
+    }
+    private void  init(){
         //導覽列上的功能才可以使用
         setHasOptionsMenu(true);
 
@@ -32,16 +40,19 @@ public class ToolbarBackFragment extends Fragment {
         actionBar.setDisplayHomeAsUpEnabled(true);
         //資料從呼叫該toolbar的地方傳入
         actionBar.setTitle(getActivity().getIntent().getIntExtra("title",R.string.nothing));
-
-
-
-        return view;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
             getActivity().finish();
         return true;
+    }
+
+    public void setSearch(){
+
+    }
+    public void setMember(){
+
     }
 
 }

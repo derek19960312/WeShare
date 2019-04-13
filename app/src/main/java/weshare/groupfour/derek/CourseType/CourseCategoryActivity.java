@@ -4,22 +4,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.CallServer.ServerURL;
+
 
 public class CourseCategoryActivity extends AppCompatActivity {
 
@@ -33,37 +34,21 @@ public class CourseCategoryActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         rvCategory.setLayoutManager(staggeredGridLayoutManager);
 
-        final List<CourseTypeVO> courseTypeVOS = new ArrayList<>();
-
+        Gson gson = new Gson();
         CallServlet callServlet = new CallServlet();
-        callServlet.execute(URL,"");
+        Type listType = new TypeToken<List<CourseTypeVO>>() {
+        }.getType();
+
         try{
-            Thread.sleep(5000);
+            List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(URL,"").get(),listType);
+            rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
         }catch (Exception e) {
-            Toast.makeText( this, "連線錯誤", Toast.LENGTH_SHORT).show();
-        }
-
-        if(callServlet.getList().size()!=0){
-            try {
-                JSONArray jsonArray = new JSONArray(callServlet.getList().get(0));
-                for(int i = 0 ; i<jsonArray.length(); i++){
-                    CourseTypeVO cusVO = new CourseTypeVO();
-                    cusVO.setCourseTypeName(((JSONObject)jsonArray.get(i)).getString("courseTypeName"));
-                    courseTypeVOS.add(cusVO);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }else{
-            Toast.makeText(this, "錯誤", Toast.LENGTH_SHORT).show();
+            Log.e("連線錯誤",e.toString());
         }
 
 
 
 
-
-
-        rvCategory.setAdapter(new CourseTypeAdapter(courseTypeVOS));
     }
 
     private class CourseTypeAdapter extends RecyclerView.Adapter<CourseTypeAdapter.ViewHolder>{
@@ -103,7 +88,5 @@ public class CourseCategoryActivity extends AppCompatActivity {
         public int getItemCount() {
             return courseTypeVOS.size();
         }
-
-
     }
 }

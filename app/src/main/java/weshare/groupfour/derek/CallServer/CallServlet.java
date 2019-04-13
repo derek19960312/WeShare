@@ -1,9 +1,13 @@
 package weshare.groupfour.derek.CallServer;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -11,19 +15,27 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CallServlet extends AsyncTask<String, Void, List<String>> {
-    List<String> list;
-    StringBuffer sb = null;
+public class CallServlet extends AsyncTask<String, Void, String> {
+    private ProgressDialog progressDialog;
+
+//    @Override
+//    protected void onPreExecute() {
+//        super.onPreExecute();
+//        progressDialog = new ProgressDialog();
+//        progressDialog.setMessage("請稍等..........");
+//        progressDialog.show();
+//    }
+
     @Override
-    protected List<String> doInBackground(String... strings) {
-        list = new ArrayList<>();
+    protected String doInBackground(String... strings) {
+        StringBuilder sb = new StringBuilder();
+
         String strurl = strings[0];
         HttpURLConnection con = null;
         try {
             URL url = new URL(strurl);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
-
             String data;
             if(strings[1]!=null){
                 data = strings[1];
@@ -31,38 +43,19 @@ public class CallServlet extends AsyncTask<String, Void, List<String>> {
                 out.write(data.getBytes());
                 out.flush();
             }
-
-            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+   if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String str;
                 while((str = br.readLine()) != null)
                     sb.append(str);
-                list.add(sb.toString());
-                Log.e("123123",sb.toString());
-                return list;
-
-            } else {
-
+                Log.e("return from servlet",sb.toString());
             }
-
         } catch (Exception e) {
-            list.add("連線失敗2");
-            e.printStackTrace();
+            Log.e("connection erro",e.toString());
         } finally {
             con.disconnect();
         }
-
-
-        return list;
+        return  sb.toString();
     }
 
-    @Override
-    protected void onPostExecute(List<String> strings) {
-        super.onPostExecute(strings);
-
-    }
-
-    public List<String> getList() {
-        return list;
-    }
 }

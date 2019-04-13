@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/myLikeInsCourse"
-        android:icon="@drawable/round_favorite_black_48dp"
-        android:title="@string/myLikeInsCourse"/>
-    <item android:id="@+id/CourseCategort"
-        android:icon="@drawable/round_category_black_48dp"
-        android:title="@string/CourseCategort"/>
-    <item android:id="@+id/myInsCourse"
-        android:icon="@drawable/round_reorder_black_48dp"
-        android:title="@string/myInsCourse"/>
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/myLikeInsCourse"
+            android:icon="@drawable/round_favorite_black_48dp"
+            android:title="@string/myLikeInsCourse"/>
+        <item android:id="@+id/CourseCategort"
+            android:icon="@drawable/round_category_black_48dp"
+            android:title="@string/CourseCategort"/>
+        <item android:id="@+id/myInsCourse"
+            android:icon="@drawable/round_reorder_black_48dp"
+            android:title="@string/myInsCourse"/>
+
+        <item android:title="@string/member">
+            <item android:id="@+id/MyWallet"
+                android:title="@string/MyWallet"/>
+            <item android:id="@+id/Friend"
+                android:title="@string/Friend"/>
+            <item android:id="@+id/ChatRoom"
+                android:title="@string/ChatRoom"/>
+        </item>
 
 
-    <item android:title="@string/member">
-        <item android:id="@+id/MyWallet"
-            android:title="@string/MyWallet"/>
-        <item android:id="@+id/Friend"
-            android:title="@string/Friend"/>
-        <item android:id="@+id/ChatRoom"
-            android:title="@string/ChatRoom"/>
-    </item>
+    </group>
+
+
+
+
 
 </menu>

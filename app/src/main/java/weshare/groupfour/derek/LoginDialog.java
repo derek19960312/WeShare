@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
@@ -54,20 +56,20 @@ public class LoginDialog extends DialogFragment {
                     Toast.makeText(view.getContext(), "比對中", Toast.LENGTH_SHORT).show();
                     CallServlet callServlet = new CallServlet();
                     String requestData = "memId=" + memId + "&memPsw=" + memPsw;
-                    callServlet.execute(URL, requestData);
+                    Gson gson = new Gson();
                     try {
-                        Thread.sleep(500);
-                        List<String> list = callServlet.getList();
-                        if (list.get(0).trim().equals("成功")) {
-                            etMemId.setText("");
-                            etMemPsw.setText("");
-                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
-                            alertDialog.dismiss();
-                        } else {
-                            etMemId.setText("");
-                            etMemPsw.setText("");
-                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
-                        }
+                        String result = callServlet.execute(URL, requestData).get();
+
+//                        if (list.get(0).trim().equals("成功")) {
+//                            etMemId.setText("");
+//                            etMemPsw.setText("");
+//                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
+//                            alertDialog.dismiss();
+//                        } else {
+//                            etMemId.setText("");
+//                            etMemPsw.setText("");
+//                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
+//                        }
                     } catch (Exception e) {
                         Toast.makeText(view.getContext(), "連線錯誤", Toast.LENGTH_SHORT).show();
                     }

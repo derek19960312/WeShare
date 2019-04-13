@@ -1,33 +1,22 @@
 package weshare.groupfour.derek.CourseType;
 
-import java.io.Serializable;
+public class CourseTypeVO implements java.io.Serializable {
+    private Integer courseTypeId;
+    private String courseTypeName;
 
-public class CourseTypeVO implements Serializable {
-    private String CourseTypeId;
-    private String CourseTypeName;
-
-    public CourseTypeVO() {
+    public Integer getCourseTypeId() {
+        return courseTypeId;
     }
 
-    public CourseTypeVO(String courseTypeName) {
-        CourseTypeName = courseTypeName;
-    }
-
-    public String getCourseTypeId() {
-        return CourseTypeId;
-    }
-
-    public void setCourseTypeId(String courseTypeId) {
-        CourseTypeId = courseTypeId;
+    public void setCourseTypeId(Integer courseTypeId) {
+        courseTypeId = courseTypeId;
     }
 
     public String getCourseTypeName() {
-        return CourseTypeName;
+        return courseTypeName;
     }
 
     public void setCourseTypeName(String courseTypeName) {
-        CourseTypeName = courseTypeName;
+        courseTypeName = courseTypeName;
     }
-
-
 }
