@@ -68,16 +68,16 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            switch (position){
-                case 0:
-                    ((CourseDetailViewHoder)holder).ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
-                    ((CourseDetailViewHoder)holder).tvTeacherName.setText(insCourseVO.getTeacherName());
-                    ((CourseDetailViewHoder)holder).tvCourseName.setText(insCourseVO.getCourseName());
-                    ((CourseDetailViewHoder)holder).tvCourseDetail.setText(insCourseVO.getCourseDetail());
-                    break;
-                case 1:
-                    break;
-            }
+//            switch (position){
+//                case 0:
+//                    ((CourseDetailViewHoder)holder).ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
+//                    ((CourseDetailViewHoder)holder).tvTeacherName.setText(insCourseVO.getTeacherName());
+//                    ((CourseDetailViewHoder)holder).tvCourseName.setText(insCourseVO.getCourseName());
+//                    ((CourseDetailViewHoder)holder).tvCourseDetail.setText(insCourseVO.getCourseDetail());
+//                    break;
+//                case 1:
+//                    break;
+//            }
         }
 
         @Override

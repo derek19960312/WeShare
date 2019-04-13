@@ -1,7 +1,8 @@
 package weshare.groupfour.derek.CourseType;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -13,14 +14,13 @@ import android.widget.Button;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
-import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.CallServer.ServerURL;
+import weshare.groupfour.derek.InsCourse.InsCourseBrowseActivity;
+import weshare.groupfour.derek.R;
 
 
 public class CourseCategoryActivity extends AppCompatActivity {
@@ -74,14 +74,19 @@ public class CourseCategoryActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        public void onBindViewHolder(final ViewHolder viewHolder, int position) {
             final CourseTypeVO courseTypeVO = courseTypeVOS.get(position);
-            final String data = "?param="+courseTypeVO.getCourseTypeName();
+
+            final String data = "?keyword="+courseTypeVO.getCourseTypeId()+"&action=search_by_CourseType";
+
             viewHolder.btnCategory.setText(courseTypeVO.getCourseTypeName());
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            viewHolder.btnCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(CourseCategoryActivity.this, InsCourseBrowseActivity.class);
+                    intent.putExtra("data",data);
+                    startActivity(intent);
                 }
             });
         }

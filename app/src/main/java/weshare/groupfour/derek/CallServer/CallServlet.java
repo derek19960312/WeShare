@@ -1,22 +1,16 @@
 package weshare.groupfour.derek.CallServer;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CallServlet extends AsyncTask<String, Void, String> {
-    private ProgressDialog progressDialog;
+//    private ProgressDialog progressDialog;
 
 //    @Override
 //    protected void onPreExecute() {

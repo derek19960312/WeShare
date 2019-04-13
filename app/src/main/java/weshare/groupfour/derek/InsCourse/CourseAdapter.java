@@ -27,7 +27,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
-            ivTeacherPic = view.findViewById(R.id.ivTeacherPic);
+            //ivTeacherPic = view.findViewById(R.id.ivTeacherPic);
             tvCourseName = view.findViewById(R.id.tvCourseName);
             tvTeacherName = view.findViewById(R.id.tvTeacherName);
 
@@ -47,9 +47,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
 
 
-        holder.ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
-        holder.tvTeacherName.setText(insCourseVO.getTeacherName());
-        holder.tvCourseName.setText(insCourseVO.getCourseName());
+        //holder.ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
+        holder.tvTeacherName.setText(insCourseVO.getTeacherId());
+        holder.tvCourseName.setText(insCourseVO.getCourseId());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

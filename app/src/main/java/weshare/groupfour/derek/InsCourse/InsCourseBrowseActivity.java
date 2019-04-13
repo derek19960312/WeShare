@@ -1,14 +1,14 @@
 package weshare.groupfour.derek.InsCourse;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -29,9 +29,14 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
 
         try {
-            List<InsCourseVO> insCourseVOList = new Gson().fromJson(new CallServlet().execute(ServerURL.IP_SEARCH_INSCOURSE,data).get());
+            String data = getIntent().getStringExtra("data");
 
+            String result = new CallServlet().execute(ServerURL.IP_SEARCH_INSCOURSE,data).get();
 
+            Type listType = new TypeToken<List<InsCourseVO>>() {
+            }.getType();
+            List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
+            recycleView.setAdapter(new CourseAdapter(insCourseVOList));
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -49,15 +54,11 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 //            }
 //        }
 
-        recycleView.setAdapter(new CourseAdapter(insCourseVOList));
+
     }
 
 
 
-    public byte[] compareToByte(Bitmap bitmap){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
-        return baos.toByteArray();
-    }
+
 
 }
