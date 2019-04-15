@@ -31,7 +31,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
         try {
             String data = getIntent().getStringExtra("data");
 
-            String result = new CallServlet().execute(ServerURL.IP_SEARCH_INSCOURSE,data).get();
+            String result = new CallServlet().execute(ServerURL.IP_COURSETYPE,data).get();
 
             Type listType = new TypeToken<List<InsCourseVO>>() {
             }.getType();

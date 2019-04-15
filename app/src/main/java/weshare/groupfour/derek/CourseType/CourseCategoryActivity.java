@@ -41,7 +41,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         }.getType();
 
         try{
-            List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(ServerURL.IP_COURSECATEGORY,"").get(),listType);
+            List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(ServerURL.IP_COURSETYPE,"action=get_all_type").get(),listType);
             rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
         }catch (Exception e) {
             Log.e("連線錯誤",e.toString());
@@ -77,7 +77,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         public void onBindViewHolder(final ViewHolder viewHolder, int position) {
             final CourseTypeVO courseTypeVO = courseTypeVOS.get(position);
 
-            final String data = "?keyword="+courseTypeVO.getCourseTypeId()+"&action=search_by_CourseType";
+            final String data = "courseTypeId="+courseTypeVO.getCourseTypeId()+"&action=find_by_coursetype";
 
             viewHolder.btnCategory.setText(courseTypeVO.getCourseTypeName());
 

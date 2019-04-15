@@ -18,9 +18,11 @@ public class ServerURL {
 
 
 
-    final public static String IP_COURSECATEGORY= IP+PROJECT+"/CourseType";
+    final public static String IP_COURSETYPE= IP+PROJECT+"/CourseTypeServlet";
     final public static String IP_LOGIN = IP+PROJECT+"/Login";
     final public static String IP_SEARCH_INSCOURSE = IP+PROJECT+"/InsCourseServlet";
+    final public static String IP_SEARCH_MEMBER = IP+PROJECT+"/MemberServlet";
+    final public static String IP_GET_PIC = IP+PROJECT+"/DBGifReader";
 
 
 }
