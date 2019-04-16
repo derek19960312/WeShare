@@ -1,8 +1,10 @@
 package weshare.groupfour.derek.InsCourse;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import weshare.groupfour.derek.MemberVO;
 import weshare.groupfour.derek.R;
 
 public class InsCourseDetailActivity extends AppCompatActivity {
@@ -29,7 +32,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
     private class CourseDetailAdapter extends RecyclerView.Adapter{
         Intent intent = getIntent();
         InsCourseVO insCourseVO = (InsCourseVO) intent.getExtras().getSerializable("insCourseVO");
-
+        MemberVO memberVO = (MemberVO)intent.getExtras().getSerializable("memberVO");
 
         class CourseDetailViewHoder extends RecyclerView.ViewHolder{
             ImageView ivTeacherPic;
@@ -38,10 +41,10 @@ public class InsCourseDetailActivity extends AppCompatActivity {
             TextView tvCourseDetail;
             public CourseDetailViewHoder(View view) {
                 super(view);
-                ivTeacherPic = view.findViewById(R.id.ivTeacherPic_D);
-                tvCourseName = view.findViewById(R.id.tvCourseName_D);
-                tvTeacherName = view.findViewById(R.id.tvTeacherName_D);
-                tvCourseDetail = view.findViewById(R.id.tvCourseDetail_D);
+                ivTeacherPic = view.findViewById(R.id.ivTeacherPic);
+                tvCourseName = view.findViewById(R.id.tvCourseName);
+                tvTeacherName = view.findViewById(R.id.tvTeacherName);
+                tvCourseDetail = view.findViewById(R.id.tvCourseDetail);
             }
         }
 
@@ -68,16 +71,17 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//            switch (position){
-//                case 0:
-//                    ((CourseDetailViewHoder)holder).ivTeacherPic.setImageResource(insCourseVO.getTeacherPic());
-//                    ((CourseDetailViewHoder)holder).tvTeacherName.setText(insCourseVO.getTeacherName());
-//                    ((CourseDetailViewHoder)holder).tvCourseName.setText(insCourseVO.getCourseName());
-//                    ((CourseDetailViewHoder)holder).tvCourseDetail.setText(insCourseVO.getCourseDetail());
-//                    break;
-//                case 1:
-//                    break;
-//            }
+            switch (position){
+                case 0:
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(memberVO.getMemImage(),0,memberVO.getMemImage().length);
+                    ((CourseDetailViewHoder)holder).ivTeacherPic.setImageBitmap(bitmap);
+                    ((CourseDetailViewHoder)holder).tvTeacherName.setText(memberVO.getMemName());
+                    ((CourseDetailViewHoder)holder).tvCourseName.setText(insCourseVO.getCourseId());
+                    ((CourseDetailViewHoder)holder).tvCourseDetail.setText(insCourseVO.getInscCourser());
+                    break;
+                case 1:
+                    break;
+            }
         }
 
         @Override

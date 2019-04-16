@@ -42,21 +42,19 @@ public class CourseCategoryActivity extends AppCompatActivity {
 
         try{
             List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(ServerURL.IP_COURSETYPE,"action=get_all_type").get(),listType);
-            rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
+            if(courseTypeList != null){
+                rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
+            }
         }catch (Exception e) {
             Log.e("連線錯誤",e.toString());
         }
-
-
-
-
     }
 
     private class CourseTypeAdapter extends RecyclerView.Adapter<CourseTypeAdapter.ViewHolder>{
-        List<CourseTypeVO> courseTypeVOS;
+        List<CourseTypeVO> CourseTypeVOs;
 
         public CourseTypeAdapter(List<CourseTypeVO> courseTypeVOS) {
-            this.courseTypeVOS = courseTypeVOS;
+            this.CourseTypeVOs = courseTypeVOS;
         }
         class ViewHolder extends RecyclerView.ViewHolder{
             private Button btnCategory;
@@ -75,7 +73,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, int position) {
-            final CourseTypeVO courseTypeVO = courseTypeVOS.get(position);
+            final CourseTypeVO courseTypeVO = CourseTypeVOs.get(position);
 
             final String data = "courseTypeId="+courseTypeVO.getCourseTypeId()+"&action=find_by_coursetype";
 
@@ -93,7 +91,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return courseTypeVOS.size();
+            return CourseTypeVOs.size();
         }
     }
 }

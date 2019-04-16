@@ -1,6 +1,10 @@
 package weshare.groupfour.derek.CallServer;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -19,12 +23,14 @@ public class CallServlet extends AsyncTask<String, Void, String> {
 //        progressDialog.setMessage("請稍等..........");
 //        progressDialog.show();
 //    }
-
+private final static String INTERNER_ERROR = "0";
     @Override
     protected String doInBackground(String... strings) {
         StringBuilder sb = new StringBuilder();
-
         String strurl = strings[0];
+//        if (networkConnected()){
+//            return INTERNER_ERROR;
+//        }
         HttpURLConnection con = null;
         try {
             URL url = new URL(strurl);
@@ -37,7 +43,7 @@ public class CallServlet extends AsyncTask<String, Void, String> {
                 out.write(data.getBytes());
                 out.flush();
             }
-   if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 String str;
                 while((str = br.readLine()) != null)
@@ -49,9 +55,11 @@ public class CallServlet extends AsyncTask<String, Void, String> {
         } finally {
             con.disconnect();
         }
-
-
         return  sb.toString();
     }
-
+    private boolean networkConnected() {
+        ConnectivityManager conManager = (ConnectivityManager) new AppCompatActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
 }

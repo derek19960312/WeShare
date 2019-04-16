@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,15 +13,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import java.util.List;
+import com.google.gson.JsonObject;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 
 
 public class LoginDialog extends DialogFragment {
-
+    final static int SUCCESS = 0;
+    final static int FALSE = 1;
     String URL = ServerURL.IP_LOGIN;
 
     View view;
@@ -46,34 +47,44 @@ public class LoginDialog extends DialogFragment {
                 tilMemPsw.setError(null);
                 String memId = etMemId.getText().toString().trim();
                 String memPsw = etMemPsw.getText().toString().trim();
-                if (memId.isEmpty()) {
-                    tilMemId.setError("請輸入帳號");
-                    return;
-                } else if (memPsw.isEmpty()) {
-                    tilMemPsw.setError("請輸入密碼");
-                    return;
-                } else {
-                    Toast.makeText(view.getContext(), "比對中", Toast.LENGTH_SHORT).show();
-                    CallServlet callServlet = new CallServlet();
-                    String requestData = "memId=" + memId + "&memPsw=" + memPsw;
-                    Gson gson = new Gson();
-                    try {
-                        String result = callServlet.execute(URL, requestData).get();
 
-//                        if (list.get(0).trim().equals("成功")) {
-//                            etMemId.setText("");
-//                            etMemPsw.setText("");
-//                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
-//                            alertDialog.dismiss();
-//                        } else {
-//                            etMemId.setText("");
-//                            etMemPsw.setText("");
-//                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
-//                        }
-                    } catch (Exception e) {
-                        Toast.makeText(view.getContext(), "連線錯誤", Toast.LENGTH_SHORT).show();
-                    }
+
+                CallServlet callServlet = new CallServlet();
+                String requestData = "action=login&memId=" + memId + "&memPsw=" + memPsw;
+                Gson gson = new Gson();
+                try {
+
+                    String result = new CallServlet().execute(ServerURL.IP_LOGIN,requestData).get();
+
+
+                    Log.e("result",result);
+                    JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
+                    Log.e("jsonObject",jsonObject.toString());
+                    String i = jsonObject.get("LoginStatus").getAsString();
+
+//                        if () {
+//                            tilMemId.setError("請輸入帳號");
+//                            return;
+//                        } else if (memPsw.isEmpty()) {
+//                            tilMemPsw.setError("請輸入密碼");
+//                            return;
+//                        } else {}
+
+                      //登入成功
+
+
+                } catch (Exception e) {
+                    Log.e("e",e.getLocalizedMessage());
+                    Toast.makeText(view.getContext(), "1213211", Toast.LENGTH_SHORT).show();
                 }
+
+
+
+
+
+
+
+
             }
         });
         Button btnCancel = view.findViewById(R.id.btnCancel);
@@ -91,49 +102,5 @@ public class LoginDialog extends DialogFragment {
         return alertDialog;
     }
 
-//    @Override
-//    public void onClick(DialogInterface dialog, int which) {
-//
-//
-//        switch (which) {
-//            case DialogInterface.BUTTON_POSITIVE:
-//                tilMemId.setError(null);
-//                tilMemPsw.setError(null);
-//                String memId = etMemId.getText().toString().trim();
-//                String memPsw = etMemPsw.getText().toString().trim();
-//                if (memId.isEmpty()) {
-//                    tilMemId.setError("請輸入帳號");
-//                    return;
-//                } else if (memPsw.isEmpty()) {
-//                    tilMemPsw.setError("請輸入密碼");
-//                    return;
-//                } else {
-//                    Toast.makeText(view.getContext(), "比對中", Toast.LENGTH_SHORT).show();
-//                    CallServlet callServlet = new CallServlet();
-//                    String requestData = "memId=" + memId + "&memPsw=" + memPsw;
-//                    callServlet.execute(URL, requestData);
-//                    try {
-//                        Thread.sleep(500);
-//                        List<String> list = callServlet.getList();
-//                        if (list.get(0).trim().equals("成功")) {
-//                            etMemId.setText("");
-//                            etMemPsw.setText("");
-//                            Toast.makeText(view.getContext(), "登入成功", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            etMemId.setText("");
-//                            etMemPsw.setText("");
-//                            Toast.makeText(view.getContext(), "帳號密碼錯誤請重新輸入", Toast.LENGTH_SHORT).show();
-//                        }
-//                    } catch (Exception e) {
-//                        Toast.makeText(view.getContext(), "連線錯誤", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                break;
-//            case DialogInterface.BUTTON_NEGATIVE:
-//                dialog.cancel();
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+
 }

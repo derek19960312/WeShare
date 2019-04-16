@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,28 +30,31 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public CourseAdapter(List<InsCourseVO> insCourseVOList) {
         this.insCourseVOList = insCourseVOList;
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivTeacherPic;
-        private TextView tvCourseName,tvTeacherName;
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView ivTeacherPic,ivLike,ivConnect;
+        private TextView tvCourseName, tvTeacherName;
+        private int heart;
 
         public ViewHolder(View view) {
             super(view);
             ivTeacherPic = view.findViewById(R.id.ivTeacherPic);
+            ivLike = view.findViewById(R.id.ivLike);
+            ivConnect = view.findViewById(R.id.ivConnect);
             tvCourseName = view.findViewById(R.id.tvCourseName);
             tvTeacherName = view.findViewById(R.id.tvTeacherName);
-
+            heart = 0;
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_course,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_course, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder( ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final InsCourseVO insCourseVO = insCourseVOList.get(position);
         Gson gson = new GsonBuilder()
@@ -60,36 +62,62 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 .create();
         MemberVO memberVO = null;
         Bitmap bitmap = null;
+        final Bundle bundle = new Bundle();
+
+
         try {
-            String memStr = new CallServlet().execute(ServerURL.IP_SEARCH_MEMBER,"action=get_one_by_android&teacherId="+insCourseVO.getTeacherId()).get();
-            memberVO = gson.fromJson(memStr,MemberVO.class);
-
-            String memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC,"action=get_member_pic&memId="+memberVO.getMemId()).get();
-
-            byte[] bmemImage = Base64.decode(memBase64,Base64.DEFAULT);
-
-            memberVO.setMemImage(bmemImage);
-            bitmap = BitmapFactory.decodeByteArray(bmemImage,0,bmemImage.length);
-            Log.e("erro",String.valueOf(bitmap == null));
+            //取回會員資料
+            String memStr = new CallServlet().execute(ServerURL.IP_SEARCH_MEMBER, "action=get_one_by_android&teacherId=" + insCourseVO.getTeacherId()).get();
+            if (memStr != null) {
+                memberVO = gson.fromJson(memStr, MemberVO.class);
+                //取回圖片
+                String memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memberVO.getMemId()).get();
+                if(memBase64 != null) {
+                    byte[] bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
+                    memberVO.setMemImage(bmemImage);
+                    bitmap = BitmapFactory.decodeByteArray(bmemImage, 0, bmemImage.length);
+                }
+            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        bundle.putSerializable("insCourseVO", insCourseVO);
+        bundle.putSerializable("memberVO", memberVO);
 
         holder.ivTeacherPic.setImageBitmap(bitmap);
         holder.tvTeacherName.setText(memberVO.getMemName());
         holder.tvCourseName.setText(insCourseVO.getCourseId());
-
-
+        holder.ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(holder.heart){
+                    case 0:
+                        holder.ivLike.setImageResource(R.drawable.hearted);
+                        //Toast.makeText(GoodsBrowseActivity.this,"已加入收藏",Toast.LENGTH_SHORT).show();
+                        holder.heart = 1;
+                        break;
+                    case 1:
+                        holder.ivLike.setImageResource(R.drawable.heart);
+                        //Toast.makeText(GoodsBrowseActivity.this,"已取消收藏",Toast.LENGTH_SHORT).show();
+                        holder.heart = 0;
+                        break;
+                }
+            }
+        });
+        holder.ivConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(new Fragment().getActivity(),"分享",Toast.LENGTH_SHORT);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                Bundle bundle = new Bundle();
                 intent.setClass(view.getContext(), InsCourseDetailActivity.class);
-                bundle.putSerializable("insCourseVO", insCourseVO);
                 intent.putExtras(bundle);
                 view.getContext().startActivity(intent);
             }
@@ -101,6 +129,4 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public int getItemCount() {
         return insCourseVOList.size();
     }
-
-
 }
