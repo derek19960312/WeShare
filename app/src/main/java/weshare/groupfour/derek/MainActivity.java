@@ -1,13 +1,13 @@
 package weshare.groupfour.derek;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ import weshare.groupfour.derek.InsCourse.MyLikeCourseActivity;
 import weshare.groupfour.derek.MyCourse.MyCourseActivity;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     NavigationView nvMain;
     DrawerLayout dlMain;
     Toolbar toolbar;
@@ -52,15 +53,14 @@ public class MainActivity extends AppCompatActivity{
 
         vpMain = findViewById(R.id.vpMain);
         List<PageVO> pageVOList = new ArrayList<>();
-        pageVOList.add(new PageVO(new CourseMainFragment(),"課程"));
-        pageVOList.add(new PageVO(new GoodsMainFragment(),"教材商城"));
-        vpMain.setAdapter(new MypagerAdapter(getSupportFragmentManager(),pageVOList));
-
+        pageVOList.add(new PageVO(new CourseMainFragment(), "課程"));
+        pageVOList.add(new PageVO(new GoodsMainFragment(), "教材商城"));
+        vpMain.setAdapter(new MypagerAdapter(getSupportFragmentManager(), pageVOList));
 
 
         //側邊欄開關
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,dlMain,toolbar,R.string.drawer_open,R.string.drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, dlMain, toolbar, R.string.drawer_open, R.string.drawer_close);
         dlMain.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 dlMain.closeDrawer(GravityCompat.START);
                 Intent intent = new Intent();
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.myLikeInsCourse:
                         intent.setClass(MainActivity.this, MyLikeCourseActivity.class);
                         startActivity(intent);
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.menuCourse:
                         vpMain.setCurrentItem(0);
                         return true;
@@ -134,11 +134,12 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onPageScrolled(int i, float v, int i1) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 bnvCourseMain.getMenu().getItem(position).setChecked(true);
                 nvMain.getMenu().clear();
-                switch (position){
+                switch (position) {
                     case 0:
                         nvMain.inflateMenu(R.menu.menu_course_main);
                         break;
@@ -147,11 +148,12 @@ public class MainActivity extends AppCompatActivity{
                         break;
                 }
             }
+
             @Override
             public void onPageScrollStateChanged(int i) {
             }
         });
-        }
+    }
 
     Button btnLogin;
     SharedPreferences spf;
@@ -165,15 +167,15 @@ public class MainActivity extends AppCompatActivity{
         btnLogin = view.findViewById(R.id.btnLogin);
         spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
 
-        String memId = spf.getString("memId",null);
-        if(memId != null){
+        String memId = spf.getString("memId", null);
+        if (memId != null) {
             tvMemId.setText(memId);
-            String sMempic = spf.getString("memImage",null);
+            String sMempic = spf.getString("memImage", null);
             byte[] bmemImage = Base64.decode(sMempic, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bmemImage, 0, bmemImage.length);
             civMemImage.setImageBitmap(bitmap);
             btnLogin.setText("登出");
-        }else{
+        } else {
             tvMemId.setText("尚未登入");
             civMemImage.setImageResource(R.drawable.teacher);
             btnLogin.setText("登入");
@@ -183,12 +185,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    public void onLogin(View v){
+    public void onLogin(View v) {
 
-        switch ((String)btnLogin.getText()){
+        switch ((String) btnLogin.getText()) {
             case "登入":
-                LoginDialog dialog = new LoginDialog();
-                dialog.show(getSupportFragmentManager(),"alert");
+//                LoginDialog dialog = new LoginDialog();
+//                dialog.show(getSupportFragmentManager(),"alert");
+                Intent intent = new Intent(MainActivity.this, LoginFakeActivity.class);
+                startActivity(intent);
                 dlMain.closeDrawer(GravityCompat.START);
             case "登出":
                 spf.edit().clear().commit();
@@ -201,25 +205,26 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("OnResume","onResume");
+        Log.e("OnResume", "onResume");
+        addNavigationHeader();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.e("onRestart","onRestart");
+        Log.e("onRestart", "onRestart");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e("onPause","onPause");
+        Log.e("onPause", "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("onStop","onStop");
+        Log.e("onStop", "onStop");
     }
 }
 

@@ -1,14 +1,10 @@
 package weshare.groupfour.derek;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
-import android.util.Base64;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,54 +15,28 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
-import weshare.groupfour.derek.CourseType.CourseTypeVO;
-import weshare.groupfour.derek.util.Tools;
 
+public class LoginFakeActivity extends AppCompatActivity {
 
-public class LoginDialog extends DialogFragment {
-
-    View view;
     EditText etMemId;
     EditText etMemPsw;
     TextInputLayout tilMemId;
     TextInputLayout tilMemPsw;
-    AlertDialog alertDialog;
-    LoginDialog loginDialogListener = null;
-
-
-    public LoginDialog() {
-    }
-
-    public interface LoginListener{
-        void onFinish();
-    }
-    public void setOnFinishListener(LoginDialog listener) {
-        loginDialogListener = listener;
-    }
-
-
-
-
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.dialog_login, null);
-        etMemId = view.findViewById(R.id.etMemId);
-        etMemPsw = view.findViewById(R.id.etMemPsw);
-        tilMemId = view.findViewById(R.id.tilMemId);
-        tilMemPsw = view.findViewById(R.id.tilMemPsw);
-        Button btnLogin = view.findViewById(R.id.btnLogin);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_login);
+
+        etMemId = findViewById(R.id.etMemId);
+        etMemPsw = findViewById(R.id.etMemPsw);
+        tilMemId = findViewById(R.id.tilMemId);
+        tilMemPsw = findViewById(R.id.tilMemPsw);
+        Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,23 +65,24 @@ public class LoginDialog extends DialogFragment {
                                 tilMemPsw.setError("請輸入密碼");
                                 return;
                             case "LoginFalse":
-                                Toast.makeText(getActivity(), "帳號密碼錯誤", Toast.LENGTH_LONG);
+                                Toast.makeText(LoginFakeActivity.this ,"帳號密碼錯誤", Toast.LENGTH_LONG).show();
                                 etMemId.setText("");
                                 etMemPsw.setText("");
                                 return;
                             case "ConnectionProblem":
-                                Toast.makeText(getActivity(), "連線異常", Toast.LENGTH_LONG);
+                                Toast.makeText(LoginFakeActivity.this, "連線異常", Toast.LENGTH_LONG).show();
                                 return;
                         }
                     } else {
                         //登入成功
+                        Toast.makeText(LoginFakeActivity.this, "登入成功", Toast.LENGTH_LONG).show();
                         MemberVO memberVO = gson.fromJson(result, MemberVO.class);
                         //byte[] bmemImage = null;
                         String memBase64 = null;
                         try {
                             memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memId).get();
                             if (memBase64 != null) {
-                              //  bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
+                                //  bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -119,16 +90,16 @@ public class LoginDialog extends DialogFragment {
                             e.printStackTrace();
                         }
 
-                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myAccount", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
                         sharedPreferences.edit()
                                 .putString("memId",memberVO.getMemId())
                                 .putString("memPsw",memberVO.getMemPsw())
                                 .putString("memImage",memBase64)
                                 .commit();
 
-                        alertDialog.dismiss();
-                        etMemId.setText("");
-                        etMemPsw.setText("");
+
+                        finish();
+
 
                     }
 
@@ -139,21 +110,15 @@ public class LoginDialog extends DialogFragment {
 
             }
         });
-        Button btnCancel = view.findViewById(R.id.btnCancel);
+        Button btnCancel = findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+
+                finish();
                 etMemId.setText("");
                 etMemPsw.setText("");
             }
         });
-        alertDialog = new AlertDialog.Builder(getActivity())
-                .setView(view)
-                .create();
-
-        return alertDialog;
     }
-
-
 }
