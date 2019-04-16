@@ -2,7 +2,11 @@ package weshare.groupfour.derek;
 
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -12,12 +16,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import weshare.groupfour.derek.CourseType.CourseCategoryActivity;
 import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
 import weshare.groupfour.derek.InsCourse.MyLikeCourseActivity;
@@ -96,6 +105,11 @@ public class MainActivity extends AppCompatActivity{
                 return false;
             }
         });
+
+        //加入側邊攔HEADER
+        addNavigationHeader();
+
+
         //底層欄
         bnvCourseMain.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -139,16 +153,74 @@ public class MainActivity extends AppCompatActivity{
         });
         }
 
+    Button btnLogin;
+    SharedPreferences spf;
 
+    public void addNavigationHeader() {
+        //側邊攔HEADDER
 
+        View view = nvMain.getHeaderView(0);
+        CircleImageView civMemImage = view.findViewById(R.id.civMemImage);
+        TextView tvMemId = view.findViewById(R.id.tvMemId);
+        btnLogin = view.findViewById(R.id.btnLogin);
+        spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
 
-    public void onLogin(View v){
-        LoginDialog dialog = new LoginDialog();
-        dialog.show(getSupportFragmentManager(),"alert");
-        dlMain.closeDrawer(GravityCompat.START);
+        String memId = spf.getString("memId",null);
+        if(memId != null){
+            tvMemId.setText(memId);
+            String sMempic = spf.getString("memImage",null);
+            byte[] bmemImage = Base64.decode(sMempic, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bmemImage, 0, bmemImage.length);
+            civMemImage.setImageBitmap(bitmap);
+            btnLogin.setText("登出");
+        }else{
+            tvMemId.setText("尚未登入");
+            civMemImage.setImageResource(R.drawable.teacher);
+            btnLogin.setText("登入");
+        }
+
 
     }
 
+
+    public void onLogin(View v){
+
+        switch ((String)btnLogin.getText()){
+            case "登入":
+                LoginDialog dialog = new LoginDialog();
+                dialog.show(getSupportFragmentManager(),"alert");
+                dlMain.closeDrawer(GravityCompat.START);
+            case "登出":
+                spf.edit().clear().commit();
+                dlMain.closeDrawer(GravityCompat.START);
+                addNavigationHeader();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("OnResume","onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e("onRestart","onRestart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("onPause","onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+    }
 }
 
 

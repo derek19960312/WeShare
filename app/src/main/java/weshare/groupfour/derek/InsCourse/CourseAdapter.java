@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,8 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.util.Tools;
+import weshare.groupfour.derek.util.Tools;
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.MemberVO;
@@ -71,12 +72,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             if (memStr != null) {
                 memberVO = gson.fromJson(memStr, MemberVO.class);
                 //取回圖片
-                String memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memberVO.getMemId()).get();
-                if(memBase64 != null) {
-                    byte[] bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
-                    memberVO.setMemImage(bmemImage);
-                    bitmap = BitmapFactory.decodeByteArray(bmemImage, 0, bmemImage.length);
-                }
+                    byte[] memImage = new Tools().getPicbymemId(memberVO.getMemId());
+                    memberVO.setMemImage(memImage);
+                    bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
+
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
