@@ -24,7 +24,7 @@ import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 
 
-public class LoginDialog extends DialogFragment {
+public class LoginDialog_deprecate extends DialogFragment {
 
     View view;
     EditText etMemId;
@@ -32,17 +32,17 @@ public class LoginDialog extends DialogFragment {
     TextInputLayout tilMemId;
     TextInputLayout tilMemPsw;
     AlertDialog alertDialog;
-    LoginDialog loginDialogListener = null;
+    LoginDialog_deprecate loginDialogDeprecateListener = null;
 
 
-    public LoginDialog() {
+    public LoginDialog_deprecate() {
     }
 
     public interface LoginListener{
         void onFinish();
     }
-    public void setOnFinishListener(LoginDialog listener) {
-        loginDialogListener = listener;
+    public void setOnFinishListener(LoginDialog_deprecate listener) {
+        loginDialogDeprecateListener = listener;
     }
 
 
@@ -72,7 +72,7 @@ public class LoginDialog extends DialogFragment {
                         .create();
                 try {
 
-                    String result = new CallServlet().execute(ServerURL.IP_LOGIN, requestData).get();
+                    String result = new CallServlet().execute(ServerURL.IP_MEMBER, requestData).get();
                     if (result.contains("LoginStatus")) {
                         //登入失敗
                         JsonObject jsonObject = gson.fromJson(result, JsonObject.class);

@@ -1,6 +1,8 @@
 package weshare.groupfour.derek.InsCourse;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +20,8 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.util.Tools;
+import weshare.groupfour.derek.LoginFakeActivity;
+import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
@@ -35,7 +39,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivTeacherPic,ivLike,ivConnect;
         private TextView tvCourseName, tvTeacherName;
-        private int heart;
+        private int like;
+        Context context;
 
         public ViewHolder(View view) {
             super(view);
@@ -43,8 +48,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             ivLike = view.findViewById(R.id.ivLike);
             ivConnect = view.findViewById(R.id.ivConnect);
             tvCourseName = view.findViewById(R.id.tvCourseName);
-            tvTeacherName = view.findViewById(R.id.tvTeacherName);
-            heart = 0;
+            tvTeacherName = view.findViewById(R.id.tvName);
+            context = view.getContext();
+            like = 0;
         }
     }
 
@@ -56,7 +62,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
+        SharedPreferences spf = holder.context.getSharedPreferences("myAccount",Context.MODE_PRIVATE);
+        final String memId = spf.getString("memId",null);
         final InsCourseVO insCourseVO = insCourseVOList.get(position);
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -65,23 +72,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         Bitmap bitmap = null;
         final Bundle bundle = new Bundle();
 
+        //取回老師名稱+會員資料
+        memberVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId());
+                    //取回圖片
+        byte[] memImage = new Join().getMemberPic(memberVO.getMemId());
+        memberVO.setMemImage(memImage);
+        bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
 
-        try {
-            //取回會員資料
-            String memStr = new CallServlet().execute(ServerURL.IP_SEARCH_MEMBER, "action=get_one_by_android&teacherId=" + insCourseVO.getTeacherId()).get();
-            if (memStr != null) {
-                memberVO = gson.fromJson(memStr, MemberVO.class);
-                //取回圖片
-                    byte[] memImage = new Tools().getPicbymemId(memberVO.getMemId());
-                    memberVO.setMemImage(memImage);
-                    bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
 
-            }
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         bundle.putSerializable("insCourseVO", insCourseVO);
         bundle.putSerializable("memberVO", memberVO);
@@ -92,17 +90,25 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(holder.heart){
-                    case 0:
-                        holder.ivLike.setImageResource(R.drawable.hearted);
-                        //Toast.makeText(GoodsBrowseActivity.this,"已加入收藏",Toast.LENGTH_SHORT).show();
-                        holder.heart = 1;
-                        break;
-                    case 1:
-                        holder.ivLike.setImageResource(R.drawable.heart);
-                        //Toast.makeText(GoodsBrowseActivity.this,"已取消收藏",Toast.LENGTH_SHORT).show();
-                        holder.heart = 0;
-                        break;
+                if(memId != null){
+                    switch(holder.like){
+                        case 0:
+                            holder.ivLike.setImageResource(R.drawable.hearted);
+                            new CourseLike().addCourseLike(memId,insCourseVO.getInscId());
+                            Toast.makeText(holder.context,"已加入收藏", Toast.LENGTH_SHORT).show();
+                            holder.like = 1;
+                            break;
+                        case 1:
+                            holder.ivLike.setImageResource(R.drawable.heart);
+                            new CourseLike().deleteCourseLike(memId,insCourseVO.getInscId());
+                            Toast.makeText(holder.context,"已取消收藏",Toast.LENGTH_SHORT).show();
+                            holder.like = 0;
+                            break;
+                    }
+                }else{
+                    Toast.makeText(holder.context,"請先登入",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(holder.context, LoginFakeActivity.class);
+                    holder.context.startActivity(intent);
                 }
             }
         });
@@ -121,6 +127,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 view.getContext().startActivity(intent);
             }
         });
+
+        //已經加入收藏的課程
+        if(memId != null){
+            List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId);
+            if(insCourseVOListbylike != null){
+                for(InsCourseVO inscVObylike : insCourseVOListbylike){
+                    if(inscVObylike.getInscId().equals(insCourseVO.getInscId())){
+                        holder.ivLike.setImageResource(R.drawable.hearted);
+                        holder.like = 1;
+                    }
+                }
+            }
+        }
 
     }
 

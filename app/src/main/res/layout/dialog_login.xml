@@ -5,7 +5,7 @@
     android:id="@+id/FrgLogin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".LoginDialog">
+    tools:context=".LoginDialog_deprecate">
 
     <TextView
         android:id="@+id/textView2"

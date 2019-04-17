@@ -4,6 +4,7 @@ package weshare.groupfour.derek;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch ((String) btnLogin.getText()) {
             case "登入":
-//                LoginDialog dialog = new LoginDialog();
+//                LoginDialog_deprecate dialog = new LoginDialog_deprecate();
 //                dialog.show(getSupportFragmentManager(),"alert");
                 Intent intent = new Intent(MainActivity.this, LoginFakeActivity.class);
                 startActivity(intent);

@@ -63,7 +63,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                         .create();
                 try {
 
-                    String result = new CallServlet().execute(ServerURL.IP_LOGIN, requestData).get();
+                    String result = new CallServlet().execute(ServerURL.IP_MEMBER, requestData).get();
                     if (result.contains("LoginStatus")) {
                         //登入失敗
                         JsonObject jsonObject = gson.fromJson(result, JsonObject.class);

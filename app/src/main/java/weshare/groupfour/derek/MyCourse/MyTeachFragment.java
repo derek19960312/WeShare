@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import weshare.groupfour.derek.CourseReservation.CourseReservationVO;
 import weshare.groupfour.derek.R;
 
 
@@ -25,12 +26,10 @@ public class MyTeachFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_teach, container, false);
         RecyclerView rvMyTeachCourse = view.findViewById(R.id.rvMyTeachCourse);
         rvMyTeachCourse.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-        List myCourseList = new ArrayList();
-        myCourseList.add(new MyCourseVO(R.drawable.teacher));
-        myCourseList.add(new MyCourseVO(R.drawable.teacher3));
-        myCourseList.add(new MyCourseVO(R.drawable.teacher2));
+        List<CourseReservationVO> myCourseList = new ArrayList();
 
-        rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseList));
+
+        rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseList,MyCourseAdapter.TEACHER));
 
         return view;
     }

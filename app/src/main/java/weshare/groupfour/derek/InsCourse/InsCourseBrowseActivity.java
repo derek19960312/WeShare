@@ -33,8 +33,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
             String result = new CallServlet().execute(ServerURL.IP_COURSETYPE,data).get();
 
-            Type listType = new TypeToken<List<InsCourseVO>>() {
-            }.getType();
+            Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
             recycleView.setAdapter(new CourseAdapter(insCourseVOList));
         } catch (ExecutionException e) {
@@ -42,23 +41,5 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-//        int j = 0;
-//        for(int i=0; i<6; i++){
-//            if(j == 3){
-//                j=0;
-//            }else{
-//                j++;
-//                insCourseVOList.add(new InsCourseVO(R.drawable.teacher+j,"English","MIMI","英文是值得投資的!!!!"));
-//            }
-//        }
-
-
     }
-
-
-
-
-
 }

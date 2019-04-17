@@ -43,7 +43,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
                 super(view);
                 ivTeacherPic = view.findViewById(R.id.ivTeacherPic);
                 tvCourseName = view.findViewById(R.id.tvCourseName);
-                tvTeacherName = view.findViewById(R.id.tvTeacherName);
+                tvTeacherName = view.findViewById(R.id.tvName);
                 tvCourseDetail = view.findViewById(R.id.tvCourseDetail);
             }
         }
