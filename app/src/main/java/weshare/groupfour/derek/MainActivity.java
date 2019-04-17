@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void addNavigationHeader() {
         //側邊攔HEADDER
-
         View view = nvMain.getHeaderView(0);
         CircleImageView civMemImage = view.findViewById(R.id.civMemImage);
         TextView tvMemId = view.findViewById(R.id.tvMemId);

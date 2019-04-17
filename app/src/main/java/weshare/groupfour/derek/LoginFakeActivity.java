@@ -2,12 +2,13 @@ package weshare.groupfour.derek;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,6 +32,16 @@ public class LoginFakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_login);
+
+        //設定寬高
+        Window win = getWindow();
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.dimAmount = 0.2f;
+        win.setAttributes(lp);
+
+
 
         etMemId = findViewById(R.id.etMemId);
         etMemPsw = findViewById(R.id.etMemPsw);
@@ -56,6 +67,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                     if (result.contains("LoginStatus")) {
                         //登入失敗
                         JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
+
                         String errorMsgs = jsonObject.get("errorMsgs").getAsString();
                         switch (errorMsgs) {
                             case "NoAccount":

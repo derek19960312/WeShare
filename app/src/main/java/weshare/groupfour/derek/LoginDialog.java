@@ -1,6 +1,5 @@
 package weshare.groupfour.derek;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +17,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
-import weshare.groupfour.derek.CourseType.CourseTypeVO;
-import weshare.groupfour.derek.util.Tools;
 
 
 public class LoginDialog extends DialogFragment {
@@ -95,12 +85,12 @@ public class LoginDialog extends DialogFragment {
                                 tilMemPsw.setError("請輸入密碼");
                                 return;
                             case "LoginFalse":
-                                Toast.makeText(getActivity(), "帳號密碼錯誤", Toast.LENGTH_LONG);
+                                Toast.makeText(getActivity(), "帳號密碼錯誤", Toast.LENGTH_LONG).show();
                                 etMemId.setText("");
                                 etMemPsw.setText("");
                                 return;
                             case "ConnectionProblem":
-                                Toast.makeText(getActivity(), "連線異常", Toast.LENGTH_LONG);
+                                Toast.makeText(getActivity(), "連線異常", Toast.LENGTH_LONG).show();
                                 return;
                         }
                     } else {
@@ -125,7 +115,7 @@ public class LoginDialog extends DialogFragment {
                                 .putString("memPsw",memberVO.getMemPsw())
                                 .putString("memImage",memBase64)
                                 .commit();
-
+                        Toast.makeText(getActivity(), "登入成功", Toast.LENGTH_LONG).show();
                         alertDialog.dismiss();
                         etMemId.setText("");
                         etMemPsw.setText("");
