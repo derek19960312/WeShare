@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
 
     </style>
 
@@ -15,6 +16,10 @@
         <item name="windowNoTitle">true</item>
 
 
+    </style>
+
+    <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
+        <item name="android:src">@drawable/baseline_face_black_48dp</item>
     </style>
 
     <style name="button_style" parent="Theme.AppCompat">

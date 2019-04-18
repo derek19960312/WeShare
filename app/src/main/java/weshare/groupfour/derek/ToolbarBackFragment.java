@@ -24,7 +24,13 @@ public class ToolbarBackFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_toolbar_back, container, false);
         toolbarBack = view.findViewById(R.id.toolbarBack);
-        init();
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarBack);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //資料從呼叫該toolbar的地方傳入
+        actionBar.setTitle(getActivity().getIntent().getStringExtra("title"));
+        //init();
         setSearch();
         setMember();
 
@@ -33,8 +39,6 @@ public class ToolbarBackFragment extends Fragment {
     private void  init(){
         //導覽列上的功能才可以使用
         setHasOptionsMenu(true);
-
-
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarBack);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

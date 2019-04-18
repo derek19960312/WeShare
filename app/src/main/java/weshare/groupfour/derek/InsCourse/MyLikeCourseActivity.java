@@ -26,16 +26,42 @@ import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.R;
 
 public class MyLikeCourseActivity extends AppCompatActivity {
-
+    RecyclerView rvMyLikeCourse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mylike_course);
 
-        RecyclerView rvMyLikeCourse = findViewById(R.id.rvMyLikeCourse);
+        rvMyLikeCourse = findViewById(R.id.rvMyLikeCourse);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         rvMyLikeCourse.setLayoutManager(staggeredGridLayoutManager);
 
+        SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
+        String memId = spf.getString("memId",null);
+        if(memId != null){
+            List<InsCourseVO> insCourseVOList = new CourseLike().getMyLikeCourse(memId);
+            if(insCourseVOList.size() !=0 ){
+                rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList));
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("查無收藏清單")
+                        .setNegativeButton("確定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        }).create().show();
+            }
+        }else{
+            Toast.makeText(MyLikeCourseActivity.this,"請先登入",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MyLikeCourseActivity.this, LoginFakeActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
         String memId = spf.getString("memId",null);
         if(memId != null){
@@ -52,10 +78,6 @@ public class MyLikeCourseActivity extends AppCompatActivity {
                             }
                         }).create().show();
             }
-        }else{
-            Toast.makeText(MyLikeCourseActivity.this,"請先登入",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MyLikeCourseActivity.this, LoginFakeActivity.class);
-            startActivity(intent);
         }
     }
 }
