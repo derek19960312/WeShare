@@ -18,15 +18,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.LoginFakeActivity;
-import weshare.groupfour.derek.util.Join;
-import weshare.groupfour.derek.util.Tools;
-import weshare.groupfour.derek.CallServer.CallServlet;
-import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.MemberVO;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Join;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -62,8 +58,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        SharedPreferences spf = holder.context.getSharedPreferences("myAccount",Context.MODE_PRIVATE);
-        final String memId = spf.getString("memId",null);
+        final SharedPreferences spf = holder.context.getSharedPreferences("myAccount",Context.MODE_PRIVATE);
+
         final InsCourseVO insCourseVO = insCourseVOList.get(position);
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -79,8 +75,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         memberVO.setMemImage(memImage);
         bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
 
-
-
         bundle.putSerializable("insCourseVO", insCourseVO);
         bundle.putSerializable("memberVO", memberVO);
 
@@ -90,6 +84,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String memId = spf.getString("memId",null);
                 if(memId != null){
                     switch(holder.like){
                         case 0:
@@ -127,7 +122,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 view.getContext().startActivity(intent);
             }
         });
-
+        final String memId = spf.getString("memId",null);
         //已經加入收藏的課程
         if(memId != null){
             List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId);

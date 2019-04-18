@@ -22,7 +22,7 @@ public class MyCourseActivity extends AppCompatActivity {
         ViewPager vpMyInsCourse = findViewById(R.id.vpMyInsCourse);
         List<PageVO> pageVOList = new ArrayList<>();
         pageVOList.add(new PageVO(new MyCourseFragment(),"我預約的"));
-        pageVOList.add(new PageVO(new MyTeachFragment(),"我教的"));
+        //pageVOList.add(new PageVO(new MyTeachFragment(),"我教的"));
         vpMyInsCourse.setAdapter(new MypagerAdapter(getSupportFragmentManager(),pageVOList));
 
         TabLayout tbMyInsCourse = findViewById(R.id.tbMyInsCourse);

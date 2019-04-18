@@ -4,7 +4,6 @@ package weshare.groupfour.derek;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.drm.DrmStore;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -182,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addNavigationHeader();
+    }
 
     public void onLogin(View v) {
 
@@ -200,30 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("OnResume", "onResume");
-        addNavigationHeader();
-    }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e("onRestart", "onRestart");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("onPause", "onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e("onStop", "onStop");
-    }
 }
 
 

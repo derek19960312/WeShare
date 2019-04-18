@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,7 +30,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         private CircleImageView civPic;
         private TextView tvName;
         private TextView tvCourseName;
-        private TextView tvCourseTime;
+        private TextView tvCourseMFD;
+        private TextView tvCourseEXP;
         private TextView tvCoursePlace;
         private TextView tvQrcode;
 
@@ -38,7 +40,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             civPic = view.findViewById(R.id.civPic);
             tvName = view.findViewById(R.id.tvName);
             tvCourseName = view.findViewById(R.id.tvCourseName);
-            tvCourseTime = view.findViewById(R.id.tvCourseTime);
+            tvCourseMFD = view.findViewById(R.id.tvCourseMFD);
+            tvCourseEXP = view.findViewById(R.id.tvCourseEXP);
             tvCoursePlace = view.findViewById(R.id.tvCoursePlace);
             tvQrcode = view.findViewById(R.id.tvQrcode);
         }
@@ -54,28 +57,42 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, int position) {
         CourseReservationVO myCourseRvVO = (CourseReservationVO) myCourseRvList.get(position);
 
+
+        holder.tvCourseName.setText(myCourseRvVO.getInscId());
+        holder.tvCoursePlace.setText(myCourseRvVO.getCrvLoc());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd a h點");
+        holder.tvCourseMFD.setText(sdf.format(myCourseRvVO.getCrvMFD()));
+        holder.tvCourseEXP.setText(sdf.format(myCourseRvVO.getCrvEXP()));
+
+
+
+        Join join = new Join();
         switch (fromWhere){
             case TEACHER:
 
-                break;
-            case MEMBER:
-
-                Join join = new Join();
-                //加入老師名稱
-                MemberVO memVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
-                myCourseRvVO.setTeacherId(memVO.getMemId());
-                //加入老師圖片
+                //加入學生名稱
+                MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId());
+                myCourseRvVO.setTeacherId("學生 "+memVO.getMemName());
+                //加入學生圖片
                 byte[] memImage = join.getMemberPic(memVO.getMemId());
                 memVO.setMemImage(memImage);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
 
-
                 holder.civPic.setImageBitmap(bitmap);
-                holder.tvCourseName.setText(myCourseRvVO.getInscId());
                 holder.tvName.setText(myCourseRvVO.getTeacherId());
-                holder.tvCoursePlace.setText(myCourseRvVO.getCrvLoc());
-                holder.tvCourseTime.setText(myCourseRvVO.getCrvMFD().toString()+" - "+myCourseRvVO.getCrvEXP().toString());
+                break;
+            case MEMBER:
 
+                //加入老師名稱
+                MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
+                myCourseRvVO.setTeacherId("老師  "+memtVO.getMemName());
+                //加入老師圖片
+                byte[] memtImage = join.getMemberPic(memtVO.getMemId());
+                //memVO.setMemImage(memtImage);
+                Bitmap bitmapt = BitmapFactory.decodeByteArray(memtImage, 0, memtImage.length);
+
+                holder.civPic.setImageBitmap(bitmapt);
+                holder.tvName.setText(myCourseRvVO.getTeacherId());
 
                 //可以展開Qrcode
                 holder.itemView.setOnClickListener(new View.OnClickListener() {

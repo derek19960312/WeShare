@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
+import weshare.groupfour.derek.Member.TeacherVO;
 
 public class LoginFakeActivity extends AppCompatActivity {
 
@@ -108,18 +109,13 @@ public class LoginFakeActivity extends AppCompatActivity {
                                 .putString("memPsw",memberVO.getMemPsw())
                                 .putString("memImage",memBase64)
                                 .commit();
-
+                        isAteacher(memId);
 
                         finish();
-
-
                     }
-
                 } catch (Exception e) {
                     Log.e("e", e.toString());
                 }
-
-
             }
         });
         Button btnCancel = findViewById(R.id.btnCancel);
@@ -132,5 +128,27 @@ public class LoginFakeActivity extends AppCompatActivity {
                 etMemPsw.setText("");
             }
         });
+
     }
+
+    public boolean isAteacher(String memId){
+        String action = "action=find_by_memId";
+        String requestData = action+"&memId="+memId;
+        try {
+            String result = new CallServlet().execute(ServerURL.IP_TEACHER,requestData).get();
+            TeacherVO teacherVO =  new Gson().fromJson(result,TeacherVO.class);
+            if (teacherVO != null){
+                SharedPreferences spf = getSharedPreferences("myAccount",MODE_PRIVATE);
+                spf.edit().putString("teacherId",teacherVO.getTeacherId()).commit();
+                return true;
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

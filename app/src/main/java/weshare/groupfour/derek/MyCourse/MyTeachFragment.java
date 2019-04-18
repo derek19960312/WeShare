@@ -1,6 +1,9 @@
 package weshare.groupfour.derek.MyCourse;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import weshare.groupfour.derek.CallServer.CallServlet;
+import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.CourseReservation.CourseReservationVO;
+import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.R;
 
 
@@ -25,13 +36,37 @@ public class MyTeachFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_my_teach, container, false);
         RecyclerView rvMyTeachCourse = view.findViewById(R.id.rvMyTeachCourse);
-        rvMyTeachCourse.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-        List<CourseReservationVO> myCourseList = new ArrayList();
+        rvMyTeachCourse.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
 
+        SharedPreferences spf = getActivity().getSharedPreferences("myAccount", Context.MODE_PRIVATE);
+        String teacherId = spf.getString("teacherId", null);
+        String memId = spf.getString("memId", null);
+        if (memId != null) {
+            String resquestData = "action=find_my_reservation&param=" + teacherId;
+            try {
+                String result = new CallServlet().execute(ServerURL.IP_COURSERESERVATION, resquestData).get();
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                        .create();
+                Type listType = new TypeToken<List<CourseReservationVO>>() {
+                }.getType();
+                List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
+                if(myCourseRvList.size() != 0){
+                    rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.TEACHER));
+                }else{
+                    view.findViewById(R.id.tvNoData).setVisibility(View.VISIBLE);
+                }
 
-        rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseList,MyCourseAdapter.TEACHER));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Intent intent = new Intent(getActivity(), LoginFakeActivity.class);
+            getActivity().startActivity(intent);
+        }
+            return view;
 
-        return view;
+        }
     }
-
-}

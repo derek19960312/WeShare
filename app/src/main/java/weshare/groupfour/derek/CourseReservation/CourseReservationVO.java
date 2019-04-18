@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 
 public class CourseReservationVO {
     private String crvId;
-    private Date crvDate;
     private String teacherId;
     private String memId;
     private String inscId;
@@ -141,13 +140,6 @@ public class CourseReservationVO {
         this.crvRate = crvRate;
     }
 
-    public Date getCrvDate() {
-        return crvDate;
-    }
-
-    public void setCrvDate(Date crvDate) {
-        this.crvDate = crvDate;
-    }
 
     public CourseReservationVO() {
 

@@ -15,7 +15,7 @@ import java.net.URL;
 
 public class CallServlet extends AsyncTask<String, Void, String> {
 //    private ProgressDialog progressDialog;
-
+//
 //    @Override
 //    protected void onPreExecute() {
 //        super.onPreExecute();
@@ -28,34 +28,32 @@ private final static String INTERNER_ERROR = "0";
     protected String doInBackground(String... strings) {
         StringBuilder sb = new StringBuilder();
         String strurl = strings[0];
-//        if (networkConnected()){
-//            return INTERNER_ERROR;
-//        }
-        HttpURLConnection con = null;
-        try {
-            URL url = new URL(strurl);
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            String data;
-            if(strings[1]!=null){
-                data = strings[1];
-                OutputStream out = con.getOutputStream();
-                out.write(data.getBytes());
-                out.flush();
+
+            HttpURLConnection con = null;
+            try {
+                URL url = new URL(strurl);
+                con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                String data;
+                if (strings[1] != null) {
+                    data = strings[1];
+                    OutputStream out = con.getOutputStream();
+                    out.write(data.getBytes());
+                    out.flush();
+                }
+                if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String str;
+                    while ((str = br.readLine()) != null)
+                        sb.append(str);
+                    Log.e("return from servlet", sb.toString());
+                }
+            } catch (Exception e) {
+                Log.e("connection erro", e.toString());
+            } finally {
+                con.disconnect();
             }
-            if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String str;
-                while((str = br.readLine()) != null)
-                    sb.append(str);
-                Log.e("return from servlet",sb.toString());
-            }
-        } catch (Exception e) {
-            Log.e("connection erro",e.toString());
-        } finally {
-            con.disconnect();
-        }
-        return  sb.toString();
+            return sb.toString();
     }
     private boolean networkConnected() {
         ConnectivityManager conManager = (ConnectivityManager) new AppCompatActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
