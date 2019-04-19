@@ -19,7 +19,7 @@ public class Join {
 
     public MemberVO getMemberbyteacherId(String teacherId){
         String action = "action=get_one_by_teacherId";
-        String requestData = action+"&teacherId="+teacherId;
+        String requestData = action+"&teacherId="+teacherId+;
 
         String result = null;
         try {
@@ -48,7 +48,7 @@ public class Join {
 
     public byte[] getMemberPic(String memId){
         String action = "action=get_member_pic";
-        String requestData = action+"&memId="+memId;
+        String requestData = action+"&memId="+memId+"&imageSize="+SysRes.getContext().getResources().getDisplayMetrics().widthPixels/3;
         String result;
         byte[] b = null;
         try {

@@ -19,7 +19,7 @@
     </style>
 
     <style name="OverflowButtonStyle" parent="@android:style/Widget.ActionButton.Overflow">
-        <item name="android:src">@drawable/baseline_face_black_48dp</item>
+        <item name="android:src">@drawable/outline_perm_identity_black_36dp</item>
     </style>
 
     <style name="button_style" parent="Theme.AppCompat">

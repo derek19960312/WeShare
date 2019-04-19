@@ -54,19 +54,19 @@ public class CourseMainFragment extends Fragment {
 //        //设置图片资源:url或本地资源
 //        images = new ArrayList<>();
 //        images.add("https://hahow-production.imgix.net/5c4147b8ae76e00020978734?w=300&auto=format&s=e331df40e5185b15f536e5063a4a3cf8");
-//        //images.add("https://hahow-production.imgix.net/5cb562b3903de500207f75e3?w=300&auto=format&s=6f75af155401ae5c6b163f805d233f04");
-//        //images.add("https://hahow-production.imgix.net/5c8e69c88d1cc80020953710?w=300&auto=format&s=751c391c505726f819943272548b154f");
-//        //images.add("https://hahow-production.imgix.net/5c7f8e02a52fc8002453c271?w=300&auto=format&s=b28b2fd6944b3323138e384a7fb9f709");
-//        //images.add("https://hahow-production.imgix.net/5c66341091da6d00207669fb?w=300&auto=format&s=7707bbbb31908b52f81f822ed448cd43");
-//        //images.add("https://hahow-production.imgix.net/5c49489a28c84d00201c809f?w=300&auto=format&s=977389aa41aa49892b5dc08d061375ef");
+//        images.add("https://hahow-production.imgix.net/5cb562b3903de500207f75e3?w=300&auto=format&s=6f75af155401ae5c6b163f805d233f04");
+//        images.add("https://hahow-production.imgix.net/5c8e69c88d1cc80020953710?w=300&auto=format&s=751c391c505726f819943272548b154f");
+//        images.add("https://hahow-production.imgix.net/5c7f8e02a52fc8002453c271?w=300&auto=format&s=b28b2fd6944b3323138e384a7fb9f709");
+//        images.add("https://hahow-production.imgix.net/5c66341091da6d00207669fb?w=300&auto=format&s=7707bbbb31908b52f81f822ed448cd43");
+//        images.add("https://hahow-production.imgix.net/5c49489a28c84d00201c809f?w=300&auto=format&s=977389aa41aa49892b5dc08d061375ef");
 //        //设置图片标题:自动对应
 //        imageTitle = new ArrayList<>();
 //        imageTitle.add("提升工程師的科技力！AWS 雲端網站建置");
-//        //imageTitle.add("鮪魚的獨門閱讀新法");
-//        //imageTitle.add("用 Python 理財：打造自己的 AI 股票理專");
-//        //imageTitle.add("TALK SMART！打造更有深度的英語口說");
-//        //imageTitle.add("火頭工做麵包：用科學方法學做健康麵包");
-//        //imageTitle.add("Kotlin Android 高效開發：全新語言雲端世代");
+//        imageTitle.add("鮪魚的獨門閱讀新法");
+//        imageTitle.add("用 Python 理財：打造自己的 AI 股票理專");
+//        imageTitle.add("TALK SMART！打造更有深度的英語口說");
+//        imageTitle.add("火頭工做麵包：用科學方法學做健康麵包");
+//        imageTitle.add("Kotlin Android 高效開發：全新語言雲端世代");
 //        mBanner = view.findViewById(R.id.banner);
 //        //设置样式,默认为:Banner.NOT_INDICATOR(不显示指示器和标题)
 //        //可选样式如下:

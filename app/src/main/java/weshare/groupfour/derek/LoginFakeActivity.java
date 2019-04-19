@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.Member.TeacherVO;
+import weshare.groupfour.derek.util.SysRes;
 
 public class LoginFakeActivity extends AppCompatActivity {
 
@@ -88,14 +90,15 @@ public class LoginFakeActivity extends AppCompatActivity {
                         }
                     } else {
                         //登入成功
-                        Toast.makeText(LoginFakeActivity.this, "登入成功", Toast.LENGTH_LONG).show();
+
                         MemberVO memberVO = gson.fromJson(result, MemberVO.class);
-                        //byte[] bmemImage = null;
+                        byte[] bmemImage = null;
                         String memBase64 = null;
+                        int imageSize = getResources().getDisplayMetrics().widthPixels/3;
                         try {
-                            memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memId).get();
+                            memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memId+"&imageSize="+imageSize).get();
                             if (memBase64 != null) {
-                                //  bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
+                                bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
                             }
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -108,9 +111,9 @@ public class LoginFakeActivity extends AppCompatActivity {
                                 .putString("memId",memberVO.getMemId())
                                 .putString("memPsw",memberVO.getMemPsw())
                                 .putString("memImage",memBase64)
-                                .commit();
+                                .apply();
                         isAteacher(memId);
-
+                        Toast.makeText(LoginFakeActivity.this, "登入成功", Toast.LENGTH_LONG).show();
                         finish();
                     }
                 } catch (Exception e) {
@@ -139,7 +142,7 @@ public class LoginFakeActivity extends AppCompatActivity {
             TeacherVO teacherVO =  new Gson().fromJson(result,TeacherVO.class);
             if (teacherVO != null){
                 SharedPreferences spf = getSharedPreferences("myAccount",MODE_PRIVATE);
-                spf.edit().putString("teacherId",teacherVO.getTeacherId()).commit();
+                spf.edit().putString("teacherId",teacherVO.getTeacherId()).apply();
                 return true;
             }
         } catch (ExecutionException e) {
