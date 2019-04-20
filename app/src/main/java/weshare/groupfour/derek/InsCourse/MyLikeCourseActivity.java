@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Tools;
 
 public class MyLikeCourseActivity extends AppCompatActivity {
     RecyclerView rvMyLikeCourse;
@@ -36,32 +38,14 @@ public class MyLikeCourseActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         rvMyLikeCourse.setLayoutManager(staggeredGridLayoutManager);
 
-        SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
-        String memId = spf.getString("memId",null);
-        if(memId != null){
-            List<InsCourseVO> insCourseVOList = new CourseLike().getMyLikeCourse(memId);
-            if(insCourseVOList.size() !=0 ){
-                rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList));
-            }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("查無收藏清單")
-                        .setNegativeButton("確定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        }).create().show();
-            }
-        }else{
-            Toast.makeText(MyLikeCourseActivity.this,"請先登入",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MyLikeCourseActivity.this, LoginFakeActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(MyLikeCourseActivity.this, LoginFakeActivity.class);
+        startActivityForResult(intent,1);
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
         String memId = spf.getString("memId",null);
         if(memId != null){
@@ -80,4 +64,7 @@ public class MyLikeCourseActivity extends AppCompatActivity {
             }
         }
     }
+
 }
+
+

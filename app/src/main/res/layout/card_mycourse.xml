@@ -25,7 +25,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
                 android:layout_weight="2"
-                android:src="@drawable/teacher2" />
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

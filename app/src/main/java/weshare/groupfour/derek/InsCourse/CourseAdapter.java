@@ -23,6 +23,7 @@ import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.MemberVO;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Join;
+import weshare.groupfour.derek.util.Tools;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -58,7 +59,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final SharedPreferences spf = holder.context.getSharedPreferences("myAccount",Context.MODE_PRIVATE);
+        final SharedPreferences spf = new Tools().getSharePreAccount();
 
         final InsCourseVO insCourseVO = insCourseVOList.get(position);
         Gson gson = new GsonBuilder()
@@ -110,7 +111,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.ivConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(new Fragment().getActivity(),"分享",Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(),"分享",Toast.LENGTH_SHORT);
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         pageVOList.add(new PageVO(new GoodsMainFragment(), "教材商城"));
         vpMain.setAdapter(new MypagerAdapter(getSupportFragmentManager(), pageVOList));
 
-
         //側邊欄開關
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, dlMain, toolbar, R.string.drawer_open, R.string.drawer_close);
@@ -75,13 +74,28 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-
-                return true;
+                Intent intent = new Intent();
+                intent.putExtra("title",menuItem.getTitle());
+                switch (menuItem.getItemId()) {
+                    case R.id.MyWallet:
+                        intent.setClass(MainActivity.this, MyWalletActivity.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.Friend:
+                        //intent.setClass(MainActivity.this, CourseCategoryActivity.class);
+                        //startActivity(intent);
+                        return true;
+                    case R.id.ChatRoom:
+                        //intent.setClass(MainActivity.this, MyCourseActivity.class);
+                        //startActivity(intent);
+                        return true;
+                }
+                return false;
             }
         });
 
 
-        //側邊藍
+        //側邊欄
         nvMain.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -143,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-
         });
 
 
@@ -172,13 +185,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
     }
 
     Button btnLogin;
@@ -202,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             btnLogin.setText("登出");
         } else {
             tvMemId.setText("尚未登入");
-            civMemImage.setImageResource(R.drawable.teacher);
+            civMemImage.setImageResource(R.mipmap.ic_launcher_round);
             btnLogin.setText("登入");
         }
 
@@ -216,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLogin(View v) {
-
         switch ((String) btnLogin.getText()) {
             case "登入":
 //                LoginDialog_deprecate dialog = new LoginDialog_deprecate();
@@ -226,8 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 dlMain.closeDrawer(GravityCompat.START);
             case "登出":
                 spf.edit().clear().commit();
-                dlMain.closeDrawer(GravityCompat.START);
                 addNavigationHeader();
+                dlMain.closeDrawer(GravityCompat.START);
         }
 
     }

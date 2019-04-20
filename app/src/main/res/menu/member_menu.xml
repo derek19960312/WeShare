@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/member_menu"
-        android:icon="@drawable/baseline_face_black_48dp"
+
         android:title="會員"
         app:actionProviderClass="android.support.v7.app.MediaRouteActionProvider"
         app:showAsAction="always">

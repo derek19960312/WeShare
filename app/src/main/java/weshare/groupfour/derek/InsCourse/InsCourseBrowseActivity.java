@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -15,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseBrowseActivity extends AppCompatActivity {
     StaggeredGridLayoutManager staggeredGridLayoutManager;
@@ -35,7 +37,11 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
-            recycleView.setAdapter(new CourseAdapter(insCourseVOList));
+            if(insCourseVOList.size() != 0) {
+                recycleView.setAdapter(new CourseAdapter(insCourseVOList));
+            }else {
+                Tools.Toast(this,"查無資料");
+            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

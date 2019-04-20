@@ -19,7 +19,7 @@ public class Join {
 
     public MemberVO getMemberbyteacherId(String teacherId){
         String action = "action=get_one_by_teacherId";
-        String requestData = action+"&teacherId="+teacherId+;
+        String requestData = action+"&teacherId="+teacherId;
 
         String result = null;
         try {
@@ -47,22 +47,27 @@ public class Join {
     }
 
     public byte[] getMemberPic(String memId){
+        byte[] bPic = null;
+        String base64 = getMemberPicB64(memId);
+        if(base64 != null){
+            bPic = Base64.decode(base64,Base64.DEFAULT);
+        }
+        return bPic;
+    }
+
+    public String getMemberPicB64(String memId){
         String action = "action=get_member_pic";
-        String requestData = action+"&memId="+memId+"&imageSize="+SysRes.getContext().getResources().getDisplayMetrics().widthPixels/3;
-        String result;
-        byte[] b = null;
+        int imageSize = ContextHolder.getContext().getResources().getDisplayMetrics().widthPixels/3;
+        String requestData = action+"&memId="+memId+"&imageSize="+imageSize;
+        String base64 = null;
         try {
-            result = new CallServlet().execute(ServerURL.IP_GET_PIC,requestData).get();
-            if(result != null){
-                b = Base64.decode(result,Base64.DEFAULT);
-            }
+            base64 = new CallServlet().execute(ServerURL.IP_GET_PIC,requestData).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return b;
+        return base64;
     }
-
 
 }

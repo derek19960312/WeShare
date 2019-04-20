@@ -15,12 +15,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.InsCourse.InsCourseBrowseActivity;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Tools;
 
 
 public class CourseCategoryActivity extends AppCompatActivity {
@@ -37,14 +40,16 @@ public class CourseCategoryActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
         CallServlet callServlet = new CallServlet();
-        Type listType = new TypeToken<List<CourseTypeVO>>() {
-        }.getType();
-
+        Type listType = new TypeToken<List<CourseTypeVO>>() {}.getType();
+        Map<String,String> requestMap = new HashMap<>();
+        requestMap.put("action","get_all_type");
+        String requestData= new Tools().RequestDataBuilder(requestMap);
         try{
-            List<CourseTypeVO> courseTypeList = gson.fromJson(callServlet.execute(ServerURL.IP_COURSETYPE,"action=get_all_type").get(),listType);
+            String result = new CallServlet().execute(ServerURL.IP_COURSETYPE,requestData).get();
+            List<CourseTypeVO> courseTypeList = gson.fromJson(result,listType);
             if(courseTypeList != null){
                 rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
-            }
+            }//查無?
         }catch (Exception e) {
             Log.e("連線錯誤",e.toString());
         }
@@ -74,8 +79,11 @@ public class CourseCategoryActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, int position) {
             final CourseTypeVO courseTypeVO = CourseTypeVOs.get(position);
+            Map<String,String> requestMap = new HashMap<>();
+            requestMap.put("action","find_by_coursetype");
+            requestMap.put("courseTypeId",courseTypeVO.getCourseTypeId().toString());
+            final String requestData = new Tools().RequestDataBuilder(requestMap);
 
-            final String data = "courseTypeId="+courseTypeVO.getCourseTypeId()+"&action=find_by_coursetype";
 
             viewHolder.btnCategory.setText(courseTypeVO.getCourseTypeName());
 
@@ -83,7 +91,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(CourseCategoryActivity.this, InsCourseBrowseActivity.class);
-                    intent.putExtra("data",data);
+                    intent.putExtra("data",requestData);
                     startActivity(intent);
                 }
             });
