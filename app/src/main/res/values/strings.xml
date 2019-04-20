@@ -12,6 +12,9 @@
     <string name="myLikeInsCourse">課程收藏</string>
     <string name="InsCourseBrowser">課程瀏覽</string>
     <string name="CourseCategort">課程分類</string>
+    <string name="CourseDetail">課程詳情</string>
+    <string name="Personal">個人課程</string>
+    <string name="Group">團體課程</string>
     <string name="Reservation">預約課程</string>
     <string name="directory_buy">直接購買</string>
     <string name="date">日期</string>
@@ -41,4 +44,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="title_activity_ins_course_detail">InsCourseDetailActivity</string>
 </resources>

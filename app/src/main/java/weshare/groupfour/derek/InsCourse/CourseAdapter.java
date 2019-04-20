@@ -71,7 +71,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         //取回老師名稱+會員資料
         memberVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId());
-                    //取回圖片
+        //取回圖片
         byte[] memImage = new Join().getMemberPic(memberVO.getMemId());
         memberVO.setMemImage(memImage);
         bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
@@ -120,6 +120,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 Intent intent = new Intent();
                 intent.setClass(view.getContext(), InsCourseDetailActivity.class);
                 intent.putExtras(bundle);
+                intent.putExtra("title",R.string.CourseDetail);
                 view.getContext().startActivity(intent);
             }
         });
