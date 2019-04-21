@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsBrowseActivity extends AppCompatActivity {
@@ -123,7 +124,8 @@ public class GoodsBrowseActivity extends AppCompatActivity {
                 holder.ivCart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(GoodsBrowseActivity.this, "已加入購物車", Toast.LENGTH_LONG).show();
+                        Toast.makeText(GoodsBrowseActivity.this, goodsVO.getGoodName()+"已加入購物車", Toast.LENGTH_LONG).show();
+                        Holder.getCart().add(goodsVO.getGoodId());
                     }
                 });
                 holder.ivHeart.setOnClickListener(new View.OnClickListener() {

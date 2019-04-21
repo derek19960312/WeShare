@@ -1,7 +1,6 @@
 package weshare.groupfour.derek;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,16 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
-
-import java.util.ArrayList;
 
 
 public class CourseMainFragment extends Fragment {
@@ -35,7 +24,7 @@ public class CourseMainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_main, container, false);
 
 
-        FloatingActionButton fabCalendar = view.findViewById(R.id.fabCalendar);
+        FloatingActionButton fabCalendar = view.findViewById(R.id.fabCalender);
         fabCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

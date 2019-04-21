@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.Goods;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.CallServer.CallServlet;
 import weshare.groupfour.derek.CallServer.ServerURL;
 import weshare.groupfour.derek.Goods.GoodsVO;
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 

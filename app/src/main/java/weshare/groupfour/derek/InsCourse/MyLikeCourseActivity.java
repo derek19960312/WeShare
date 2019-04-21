@@ -44,13 +44,13 @@ public class MyLikeCourseActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
         String memId = spf.getString("memId",null);
         if(memId != null){
             List<InsCourseVO> insCourseVOList = new CourseLike().getMyLikeCourse(memId);
-            if(insCourseVOList != null){
+            if(insCourseVOList.size() != 0 ){
                 rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList));
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
