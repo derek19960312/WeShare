@@ -13,10 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".GoodsCartActivity"
+            android:theme="@style/AppTheme.Dialog"></activity>
         <activity
             android:name=".InsCourse.InsCourseDetailActivity"
             android:label="@string/title_activity_ins_course_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginFakeActivity"
             android:theme="@style/AppTheme.Dialog" />
@@ -28,7 +30,6 @@
         <activity android:name=".CourseType.CourseCategoryActivity" />
         <activity android:name=".InsCourse.MyLikeCourseActivity" />
         <activity android:name=".MyCourse.MyCourseActivity" />
-        <activity android:name=".InsCourse.InsCourseDetailActivity_deprecate" />
         <activity android:name=".InsCourse.InsCourseBrowseActivity" />
         <activity android:name=".Goods.GoodsDetailActivity" />
         <activity android:name=".Goods.GoodsBrowseActivity" />

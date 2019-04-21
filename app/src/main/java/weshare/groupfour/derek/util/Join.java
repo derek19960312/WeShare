@@ -57,7 +57,7 @@ public class Join {
 
     public String getMemberPicB64(String memId){
         String action = "action=get_member_pic";
-        int imageSize = ContextHolder.getContext().getResources().getDisplayMetrics().widthPixels/3;
+        int imageSize = Holder.getContext().getResources().getDisplayMetrics().widthPixels/3;
         String requestData = action+"&memId="+memId+"&imageSize="+imageSize;
         String base64 = null;
         try {

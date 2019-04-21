@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 //                        return true;
 
                     //目前先接商品瀏覽
-                    case R.id.GoodsCart:
+                    case R.id.InsCourseBrowser :
                         intent.setClass(MainActivity.this, GoodsBrowseActivity.class);
                         startActivity(intent);
                         return true;

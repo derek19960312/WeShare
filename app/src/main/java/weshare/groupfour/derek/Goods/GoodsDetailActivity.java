@@ -17,8 +17,8 @@ public class GoodsDetailActivity extends AppCompatActivity {
         TextView tvDetail = findViewById(R.id.tvDetail),tvName = findViewById(R.id.tvName);
 
         GoodsVO goodsVO = (GoodsVO)getIntent().getExtras().getSerializable("goodsVO");
-        ivPic.setImageResource(goodsVO.getIcon());
-        tvName.setText(goodsVO.getName());
-        tvDetail.setText(goodsVO.getPrice());
+        //ivPic.setImageResource(goodsVO.getIcon());
+        tvName.setText(goodsVO.getGoodName());
+        tvDetail.setText(goodsVO.getGoodPrice());
     }
 }
