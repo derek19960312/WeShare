@@ -1,6 +1,7 @@
 package weshare.groupfour.derek;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
+import weshare.groupfour.derek.Goods.GoodsCartActivity;
 
 
 public class ToolbarBackFragment extends Fragment {
@@ -34,28 +37,41 @@ public class ToolbarBackFragment extends Fragment {
         setSearch();
         setMember();
 
+
         return view;
     }
-    private void  init(){
+
+    private void init() {
         //導覽列上的功能才可以使用
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarBack);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         //資料從呼叫該toolbar的地方傳入
-        actionBar.setTitle(getActivity().getIntent().getIntExtra("title",R.string.nothing));
+        actionBar.setTitle(getActivity().getIntent().getIntExtra("title", R.string.nothing));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-            getActivity().finish();
-        return true;
+        switch (item.getItemId()) {
+            case R.id.cart:
+                Intent intent = new Intent(getActivity(), GoodsCartActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.styleChange:
+                GoodsBrowseActivity.changeStyle();
+                return true;
+            default:
+                getActivity().finish();
+                return true;
+        }
     }
 
-    public void setSearch(){
+    public void setSearch() {
 
     }
-    public void setMember(){
+
+    public void setMember() {
 
     }
 

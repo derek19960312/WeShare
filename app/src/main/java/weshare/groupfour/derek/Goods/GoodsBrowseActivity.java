@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,7 +30,8 @@ import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsBrowseActivity extends AppCompatActivity {
-    StaggeredGridLayoutManager staggeredGridLayoutManager;
+    static StaggeredGridLayoutManager staggeredGridLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,29 +41,11 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         rvGoods.setLayoutManager(staggeredGridLayoutManager);
 
-        ImageView ivChange = findViewById(R.id.ivChange);
-        ivChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (staggeredGridLayoutManager.getSpanCount()) {
-                    case 1:
-                        staggeredGridLayoutManager.setSpanCount(2);
-                        break;
-                    case 2:
-                        staggeredGridLayoutManager.setSpanCount(1);
-                        break;
-                }
-            }
-        });
 
 
-        ImageView ivMyCart = findViewById(R.id.ivMyCart);
-        ivMyCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(GoodsBrowseActivity.this, "查看我的購物車", Toast.LENGTH_LONG).show();
-            }
-        });
+
+
+
 
 
         Gson gson = new Gson();
@@ -71,11 +55,11 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         String result = null;
         try {
             result = new CallServlet().execute(ServerURL.IP_GOODS, requestData).get();
-            Log.e("result",result);
+            Log.e("result", result);
             Type listType = new TypeToken<List<GoodsVO>>() {
             }.getType();
             List<GoodsVO> goodsVOList = gson.fromJson(result, listType);
-            if(goodsVOList != null){
+            if (goodsVOList != null) {
                 rvGoods.setAdapter(new GoodsAdapter(goodsVOList));
             }
 
@@ -85,83 +69,110 @@ public class GoodsBrowseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> {
-            private List<GoodsVO> goodsVOList;
+        private List<GoodsVO> goodsVOList;
 
-            public GoodsAdapter(List<GoodsVO> goodsVOList) {
-                this.goodsVOList = goodsVOList;
-            }
+        public GoodsAdapter(List<GoodsVO> goodsVOList) {
+            this.goodsVOList = goodsVOList;
+        }
 
-            class ViewHolder extends RecyclerView.ViewHolder {
-                private TextView tvName, tvPrice;
-                private ImageView ivIcon, ivCart, ivHeart;
-                private int heart;
+        class ViewHolder extends RecyclerView.ViewHolder {
+            private TextView tvName, tvPrice;
+            private ImageView ivIcon, ivCart, ivHeart;
+            private int heart;
 
-                public ViewHolder(View view) {
-                    super(view);
-                    tvName = view.findViewById(R.id.tvName);
-                    tvPrice = view.findViewById(R.id.tvPrice);
-                    ivIcon = view.findViewById(R.id.ivIcon);
-                    ivCart = view.findViewById(R.id.ivCart);
-                    ivHeart = view.findViewById(R.id.ivHeart);
-                    heart = 0;
-                }
-            }
-
-
-            @Override
-            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_goods, parent, false);
-                return new ViewHolder(view);
-            }
-
-            @Override
-            public void onBindViewHolder(final ViewHolder holder, int position) {
-                final GoodsVO goodsVO = goodsVOList.get(position);
-                holder.tvPrice.setText("特價 : " + goodsVO.getGoodPrice());
-                holder.tvName.setText(goodsVO.getGoodName());
-                //holder.ivIcon.setImageResource(goodsVO.);
-                holder.ivCart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(GoodsBrowseActivity.this, goodsVO.getGoodName()+"已加入購物車", Toast.LENGTH_LONG).show();
-                        Holder.getCart().add(goodsVO.getGoodId());
-                    }
-                });
-                holder.ivHeart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (holder.heart) {
-                            case 0:
-                                holder.ivHeart.setImageResource(R.drawable.hearted);
-                                Toast.makeText(GoodsBrowseActivity.this, "已加入收藏", Toast.LENGTH_SHORT).show();
-                                holder.heart = 1;
-                                break;
-                            case 1:
-                                holder.ivHeart.setImageResource(R.drawable.heart);
-                                Toast.makeText(GoodsBrowseActivity.this, "已取消收藏", Toast.LENGTH_SHORT).show();
-                                holder.heart = 0;
-                                break;
-                        }
-                    }
-                });
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Toast.makeText(GoodsBrowseActivity.this,goodsVO.getName()+"查看詳情",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(GoodsBrowseActivity.this, GoodsDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("goodsVO", goodsVO);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public int getItemCount() {
-                return goodsVOList.size();
+            public ViewHolder(View view) {
+                super(view);
+                tvName = view.findViewById(R.id.tvName);
+                tvPrice = view.findViewById(R.id.tvPrice);
+                ivIcon = view.findViewById(R.id.ivIcon);
+                ivCart = view.findViewById(R.id.ivCart);
+                ivHeart = view.findViewById(R.id.ivHeart);
+                heart = 0;
             }
         }
 
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_goods, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            final GoodsVO goodsVO = goodsVOList.get(position);
+            holder.tvPrice.setText("特價 : " + goodsVO.getGoodPrice());
+            holder.tvName.setText(goodsVO.getGoodName());
+            //holder.ivIcon.setImageResource(goodsVO.);
+            holder.ivCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(GoodsBrowseActivity.this, goodsVO.getGoodName() + "已加入購物車", Toast.LENGTH_LONG).show();
+                    Map<String, Integer> myCart = Holder.getCart();
+                    String goodsId = goodsVO.getGoodId();
+                    if (!myCart.containsKey(goodsId)) {
+                        myCart.put(goodsId, 1);
+                    } else {
+                        int goodsCount = myCart.get(goodsId);
+                        goodsCount++;
+                        myCart.put(goodsId, goodsCount);
+                    }
+                }
+            });
+            holder.ivHeart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (holder.heart) {
+                        case 0:
+                            holder.ivHeart.setImageResource(R.drawable.hearted);
+                            Toast.makeText(GoodsBrowseActivity.this, "已加入收藏", Toast.LENGTH_SHORT).show();
+                            holder.heart = 1;
+                            break;
+                        case 1:
+                            holder.ivHeart.setImageResource(R.drawable.heart);
+                            Toast.makeText(GoodsBrowseActivity.this, "已取消收藏", Toast.LENGTH_SHORT).show();
+                            holder.heart = 0;
+                            break;
+                    }
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(GoodsBrowseActivity.this,goodsVO.getName()+"查看詳情",Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(GoodsBrowseActivity.this, GoodsDetailActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable("goodsVO", goodsVO);
+//                    intent.putExtras(bundle);
+//                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return goodsVOList.size();
+        }
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 為了讓Toolbar的 Menu有作用，這邊的程式不可以拿掉
+        getMenuInflater().inflate(R.menu.cart_menu, menu);
+        getMenuInflater().inflate(R.menu.style_change_menu, menu);
+        return true;
+    }
+
+    public static void changeStyle(){
+        switch (staggeredGridLayoutManager.getSpanCount()) {
+            case 1:
+                staggeredGridLayoutManager.setSpanCount(2);
+                break;
+            case 2:
+                staggeredGridLayoutManager.setSpanCount(1);
+                break;
+        }
+    }
+
+}

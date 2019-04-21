@@ -46,7 +46,7 @@
                 <ImageView
                     android:id="@+id/ivHeart"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="top"
                     android:layout_weight="4"
                     card_view:srcCompat="@drawable/heart" />
@@ -72,10 +72,10 @@
                 <ImageView
                     android:id="@+id/ivCart"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="bottom"
                     android:layout_weight="4"
-                    card_view:srcCompat="@drawable/shopping_cart" />
+                    card_view:srcCompat="@drawable/round_shopping_cart_black_48dp" />
 
             </LinearLayout>
         </LinearLayout>
