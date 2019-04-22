@@ -1,6 +1,8 @@
 package weshare.groupfour.derek.goods;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,26 +21,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.callServer.CallServlet;
-import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Holder;
-import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsCartActivity extends AppCompatActivity {
     TextView tvTotalPrice;
-    int totalPrice = 0;
-    Map<String,Integer> myCart;
+
+    Map<GoodsVO,Integer> myCart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,25 +51,14 @@ public class GoodsCartActivity extends AppCompatActivity {
             rvCart.setLayoutManager(new LinearLayoutManager(this));
 
             myCart = Holder.getCart();
-            List<GoodsVO> goodsVOS = new ArrayList<>();
-            Gson gson = new Gson();
-            for(String goodsId : myCart.keySet()){
-                Map<String,String> request = new HashMap<>();
-                request.put("action","get_one_by_Id");
-                request.put("goodsId",goodsId);
-                String requestData = Tools.RequestDataBuilder(request);
-                try {
-                    String result = new CallServlet().execute(ServerURL.IP_GOODS,requestData).get();
-                    GoodsVO goodsVO = gson.fromJson(result,GoodsVO.class);
-                    goodsVOS.add(goodsVO);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            rvCart.setAdapter(new GoodsCartAdapter(goodsVOS));
+            rvCart.setAdapter(new GoodsCartAdapter(new ArrayList<GoodsVO>(myCart.keySet())));
 
+
+            int total = 0;
+            for(GoodsVO gvo : myCart.keySet()){
+                total += myCart.get(gvo)*gvo.getGoodPrice();
+            }
+            tvTotalPrice.setText(String.valueOf(total));
 
             //設定寬高
             Window win = getWindow();
@@ -116,7 +101,7 @@ public class GoodsCartActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // 為了讓Toolbar的 Menu有作用，這邊的程式不可以拿掉
-        getMenuInflater().inflate(R.menu.cart_close_menu, menu);
+        getMenuInflater().inflate(R.menu.close_menu, menu);
         return true;
     }
 
@@ -129,10 +114,11 @@ public class GoodsCartActivity extends AppCompatActivity {
         }
 
         private class ViewHolder extends RecyclerView.ViewHolder{
-            ImageView ivIcon;
+            ImageView ivIcon, ivHeart;
             TextView tvName, tvPrice;
             Spinner spCount;
-            int sumPrice;
+            int heart;
+            Context context;
 
             public ViewHolder(View view) {
                 super(view);
@@ -140,7 +126,9 @@ public class GoodsCartActivity extends AppCompatActivity {
                 tvName = view.findViewById(R.id.tvName);
                 tvPrice = view.findViewById(R.id.tvPrice);
                 spCount = view.findViewById(R.id.spCount);
-                sumPrice = 0;
+                ivHeart = view.findViewById(R.id.ivHeart);
+                heart = 0;
+                context = view.getContext();
             }
         }
 
@@ -156,21 +144,26 @@ public class GoodsCartActivity extends AppCompatActivity {
 
             holder.tvName.setText(goodsVO.getGoodName());
             holder.tvPrice.setText(String.valueOf(goodsVO.getGoodPrice()));
-
-            holder.sumPrice = goodsVO.getGoodPrice()*myCart.get(goodsVO.getGoodId());
-            totalPrice += holder.sumPrice;
-            tvTotalPrice.setText(String.valueOf(totalPrice));
-
-            holder.spCount.setSelection(myCart.get(goodsVO.getGoodId())-1,true);
+            int count = myCart.get(goodsVO)-1;
+            if(count > 8){
+                count = 8;
+            }
+            holder.spCount.setSelection(count,true);
 
             holder.spCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    int oldCount = myCart.get(goodsVO.getGoodId());
-                    int newCount = ++position;
-                    totalPrice += (newCount-oldCount)*goodsVO.getGoodPrice();
-                    tvTotalPrice.setText(String.valueOf(totalPrice));
-                    myCart.put(goodsVO.getGoodId(),newCount);
+                    if(position < 9 ){
+                        myCart.put(goodsVO,++position);
+                        int total = 0;
+                        for(GoodsVO gvo : myCart.keySet()){
+                            total += myCart.get(gvo)*gvo.getGoodPrice();
+                        }
+                        tvTotalPrice.setText(String.valueOf(total));
+                    }else{
+
+                    }
+
                 }
 
                 @Override
@@ -179,8 +172,31 @@ public class GoodsCartActivity extends AppCompatActivity {
                 }
             });
             //載入圖片
-            holder.ivIcon.setImageBitmap(new Join().getGoodsPicBitmap(goodsVO.getGoodId()));
+            holder.ivIcon.setImageBitmap(Tools.getBitmapByBase64(goodsVO.getGoodImg()));
 
+            //收藏
+            holder.ivHeart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences spf = Tools.getSharePreAccount();
+                    String memId = spf.getString("memId",null);
+                    switch (holder.heart) {
+                        case 0:
+                            holder.ivHeart.setImageResource(R.drawable.hearted);
+                            new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId());
+                            Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
+                            holder.heart = 1;
+                            break;
+                        case 1:
+                            holder.ivHeart.setImageResource(R.drawable.heart);
+                            new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId());
+                            Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
+                            holder.heart = 0;
+                            break;
+                    }
+
+                }
+            });
 
         }
 

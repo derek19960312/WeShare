@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsBrowseActivity extends AppCompatActivity {
@@ -47,6 +48,9 @@ public class GoodsBrowseActivity extends AppCompatActivity {
             }.getType();
             List<GoodsVO> goodsVOList = gson.fromJson(result, listType);
             if (goodsVOList != null) {
+                for(GoodsVO gvo : goodsVOList){
+                    gvo.setGoodImg(new Join().getGoodsPicB64(gvo.getGoodId()));
+                }
                 rvGoods.setAdapter(new GoodsAdapter(goodsVOList));
             }
 

@@ -36,6 +36,9 @@
         <activity android:name=".insCourse.InsCourseBrowseActivity" />
         <activity android:name=".goods.GoodsDetailActivity" />
         <activity android:name=".goods.GoodsBrowseActivity" />
+        <activity
+            android:name=".courseReservation.CourseReservationActivity"
+            android:theme="@style/AppTheme.Dialog" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

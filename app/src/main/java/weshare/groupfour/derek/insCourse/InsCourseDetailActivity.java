@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.courseReservation.CourseReservationActivity;
 import weshare.groupfour.derek.member.TeacherVO;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.R;
@@ -35,6 +36,7 @@ import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseDetailActivity extends AppCompatActivity {
     InsCourseVO MinsCourseVO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,42 +55,43 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         MemberVO memberVO = (MemberVO) intent.getExtras().getSerializable("memberVO");
 
         //撈老師資料
-        Map<String,String> requestT = new HashMap<>();
-        requestT.put("action","find_by_teacherId");
-        requestT.put("teacherId",MinsCourseVO.getTeacherId());
+        Map<String, String> requestT = new HashMap<>();
+        requestT.put("action", "find_by_teacherId");
+        requestT.put("teacherId", MinsCourseVO.getTeacherId());
         String requestDataT = Tools.RequestDataBuilder(requestT);
         String resultT = null;
         try {
-            resultT = new CallServlet().execute(ServerURL.IP_COURSE,requestDataT).get();
+            resultT = new CallServlet().execute(ServerURL.IP_COURSE, requestDataT).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        TeacherVO teacherVO = gson.fromJson(resultT,TeacherVO.class);
+        TeacherVO teacherVO = gson.fromJson(resultT, TeacherVO.class);
         TextView tvDrgee = findViewById(R.id.tvDegree);
         TextView tvAbouts = findViewById(R.id.tvAbouts);
-        if(teacherVO != null){
+        if (teacherVO != null) {
             tvDrgee.setText(teacherVO.getTeacherEdu());
             tvAbouts.setText(teacherVO.getTeacherText());
         }
 
         //去撈課程
-        Map<String,String> requestC = new HashMap<>();
-        requestC.put("action","find_by_teacher");
-        requestC.put("teacherId",MinsCourseVO.getTeacherId());
+        Map<String, String> requestC = new HashMap<>();
+        requestC.put("action", "find_by_teacher");
+        requestC.put("teacherId", MinsCourseVO.getTeacherId());
         String requestDataC = Tools.RequestDataBuilder(requestC);
         String resultC = null;
         try {
-            resultC = new CallServlet().execute(ServerURL.IP_INSCOURSE,requestDataC).get();
+            resultC = new CallServlet().execute(ServerURL.IP_INSCOURSE, requestDataC).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
-        List<InsCourseVO> insCourseVOS = gson.fromJson(resultC,listType);
-        if(insCourseVOS != null){
+        Type listType = new TypeToken<List<InsCourseVO>>() {
+        }.getType();
+        List<InsCourseVO> insCourseVOS = gson.fromJson(resultC, listType);
+        if (insCourseVOS != null) {
             rvCourse.setAdapter(new InscAdpter(insCourseVOS));
         }
 
@@ -99,7 +102,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int Visibility = detail2.getVisibility();
-                switch(Visibility){
+                switch (Visibility) {
                     case View.VISIBLE:
                         detail2.setVisibility(View.GONE);
                         break;
@@ -114,14 +117,10 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         //收藏判斷
 
 
-
         //塞資料
         Bitmap bitmap = BitmapFactory.decodeByteArray(memberVO.getMemImage(), 0, memberVO.getMemImage().length);
         ivTeacherPic.setImageBitmap(bitmap);
         tvTeacherName.setText(memberVO.getMemName());
-
-
-
 
 
     }
@@ -154,14 +153,14 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
         @Override
         public InscAdpter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_sensei_no_course,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_sensei_no_course, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final InscAdpter.ViewHolder holder, int position) {
-            InsCourseVO insCourseVO = insCourseVOS.get(position);
-            if(insCourseVO.getInscId().equals(MinsCourseVO.getInscId())){
+            final InsCourseVO insCourseVO = insCourseVOS.get(position);
+            if (insCourseVO.getInscId().equals(MinsCourseVO.getInscId())) {
                 holder.touchToShow.setVisibility(View.VISIBLE);
             }
             holder.tvCourseName.setText(insCourseVO.getCourseId());
@@ -169,7 +168,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     int Visibility = holder.touchToShow.getVisibility();
-                    switch(Visibility){
+                    switch (Visibility) {
                         case View.VISIBLE:
                             holder.touchToShow.setVisibility(View.GONE);
                             break;
@@ -180,7 +179,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
                 }
             });
-            switch(insCourseVO.getInscType()){
+            switch (insCourseVO.getInscType()) {
                 case 0:
                     holder.tvCourseType.setText(R.string.Personal);
                     break;
@@ -197,6 +196,18 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
                 }
             });
+
+            //送出預約
+            holder.btnCrv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(InsCourseDetailActivity.this, CourseReservationActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("insCourseVO",insCourseVO);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -204,6 +215,4 @@ public class InsCourseDetailActivity extends AppCompatActivity {
             return insCourseVOS.size();
         }
     }
-
-
 }

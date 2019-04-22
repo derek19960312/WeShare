@@ -1,14 +1,15 @@
 package weshare.groupfour.derek.goods;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-	public class GoodsVO implements Serializable{
+public class GoodsVO implements Serializable{
 	private String goodId;
 	private String teacherId;
 	private String goodName;
 	private Integer goodPrice;
 	private String goodInfo;
-	private byte[] goodImg;
+	private String goodImg;
 	private Integer goodStatus;
 	
 	public GoodsVO() {
@@ -45,10 +46,10 @@ import java.io.Serializable;
 	public void setGoodInfo(String goodInfo) {
 		this.goodInfo = goodInfo;
 	}
-	public byte[] getGoodImg() {
+	public String getGoodImg() {
 		return goodImg;
 	}
-	public void setGoodImg(byte[] goodImg) {
+	public void setGoodImg(String goodImg) {
 		this.goodImg = goodImg;
 	}
 	public Integer getGoodStatus() {
@@ -62,5 +63,17 @@ import java.io.Serializable;
 		return "GoodsVO [goodId=" + goodId + ", teacherId=" + teacherId + ", goodName=" + goodName + ", goodPrice="
 				+ goodPrice + ", goodInfo=" + goodInfo + ", goodImg=" + goodImg + ", goodStatus=" + goodStatus + "]";
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		GoodsVO goodsVO = (GoodsVO) o;
+		return Objects.equals(goodId, goodsVO.goodId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(goodId);
+	}
 }

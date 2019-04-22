@@ -1,7 +1,9 @@
 package weshare.groupfour.derek.goods;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,10 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Map;
 
+import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.insCourse.CourseLike;
+import weshare.groupfour.derek.insCourse.InsCourseVO;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
@@ -65,19 +70,18 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
         final GoodsVO goodsVO = goodsVOList.get(position);
         holder.tvPrice.setText("特價 : " + goodsVO.getGoodPrice());
         holder.tvName.setText(goodsVO.getGoodName());
-        holder.ivIcon.setImageBitmap(new Join().getGoodsPicBitmap(goodsVO.getGoodId()));
+        holder.ivIcon.setImageBitmap(Tools.getBitmapByBase64(goodsVO.getGoodImg()));
         holder.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(holder.context, goodsVO.getGoodName() + "已加入購物車", Toast.LENGTH_LONG).show();
-                Map<String, Integer> myCart = Holder.getCart();
-                String goodsId = goodsVO.getGoodId();
-                if (!myCart.containsKey(goodsId)) {
-                    myCart.put(goodsId, 1);
+                Map<GoodsVO, Integer> myCart = Holder.getCart();
+                if (!myCart.containsKey(goodsVO)) {
+                    myCart.put(goodsVO, 1);
                 } else {
-                    int goodsCount = myCart.get(goodsId);
+                    int goodsCount = myCart.get(goodsVO);
                     goodsCount++;
-                    myCart.put(goodsId, goodsCount);
+                    myCart.put(goodsVO, goodsCount);
                 }
             }
         });
@@ -86,22 +90,44 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
             public void onClick(View v) {
                 SharedPreferences spf = Tools.getSharePreAccount();
                 String memId = spf.getString("memId",null);
-                switch (holder.heart) {
-                    case 0:
-                        holder.ivHeart.setImageResource(R.drawable.hearted);
-                        new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId());
-                        Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
-                        holder.heart = 1;
-                        break;
-                    case 1:
-                        holder.ivHeart.setImageResource(R.drawable.heart);
-                        new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId());
-                        Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
-                        holder.heart = 0;
-                        break;
+                if(memId != null){
+                    switch (holder.heart) {
+                        case 0:
+                            holder.ivHeart.setImageResource(R.drawable.hearted);
+                            new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId());
+                            Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
+                            holder.heart = 1;
+                            break;
+                        case 1:
+                            holder.ivHeart.setImageResource(R.drawable.heart);
+                            new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId());
+                            Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
+                            holder.heart = 0;
+                            break;
+                    }
+                }else{
+                    Toast.makeText(holder.context,"請先登入",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(holder.context, LoginFakeActivity.class);
+                    holder.context.startActivity(intent);
                 }
+
             }
         });
+
+        //秀出已經加入收藏者
+        String memId = Tools.getSharePreAccount().getString("memId",null);
+        if(memId != null){
+            List<GoodsVO> GoodsVOListbylike = new GoodsLike().getMyLikeGoods(memId);
+            if(GoodsVOListbylike != null){
+                for(GoodsVO goodsVObylike : GoodsVOListbylike){
+                    if(goodsVObylike.getGoodId().equals(goodsVO.getGoodId())){
+                        holder.ivHeart.setImageResource(R.drawable.hearted);
+                        holder.heart = 1;
+                    }
+                }
+            }
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +148,11 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        return GoodsBrowseActivity.staggeredGridLayoutManager.getSpanCount();
+        if(GoodsBrowseActivity.staggeredGridLayoutManager != null){
+            return GoodsBrowseActivity.staggeredGridLayoutManager.getSpanCount();
+        }else{
+            return 1;
+        }
+
     }
 }

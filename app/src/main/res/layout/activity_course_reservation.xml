@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".courseReservation.CourseReservationFragment">
+    tools:context=".courseReservation.CourseReservationActivity">
 
-    <TextView
-        android:id="@+id/tvReservation"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tbReservation"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="8dp"
-        android:background="@color/primaryColor"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
         android:text="@string/Reservation"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
@@ -32,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReservation">
+        app:layout_constraintTop_toBottomOf="@+id/tbReservation">
 
         <EditText
             android:id="@+id/editText"
@@ -142,10 +144,10 @@
 
         <Button
             android:id="@+id/button"
-            android:theme="@style/button_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/send_reservation" />
+            android:text="@string/send_reservation"
+            android:theme="@style/button_style" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

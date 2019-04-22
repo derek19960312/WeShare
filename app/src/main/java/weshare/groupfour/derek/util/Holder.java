@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import weshare.groupfour.derek.goods.GoodsVO;
+
 public class Holder {
     private static Context applicationContext;
-    private static Map<String,Integer> cart = new HashMap<>();
+    private static Map<GoodsVO,Integer> cart = new HashMap<>();
     public static void initial(Context context){
         applicationContext = context;
     }
@@ -19,7 +21,7 @@ public class Holder {
         return applicationContext;
     }
 
-    public static Map<String,Integer> getCart(){
+    public static Map<GoodsVO,Integer> getCart(){
         return cart;
     }
 }

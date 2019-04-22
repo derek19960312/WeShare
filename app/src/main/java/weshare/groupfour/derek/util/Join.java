@@ -75,27 +75,22 @@ public class Join {
     }
 
 
-    public Bitmap getGoodsPicBitmap(String goodId){
+    public String getGoodsPicB64(String goodId){
+        String action = "action=get_goods_pic";
         int imageSize = Holder.getContext().getResources().getDisplayMetrics().widthPixels/3;
-        Map<String,String> request = new HashMap<>();
-        request.put("action","get_goods_pic");
-        request.put("goodId",goodId);
-        request.put("imageSize",String.valueOf(imageSize));
-        String requestData = Tools.RequestDataBuilder(request);
-
-        Bitmap goodsImg = null;
+        String requestData = action+"&goodId="+goodId+"&imageSize="+imageSize;
+        String base64 = null;
         try {
-            String base64 = new CallServlet().execute(ServerURL.IP_GET_PIC,requestData).get();
-            if(base64 != null){
-                byte[] b = Base64.decode(base64,Base64.DEFAULT);
-                goodsImg = BitmapFactory.decodeByteArray(b, 0, b.length);
-            }
+            base64 = new CallServlet().execute(ServerURL.IP_GET_PIC,requestData).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return goodsImg;
+        return base64;
     }
+
+
+
 
 }
