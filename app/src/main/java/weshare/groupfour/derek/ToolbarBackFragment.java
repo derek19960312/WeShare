@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
-import weshare.groupfour.derek.Goods.GoodsCartActivity;
+import weshare.groupfour.derek.goods.GoodsBrowseActivity;
+import weshare.groupfour.derek.goods.GoodsCartActivity;
 
 
 public class ToolbarBackFragment extends Fragment {

@@ -13,26 +13,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Goods.GoodsCartActivity"
-            android:theme="@style/AppTheme.Dialog"></activity>
+        <activity android:name=".myGoodsOrders.MyGoodsActivity"></activity>
+        <activity android:name=".goods.MyLikeGoodsActivity" />
         <activity
-            android:name=".InsCourse.InsCourseDetailActivity"
+            android:name=".goods.GoodsCartActivity"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name=".insCourse.InsCourseDetailActivity"
             android:label="@string/title_activity_ins_course_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginFakeActivity"
             android:theme="@style/AppTheme.Dialog" />
-        <activity android:name=".MyWalletActivity" />
+        <activity android:name=".member.MyWalletActivity" />
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
             android:theme="@style/AppTheme.Dialog" />
-        <activity android:name=".CourseType.CourseCategoryActivity" />
-        <activity android:name=".InsCourse.MyLikeCourseActivity" />
-        <activity android:name=".MyCourse.MyCourseActivity" />
-        <activity android:name=".InsCourse.InsCourseBrowseActivity" />
-        <activity android:name=".Goods.GoodsDetailActivity" />
-        <activity android:name=".Goods.GoodsBrowseActivity" />
+        <activity android:name=".courseType.CourseCategoryActivity" />
+        <activity android:name=".insCourse.MyLikeCourseActivity" />
+        <activity android:name=".myCourseOrders.MyCourseActivity" />
+        <activity android:name=".insCourse.InsCourseBrowseActivity" />
+        <activity android:name=".goods.GoodsDetailActivity" />
+        <activity android:name=".goods.GoodsBrowseActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

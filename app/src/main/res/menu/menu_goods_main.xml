@@ -7,7 +7,7 @@
             android:title="@string/GoodsLike"/>
         <item android:id="@+id/InsCourseBrowser"
             android:icon="@drawable/round_category_black_48dp"
-            android:title="@string/InsCourseBrowser"/>
+            android:title="教材瀏覽"/>
         <item android:id="@+id/GoodsOrder"
             android:icon="@drawable/round_reorder_black_48dp"
             android:title="@string/GoodsOrder"/>

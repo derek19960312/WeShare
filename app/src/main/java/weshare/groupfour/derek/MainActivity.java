@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLDebugHelper;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -21,24 +20,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import weshare.groupfour.derek.CourseType.CourseCategoryActivity;
-import weshare.groupfour.derek.Goods.GoodsBrowseActivity;
-import weshare.groupfour.derek.InsCourse.MyLikeCourseActivity;
-import weshare.groupfour.derek.MyCourse.MyCourseActivity;
+import weshare.groupfour.derek.courseType.CourseCategoryActivity;
+import weshare.groupfour.derek.goods.GoodsBrowseActivity;
+import weshare.groupfour.derek.goods.MyLikeGoodsActivity;
+import weshare.groupfour.derek.insCourse.MyLikeCourseActivity;
+import weshare.groupfour.derek.member.MyWalletActivity;
+import weshare.groupfour.derek.myCourseOrders.MyCourseActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -103,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("title",menuItem.getTitle());
                 switch (menuItem.getItemId()) {
+                    //課程側邊欄選單
                     case R.id.myLikeInsCourse:
                         intent.setClass(MainActivity.this, MyLikeCourseActivity.class);
                         startActivity(intent);
@@ -115,14 +109,12 @@ public class MainActivity extends AppCompatActivity {
                         intent.setClass(MainActivity.this, MyCourseActivity.class);
                         startActivity(intent);
                         return true;
-                    case R.id.MyWallet:
-                        intent.setClass(MainActivity.this, MyWalletActivity.class);
+
+                    //商品側邊欄選單
+                    case R.id.GoodsLike:
+                        intent.setClass(MainActivity.this, MyLikeGoodsActivity.class);
                         startActivity(intent);
                         return true;
-//                    case R.id.GoodsLike:
-//                        intent.setClass(MainActivity.this, MyLikeCourseActivity.class);
-//                        startActivity(intent);
-//                        return true;
 
                     //目前先接商品瀏覽
                     case R.id.InsCourseBrowser :
@@ -160,8 +152,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //滑動時
+
+        //ViewPager滑動時
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int i, float v, int i1) {
             }
@@ -179,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             }
-
             @Override
             public void onPageScrollStateChanged(int i) {
             }
@@ -191,46 +184,56 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences spf;
 
     public void addNavigationHeader() {
-        //側邊攔HEADDER
+        //抓取側邊攔的HEADDER
         View view = nvMain.getHeaderView(0);
+        //抓取View上的元件
         CircleImageView civMemImage = view.findViewById(R.id.civMemImage);
         TextView tvMemId = view.findViewById(R.id.tvMemId);
+        TextView tvMemName = view.findViewById(R.id.tvMemName);
         btnLogin = view.findViewById(R.id.btnLogin);
+        //從sharePreferences取出登入資料
         spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
-
         String memId = spf.getString("memId", null);
+        String memName = spf.getString("memName", null);
+
         if (memId != null) {
+            //有登入資訊
             tvMemId.setText(memId);
+            tvMemName.setText(memName);
+
+            //取出圖片並轉成Bitmap
             String sMempic = spf.getString("memImage", null);
             byte[] bmemImage = Base64.decode(sMempic, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bmemImage, 0, bmemImage.length);
             civMemImage.setImageBitmap(bitmap);
             btnLogin.setText("登出");
         } else {
-            tvMemId.setText("尚未登入");
+            //無登入資訊
+            tvMemId.setText("");
+            tvMemName.setText("尚未登入");
             civMemImage.setImageResource(R.mipmap.ic_launcher_round);
             btnLogin.setText("登入");
         }
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //重新載入Headder
         addNavigationHeader();
     }
 
     public void onLogin(View v) {
         switch ((String) btnLogin.getText()) {
             case "登入":
+           //目前暫時無法解決  Fragment 生命週期問題
 //                LoginDialog_deprecate dialog = new LoginDialog_deprecate();
 //                dialog.show(getSupportFragmentManager(),"alert");
                 Intent intent = new Intent(MainActivity.this, LoginFakeActivity.class);
                 startActivity(intent);
                 dlMain.closeDrawer(GravityCompat.START);
             case "登出":
-                spf.edit().clear().commit();
+                spf.edit().clear().apply();
                 addNavigationHeader();
                 dlMain.closeDrawer(GravityCompat.START);
         }

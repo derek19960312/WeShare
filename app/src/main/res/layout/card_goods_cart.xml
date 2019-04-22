@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/ivIcon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="4"
             card_view:srcCompat="@drawable/pencil" />
@@ -63,7 +63,7 @@
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="單價" />
 
@@ -80,7 +80,7 @@
                     android:id="@+id/textView14"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="數量" />
 

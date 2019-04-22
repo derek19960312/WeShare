@@ -1,11 +1,9 @@
 package weshare.groupfour.derek;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,9 +18,10 @@ import com.google.gson.JsonObject;
 
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.CallServer.CallServlet;
-import weshare.groupfour.derek.CallServer.ServerURL;
-import weshare.groupfour.derek.Member.TeacherVO;
+import weshare.groupfour.derek.callServer.CallServlet;
+import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.member.MemberVO;
+import weshare.groupfour.derek.member.TeacherVO;
 import weshare.groupfour.derek.util.Join;
 
 import weshare.groupfour.derek.util.Tools;
@@ -105,6 +104,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                                     .putString("memId", memberVO.getMemId())
                                     .putString("memPsw", memberVO.getMemPsw())
                                     .putString("memImage", memBase64)
+                                    .putString("memName",memberVO.getMemName())
                                     .apply();
                             isAteacher(memId);
                             Toast.makeText(LoginFakeActivity.this, "登入成功", Toast.LENGTH_LONG).show();

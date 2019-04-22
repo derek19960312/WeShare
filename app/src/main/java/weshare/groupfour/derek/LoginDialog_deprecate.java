@@ -20,8 +20,9 @@ import com.google.gson.JsonObject;
 
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.CallServer.CallServlet;
-import weshare.groupfour.derek.CallServer.ServerURL;
+import weshare.groupfour.derek.callServer.CallServlet;
+import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.member.MemberVO;
 
 
 public class LoginDialog_deprecate extends DialogFragment {
