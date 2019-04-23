@@ -11,7 +11,7 @@
     <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/primaryLightColor</item>
+        <item name="colorAccent">@color/primaryDarkColor</item>
         <item name="dialogCornerRadius">5dp</item>
         <item name="windowNoTitle">true</item>
 

@@ -3,13 +3,17 @@ package weshare.groupfour.derek.courseReservation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
+import weshare.groupfour.derek.CheckDateFragment;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
 
@@ -33,6 +37,13 @@ public class CourseReservationActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        CheckDateFragment cdf = new CheckDateFragment();
+        ft.add(R.id.clReservation,cdf,"DatePickFragment");
+        ft.commit();
+
 
 
 

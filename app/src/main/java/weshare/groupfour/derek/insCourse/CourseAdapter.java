@@ -34,7 +34,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivTeacherPic,ivLike,ivConnect;
+        private ImageView ivTeacherPic, ivLike, ivConnect;
         private TextView tvCourseName, tvTeacherName;
         private int like;
         Context context;
@@ -66,43 +66,40 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
         MemberVO memberVO = null;
-        Bitmap bitmap = null;
+
         final Bundle bundle = new Bundle();
 
         //取回老師名稱+會員資料
         memberVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId());
-        //取回圖片
-        byte[] memImage = new Join().getMemberPic(memberVO.getMemId());
-        memberVO.setMemImage(memImage);
-        bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
+
 
         bundle.putSerializable("insCourseVO", insCourseVO);
         bundle.putSerializable("memberVO", memberVO);
 
-        holder.ivTeacherPic.setImageBitmap(bitmap);
+
         holder.tvTeacherName.setText(memberVO.getMemName());
         holder.tvCourseName.setText(insCourseVO.getCourseId());
         holder.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String memId = spf.getString("memId",null);
-                if(memId != null){
-                    switch(holder.like){
+                String memId = spf.getString("memId", null);
+                if (memId != null) {
+                    switch (holder.like) {
                         case 0:
                             holder.ivLike.setImageResource(R.drawable.hearted);
-                            new CourseLike().addCourseLike(memId,insCourseVO.getInscId());
-                            Toast.makeText(holder.context,"已加入收藏", Toast.LENGTH_SHORT).show();
+                            new CourseLike().addCourseLike(memId, insCourseVO.getInscId());
+                            Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
                             holder.like = 1;
                             break;
                         case 1:
                             holder.ivLike.setImageResource(R.drawable.heart);
-                            new CourseLike().deleteCourseLike(memId,insCourseVO.getInscId());
-                            Toast.makeText(holder.context,"已取消收藏",Toast.LENGTH_SHORT).show();
+                            new CourseLike().deleteCourseLike(memId, insCourseVO.getInscId());
+                            Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
                             holder.like = 0;
                             break;
                     }
-                }else{
-                    Toast.makeText(holder.context,"請先登入",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(holder.context, "請先登入", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(holder.context, LoginFakeActivity.class);
                     holder.context.startActivity(intent);
                 }
@@ -111,7 +108,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.ivConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(),"分享",Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(), "分享", Toast.LENGTH_SHORT);
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -120,24 +117,28 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 Intent intent = new Intent();
                 intent.setClass(view.getContext(), InsCourseDetailActivity.class);
                 intent.putExtras(bundle);
-                intent.putExtra("title",R.string.CourseDetail);
+                intent.putExtra("title", R.string.CourseDetail);
                 view.getContext().startActivity(intent);
             }
         });
-        final String memId = spf.getString("memId",null);
+        final String memId = spf.getString("memId", null);
         //已經加入收藏的課程
-        if(memId != null){
+        if (memId != null) {
             List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId);
-            if(insCourseVOListbylike != null){
-                for(InsCourseVO inscVObylike : insCourseVOListbylike){
-                    if(inscVObylike.getInscId().equals(insCourseVO.getInscId())){
+            if (insCourseVOListbylike != null) {
+                for (InsCourseVO inscVObylike : insCourseVOListbylike) {
+                    if (inscVObylike.getInscId().equals(insCourseVO.getInscId())) {
                         holder.ivLike.setImageResource(R.drawable.hearted);
                         holder.like = 1;
                     }
                 }
             }
         }
-
+        //取回圖片
+        byte[] memImage = new Join().getMemberPic(memberVO.getMemId());
+        memberVO.setMemImage(memImage);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
+        holder.ivTeacherPic.setImageBitmap(bitmap);
     }
 
     @Override

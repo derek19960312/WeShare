@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".myGoodsOrders.MyGoodsActivity"></activity>
+        <activity android:name=".ReservationConfirmActivity"></activity>
+        <activity android:name=".myGoodsOrders.MyGoodsActivity" />
         <activity android:name=".goods.MyLikeGoodsActivity" />
         <activity
             android:name=".goods.GoodsCartActivity"
