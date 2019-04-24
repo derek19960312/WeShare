@@ -8,13 +8,13 @@ public class ServerURL {
     //迎刃
 //  final public static String IP = "http://18.191.251.39:8081";
 
-// final public static String IP = "http://localhost:8081";
+//  final public static String IP = "http://localhost:8081";
 
     //中央宿舍
-//  final public static String IP = "http://192.168.168.123:8081";
+  final public static String IP = "http://192.168.168.123:8081";
 
     //資策會
-  final public static String IP = "http://10.120.26.19:8081";
+//  final public static String IP = "http://10.120.26.19:8081";
 
     //桃園家
 //  final public static String IP = "http://192.168.1.108:8081";

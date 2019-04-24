@@ -18,7 +18,7 @@
     <string name="Reservation">預約課程</string>
     <string name="directory_buy">直接購買</string>
     <string name="date">日期</string>
-    <string name="price">價格</string>
+    <string name="price">單價</string>
     <string name="handling">手續費</string>
     <string name="total">總金額</string>
     <string name="remarks">備註</string>
@@ -39,6 +39,8 @@
     <string name="Friend">好友管理</string>
     <string name="ChatRoom">聊天室</string>
     <string name="MyWallet">我的錢包</string>
+    <string name="Teacher">授課老師</string>
+    <string name="InscLoc">上課地點</string>
 
     <string-array name="goodsCount">
         <item>1</item>

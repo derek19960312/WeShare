@@ -36,6 +36,7 @@ import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseDetailActivity extends AppCompatActivity {
     InsCourseVO MinsCourseVO;
+    MemberVO TeaMemVO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         //上層傳來
         Intent intent = getIntent();
         MinsCourseVO = (InsCourseVO) intent.getExtras().getSerializable("insCourseVO");
-        MemberVO memberVO = (MemberVO) intent.getExtras().getSerializable("memberVO");
+        TeaMemVO = (MemberVO) intent.getExtras().getSerializable("TeaMemVO");
 
         //撈老師資料
         Map<String, String> requestT = new HashMap<>();
@@ -61,7 +62,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         String requestDataT = Tools.RequestDataBuilder(requestT);
         String resultT = null;
         try {
-            resultT = new CallServlet().execute(ServerURL.IP_COURSE, requestDataT).get();
+            resultT = new CallServlet().execute(ServerURL.IP_TEACHER, requestDataT).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -118,9 +119,9 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
 
         //塞資料
-        Bitmap bitmap = BitmapFactory.decodeByteArray(memberVO.getMemImage(), 0, memberVO.getMemImage().length);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(TeaMemVO.getMemImage(), 0, TeaMemVO.getMemImage().length);
         ivTeacherPic.setImageBitmap(bitmap);
-        tvTeacherName.setText(memberVO.getMemName());
+        tvTeacherName.setText(TeaMemVO.getMemName());
 
 
     }
@@ -204,6 +205,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent(InsCourseDetailActivity.this, CourseReservationActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("insCourseVO",insCourseVO);
+                    bundle.putSerializable("TeaMemVO",TeaMemVO);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

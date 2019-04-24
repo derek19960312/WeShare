@@ -30,6 +30,7 @@ public class Tools {
         return sb.toString();
     }
 
+
     public static void Toast(Context context,String content){
         Toast.makeText(context,content, Toast.LENGTH_SHORT).show();
     }

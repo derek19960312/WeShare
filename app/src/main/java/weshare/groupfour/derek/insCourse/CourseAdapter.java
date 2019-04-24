@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,19 +66,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
-        MemberVO memberVO = null;
+
 
         final Bundle bundle = new Bundle();
 
-        //取回老師名稱+會員資料
-        memberVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId());
+        //取回老師名稱+資料
+        MemberVO TeaMemVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId());
 
-
+        //包裝資料 帶去下層
         bundle.putSerializable("insCourseVO", insCourseVO);
-        bundle.putSerializable("memberVO", memberVO);
+        bundle.putSerializable("TeaMemVO", TeaMemVO);
 
 
-        holder.tvTeacherName.setText(memberVO.getMemName());
+        holder.tvTeacherName.setText(TeaMemVO.getMemName());
         holder.tvCourseName.setText(insCourseVO.getCourseId());
         holder.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,9 +135,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 }
             }
         }
+
         //取回圖片
-        byte[] memImage = new Join().getMemberPic(memberVO.getMemId());
-        memberVO.setMemImage(memImage);
+        byte[] memImage = new Join().getMemberPic(TeaMemVO.getMemId());
+        TeaMemVO.setMemImage(memImage);
         Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
         holder.ivTeacherPic.setImageBitmap(bitmap);
     }
