@@ -11,18 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="挑選日期時間"
+        android:text="請挑選日期時間"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/clBolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -44,8 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
-    <RadioGroup
-        android:id="@+id/rgDate"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -53,7 +50,28 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/clBolder">
+
+        <RadioGroup
+            android:id="@+id/rgDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvNoTime"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="本日老師並無空閒"
+            android:textSize="40dp"
+            android:visibility="gone" />
+
+
+    </FrameLayout>
+
 
     <Button
         android:id="@+id/btnSubmit"
@@ -68,5 +86,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

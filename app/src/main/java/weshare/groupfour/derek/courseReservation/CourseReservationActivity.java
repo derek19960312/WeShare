@@ -2,6 +2,8 @@ package weshare.groupfour.derek.courseReservation;
 
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -16,7 +18,6 @@ import weshare.groupfour.derek.insCourse.InsCourseVO;
 
 
 public class CourseReservationActivity extends AppCompatActivity {
-    static FragmentManager fm;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_reservation);
@@ -36,14 +37,15 @@ public class CourseReservationActivity extends AppCompatActivity {
         });
 
 
-        fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         CheckDateFragment cdf = new CheckDateFragment();
-        ft.add(R.id.clReservation,cdf,"DatePickFragment");
-        ft.commit();
+        Fragment rcfragment = fm.findFragmentByTag("rcfragment");
 
-
-
+        if(rcfragment == null){
+            ft.add(R.id.clReservation,cdf,"DatePickFragment");
+            ft.commit();
+        }
 
 
     }

@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity android:name=".member.MyWalletActivity" />
         <activity
-            android:name=".CalendarActivity" />
+            android:name=".calendar.CalendarActivity" />
         <activity android:name=".courseType.CourseCategoryActivity" />
         <activity android:name=".insCourse.MyLikeCourseActivity" />
         <activity android:name=".myCourseOrders.MyCourseActivity" />

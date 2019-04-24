@@ -37,7 +37,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
             if(insCourseVOList != null || insCourseVOList.size() != 0) {
-                recycleView.setAdapter(new CourseAdapter(insCourseVOList));
+                recycleView.setAdapter(new CourseAdapter(insCourseVOList,this));
             }else {
                 Tools.Toast(this,"查無資料");
             }

@@ -29,9 +29,11 @@ import weshare.groupfour.derek.util.Tools;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
     private List<InsCourseVO> insCourseVOList;
+    private Context context;
 
-    public CourseAdapter(List<InsCourseVO> insCourseVOList) {
+    public CourseAdapter(List<InsCourseVO> insCourseVOList, Context context) {
         this.insCourseVOList = insCourseVOList;
+        this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -137,7 +139,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
 
         //取回圖片
-        byte[] memImage = new Join().getMemberPic(TeaMemVO.getMemId());
+        byte[] memImage = new Join().getMemberPic(context,TeaMemVO.getMemId());
         TeaMemVO.setMemImage(memImage);
         Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
         holder.ivTeacherPic.setImageBitmap(bitmap);

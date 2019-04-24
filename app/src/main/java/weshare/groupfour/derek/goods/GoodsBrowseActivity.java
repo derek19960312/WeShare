@@ -49,7 +49,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
             List<GoodsVO> goodsVOList = gson.fromJson(result, listType);
             if (goodsVOList != null) {
                 for(GoodsVO gvo : goodsVOList){
-                    gvo.setGoodImg(new Join().getGoodsPicB64(gvo.getGoodId()));
+                    gvo.setGoodImg(new Join().getGoodsPicB64(this,gvo.getGoodId()));
                 }
                 rvGoods.setAdapter(new GoodsAdapter(goodsVOList));
             }

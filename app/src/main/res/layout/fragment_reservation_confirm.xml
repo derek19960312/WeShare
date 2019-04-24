@@ -23,12 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/insCourseVO"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvInscName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="XXX"
             android:textSize="20sp" />
 
@@ -37,12 +39,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Teacher"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvTeacherName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="XXX"
             android:textSize="20sp" />
 
@@ -51,12 +55,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/InscLoc"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvInscLoc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="XXX"
             android:textSize="20sp" />
 
@@ -65,12 +71,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/date"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvDateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="2018-09-10"
             android:textSize="20sp" />
 
@@ -79,12 +87,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/price"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="1500"
             android:textSize="20sp" />
 
@@ -93,12 +103,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/handling"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvFee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="20"
             android:textSize="20sp" />
 
@@ -107,12 +119,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/total"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvTotalPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="1520"
             android:textSize="20sp" />
 
@@ -121,7 +135,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/remarks"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/etMore"

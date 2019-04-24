@@ -25,6 +25,7 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Tools;
 
 
 public class MyTeachFragment extends Fragment {
@@ -39,7 +40,7 @@ public class MyTeachFragment extends Fragment {
         RecyclerView rvMyTeachCourse = view.findViewById(R.id.rvMyTeachCourse);
         rvMyTeachCourse.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
 
-        SharedPreferences spf = getActivity().getSharedPreferences("myAccount", Context.MODE_PRIVATE);
+        SharedPreferences spf = Tools.getSharePreAccount();
         String teacherId = spf.getString("teacherId", null);
         if (teacherId != null) {
         String resquestData = "action=find_my_reservation&param=" + teacherId;
@@ -51,9 +52,9 @@ public class MyTeachFragment extends Fragment {
             Type listType = new TypeToken<List<CourseReservationVO>>() {
             }.getType();
             List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
-            Log.e("myCourseRvList", String.valueOf(myCourseRvList.size()));
+
             if (myCourseRvList.size() != 0) {
-                rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.TEACHER));
+                rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.TEACHER,getContext()));
             } else {
                 view.findViewById(R.id.tvNoData).setVisibility(View.VISIBLE);
             }

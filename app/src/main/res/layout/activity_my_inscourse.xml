@@ -11,42 +11,23 @@
         android:name="weshare.groupfour.derek.ToolbarBackFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
-        app:layout_constraintBottom_toTopOf="@+id/vpMyInsCourse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tbMyInsCourse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment5">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.TabLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpMyInsCourse"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/clMyInsCourse"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment5"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/fragment5">
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>

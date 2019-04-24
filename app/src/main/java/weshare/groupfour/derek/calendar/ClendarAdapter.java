@@ -1,34 +1,35 @@
-package weshare.groupfour.derek.myCourseOrders;
+package weshare.groupfour.derek.calendar;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.member.MemberVO;
-import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Join;
 
-public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHolder>{
-    public final static int MEMBER = 0;
-    public final static int TEACHER = 1;
-    private int fromWhere;
-    private Context context;
+public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHolder>{
+
     private List<CourseReservationVO> myCourseRvList;
-    public MyCourseAdapter(List<CourseReservationVO> myCourseRvList, int fromWhere, Context context) {
+    private Context context;
+
+    public ClendarAdapter(List<CourseReservationVO> myCourseRvList, Context context) {
         this.myCourseRvList = myCourseRvList;
-        this.fromWhere = fromWhere;
         this.context = context;
     }
+
     class ViewHolder extends RecyclerView.ViewHolder{
         private CircleImageView civPic;
         private TextView tvName;
@@ -37,6 +38,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         private TextView tvCourseEXP;
         private TextView tvCoursePlace;
         private TextView tvQrcode;
+        private LinearLayout llCalendar;
 
         public ViewHolder(View view) {
             super(view);
@@ -47,12 +49,13 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             tvCourseEXP = view.findViewById(R.id.tvCourseEXP);
             tvCoursePlace = view.findViewById(R.id.tvCoursePlace);
             tvQrcode = view.findViewById(R.id.tvQrcode);
+            llCalendar = view.findViewById(R.id.llCalendar);
         }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_mycourse,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_myclendar,parent,false);
         return new ViewHolder(view);
     }
 
@@ -70,37 +73,44 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
 
         Join join = new Join();
-        switch (fromWhere){
-            case TEACHER:
+        switch (myCourseRvVO.getIdFlag()){
+            case 1:
 
                 //加入學生名稱
                 MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId());
-                myCourseRvVO.setTeacherId("學生 "+memVO.getMemName());
                 //加入學生圖片
                 byte[] memImage = join.getMemberPic(context,memVO.getMemId());
                 memVO.setMemImage(memImage);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
 
                 holder.civPic.setImageBitmap(bitmap);
-                holder.tvName.setText(myCourseRvVO.getTeacherId());
+                holder.tvName.setText("學生 "+memVO.getMemName());
                 break;
-            case MEMBER:
+            case 0:
 
                 //加入老師名稱
                 MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
-                myCourseRvVO.setTeacherId("老師  "+memtVO.getMemName());
                 //加入老師圖片
                 byte[] memtImage = join.getMemberPic(context,memtVO.getMemId());
                 //memVO.setMemImage(memtImage);
                 Bitmap bitmapt = BitmapFactory.decodeByteArray(memtImage, 0, memtImage.length);
 
                 holder.civPic.setImageBitmap(bitmapt);
-                holder.tvName.setText(myCourseRvVO.getTeacherId());
+                holder.tvName.setText("老師  "+memtVO.getMemName());
+
 
                 //可以展開Qrcode
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        switch (holder.llCalendar.getVisibility()){
+                            case View.VISIBLE:
+                                holder.llCalendar.setVisibility(View.GONE);
+                                break;
+                            case View.GONE:
+                                holder.llCalendar.setVisibility(View.VISIBLE);
+                                break;
+                        }
                         switch (holder.tvQrcode.getVisibility()){
                             case View.VISIBLE:
                                 holder.tvQrcode.setVisibility(View.GONE);

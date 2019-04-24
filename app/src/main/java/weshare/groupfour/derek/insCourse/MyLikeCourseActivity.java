@@ -39,7 +39,7 @@ public class MyLikeCourseActivity extends AppCompatActivity {
         if(memId != null){
             List<InsCourseVO> insCourseVOList = new CourseLike().getMyLikeCourse(memId);
             if(insCourseVOList != null && insCourseVOList.size() != 0 ){
-                rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList));
+                rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList,this));
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("查無收藏清單")

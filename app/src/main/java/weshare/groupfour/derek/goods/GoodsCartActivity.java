@@ -72,7 +72,6 @@ public class GoodsCartActivity extends AppCompatActivity {
             tbGoodsCart.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-
                     finish();
                     return true;
                 }
@@ -109,7 +108,7 @@ public class GoodsCartActivity extends AppCompatActivity {
     private class GoodsCartAdapter extends RecyclerView.Adapter<GoodsCartAdapter.ViewHolder> {
         List<GoodsVO> goodsVOs;
 
-        public GoodsCartAdapter(List goodsVOs) {
+        public GoodsCartAdapter(List<GoodsVO> goodsVOs) {
             this.goodsVOs = goodsVOs;
         }
 

@@ -1,5 +1,6 @@
 package weshare.groupfour.derek;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -97,7 +98,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                             //登入成功
 
                             MemberVO memberVO = gson.fromJson(result, MemberVO.class);
-                            String memBase64 = new Join().getMemberPicB64(memberVO.getMemId());
+                            String memBase64 = new Join().getMemberPicB64(LoginFakeActivity.this,memberVO.getMemId());
 
                             SharedPreferences sharedPreferences = Tools.getSharePreAccount();
                             sharedPreferences.edit()

@@ -49,7 +49,7 @@ public class MyCourseFragment extends Fragment {
             }.getType();
             List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
             if (myCourseRvList != null & myCourseRvList.size() != 0) {
-                rvMyCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.MEMBER));
+                rvMyCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.MEMBER,getContext()));
             } else {
                 tvNoData = view.findViewById(R.id.tvNoData);
                 tvNoData.setVisibility(View.VISIBLE);

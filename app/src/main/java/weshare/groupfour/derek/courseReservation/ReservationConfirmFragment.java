@@ -2,10 +2,12 @@ package weshare.groupfour.derek.courseReservation;
 
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.util.Log;
+
+import android.support.v4.app.FragmentHostCallback;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
@@ -41,6 +45,8 @@ public class ReservationConfirmFragment extends Fragment {
         SharedPreferences spf = Tools.getSharePreAccount();
         String memId = spf.getString("memId", null);
 
+        Toolbar tbReservation = getActivity().findViewById(R.id.tbReservation);
+        tbReservation.setTitle("訂單確認");
 
 
         final CourseReservationVO crVO = (CourseReservationVO) getArguments().getSerializable("crVO");
@@ -60,8 +66,9 @@ public class ReservationConfirmFragment extends Fragment {
         tvTeacherName.setText(TeaMemVO.getMemName());
         tvInscLoc.setText(insCourseVO.getInscLoc());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd kk:mm");
-        tvDateTime.setText(sdf.format(crVO.getCrvMFD())+"-"+sdf.format((crVO.getCrvEXP())));
+        SimpleDateFormat sdfMFD = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+        SimpleDateFormat sdfEXP = new SimpleDateFormat("kk:mm");
+        tvDateTime.setText(sdfMFD.format(crVO.getCrvMFD())+" ~ "+sdfEXP.format((crVO.getCrvEXP())));
 
 
 
@@ -74,10 +81,10 @@ public class ReservationConfirmFragment extends Fragment {
 
 
         int inscPrice = insCourseVO.getInscPrice();
-        tvPrice.setText(String.valueOf(inscPrice)+" X "+totalTime+" = "+String.valueOf(inscPrice*totalTime));
-        tvFee.setText(String.valueOf(inscPrice)+" X 0.05 = "+String.valueOf(inscPrice*0.05));
+        tvPrice.setText(inscPrice+" X "+totalTime+" = "+inscPrice*totalTime);
+        tvFee.setText(inscPrice+" X 0.1 = "+inscPrice*0.1);
 
-        Double totalPrice = inscPrice*totalTime+inscPrice*0.05;
+        Double totalPrice = inscPrice*totalTime+inscPrice*0.1;
         tvTotalPrice.setText(String.valueOf(totalPrice));
 
         //製作預約VO
@@ -87,6 +94,11 @@ public class ReservationConfirmFragment extends Fragment {
         crVO.setCrvTotalPrice(totalPrice);
         crVO.setCrvLoc(insCourseVO.getInscLoc());
         crVO.setCrvTotalTime(totalTime);
+        crVO.setTeamId(null);
+        crVO.setCrvStatus(1);
+        crVO.setClassStatus(0);
+        crVO.setTranStatus(0);
+        crVO.setCrvRate(null);
 
 
 
@@ -101,9 +113,22 @@ public class ReservationConfirmFragment extends Fragment {
                 requestMap.put("action","make_new_reservation");
                 requestMap.put("crVO",gson.toJson(crVO));
                 String request = Tools.RequestDataBuilder(requestMap);
-                new CallServlet().execute(ServerURL.IP_COURSERESERVATION,request);
-                Tools.Toast(getContext(),"已成功預約");
-                getActivity().finish();
+                String result = null;
+                try {
+                    result = new CallServlet().execute(ServerURL.IP_COURSERESERVATION,request).get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(result != null || result.isEmpty()){
+                    Tools.Toast(getContext(),"已成功預約");
+                    getActivity().finish();
+                }else{
+                    FragmentManager fm = getFragmentManager();
+                    fm.popBackStack();
+                }
             }
         });
 
