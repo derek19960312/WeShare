@@ -9,18 +9,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import weshare.groupfour.derek.calendar.CalendarActivity;
+import weshare.groupfour.derek.insCourse.InsCourseBrowseActivity;
+import weshare.groupfour.derek.util.Tools;
 
 
 public class CourseMainFragment extends Fragment {
@@ -34,7 +32,7 @@ public class CourseMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course_main, container, false);
+        final View view = inflater.inflate(R.layout.fragment_course_main, container, false);
 
 
         FloatingActionButton fabCalendar = view.findViewById(R.id.fabCalender);
@@ -43,6 +41,33 @@ public class CourseMainFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CalendarActivity.class);
                 startActivity(intent);
+            }
+        });
+
+
+        //search
+        final SearchView svCourseMain = view.findViewById(R.id.svCourseMain);
+        svCourseMain.setSubmitButtonEnabled(true);
+
+
+
+        svCourseMain.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Map<String,String> requestMap = new HashMap<>();
+                requestMap.put("action","search_for_course");
+                requestMap.put("keyword",query.trim());
+                String requestData = Tools.RequestDataBuilder(requestMap);
+                Intent intent = new Intent(getActivity(), InsCourseBrowseActivity.class);
+                intent.putExtra("requestData",requestData);
+                startActivity(intent);
+                svCourseMain.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
 

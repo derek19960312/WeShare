@@ -25,6 +25,8 @@ import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +113,9 @@ public class CalendarActivity extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
                 List<CourseReservationVO> myCourseRvList = new ArrayList<>();
-                long clicked = new java.sql.Date(year-1900, month, dayOfMonth).getTime();
+
+                long clicked = new GregorianCalendar(year, month, dayOfMonth).getTimeInMillis();
+
                 SimpleDateFormat sdf = new SimpleDateFormat("yy,MM,dd");
                 for(CourseReservationVO crVO : mycrvTec){
                     long crMFD = 0;
@@ -139,7 +143,6 @@ public class CalendarActivity extends AppCompatActivity {
                     }
                 }
 
-                Log.e("size",String.valueOf(myCourseRvList.size()));
                 rvClendar.setAdapter(new ClendarAdapter(myCourseRvList,CalendarActivity.this));
 
 

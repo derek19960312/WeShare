@@ -27,7 +27,7 @@ public class GoodsLike {
             String result = null;
             try {
                 String requestData = "action=look_my_favorites&memId="+memId;
-                Log.e("memId",memId);
+
                 result = new CallServlet().execute(ServerURL.IP_GOODSLIKE,requestData).get();
             } catch (ExecutionException e) {
                 e.printStackTrace();

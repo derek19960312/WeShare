@@ -18,25 +18,29 @@ import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseBrowseActivity extends AppCompatActivity {
-    StaggeredGridLayoutManager staggeredGridLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inscourse_browse);
+
+
         RecyclerView recycleView = findViewById(R.id.rvGoods);
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
-        recycleView.setLayoutManager(staggeredGridLayoutManager);
+        recycleView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
 
 
         try {
-            String data = getIntent().getStringExtra("data");
+            String data = getIntent().getStringExtra("requestData");
 
-            String result = new CallServlet().execute(ServerURL.IP_COURSETYPE,data).get();
+            String result = new CallServlet().execute(ServerURL.IP_COURSE,data).get();
 
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
             if(insCourseVOList != null || insCourseVOList.size() != 0) {
+
+
+
                 recycleView.setAdapter(new CourseAdapter(insCourseVOList,this));
             }else {
                 Tools.Toast(this,"查無資料");

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,46 +53,24 @@ public class Join {
         return gson.fromJson(result,MemberVO.class);
     }
 
-    public byte[] getMemberPic(Context context,String memId){
-        byte[] bPic = null;
-        String base64 = getMemberPicB64(context,memId);
-        if(base64 != null){
-            bPic = Base64.decode(base64,Base64.DEFAULT);
-        }
-        return bPic;
-    }
 
-    public String getMemberPicB64(Context context,String memId){
-        String action = "action=get_member_pic";
+
+    public static void setPicOn(ImageView imageView, String id){
+        Map<String,String> requestMap = new HashMap<>();
+        if(id.contains("GD")){
+            requestMap.put("action","get_goods_pic");
+            requestMap.put("goodId",id);
+        }else{
+            requestMap.put("action","get_member_pic");
+            requestMap.put("memId",id);
+        }
         int imageSize = Holder.getContext().getResources().getDisplayMetrics().widthPixels/3;
-        String requestData = action+"&memId="+memId+"&imageSize="+imageSize;
-        String base64 = null;
-        try {
-            base64 = new CallServlet_Pic(context).execute(ServerURL.IP_GET_PIC,requestData).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return base64;
+        requestMap.put("imageSize",String.valueOf(imageSize));
+        String request = Tools.RequestDataBuilder(requestMap);
+
+        new CallServlet_Pic(imageView).execute(ServerURL.IP_GET_PIC,request);
+
     }
-
-
-    public String getGoodsPicB64(Context context,String goodId){
-        String action = "action=get_goods_pic";
-        int imageSize = Holder.getContext().getResources().getDisplayMetrics().widthPixels/3;
-        String requestData = action+"&goodId="+goodId+"&imageSize="+imageSize;
-        String base64 = null;
-        try {
-            base64 = new CallServlet_Pic(context).execute(ServerURL.IP_GET_PIC,requestData).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return base64;
-    }
-
 
 
 

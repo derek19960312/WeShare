@@ -70,7 +70,7 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
         final GoodsVO goodsVO = goodsVOList.get(position);
         holder.tvPrice.setText("特價 : " + goodsVO.getGoodPrice());
         holder.tvName.setText(goodsVO.getGoodName());
-        holder.ivIcon.setImageBitmap(Tools.getBitmapByBase64(goodsVO.getGoodImg()));
+
         holder.ivCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +139,12 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
 //                    startActivity(intent);
             }
         });
+
+
+        //載入圖片
+        Join.setPicOn(holder.ivIcon,goodsVO.getGoodId());
+
+
     }
 
     @Override

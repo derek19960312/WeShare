@@ -4,7 +4,8 @@
     android:id="@+id/cvCourse"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -24,14 +25,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -40,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center_vertical"
                     android:text="TextView"
                     android:textSize="18dp" />
 
@@ -55,8 +56,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -65,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="bottom"
+                    android:gravity="center_vertical"
                     android:text="500"
                     android:textColor="@android:color/holo_red_dark" />
 

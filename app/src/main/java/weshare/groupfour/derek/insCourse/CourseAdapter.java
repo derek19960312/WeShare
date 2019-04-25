@@ -139,10 +139,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
 
         //取回圖片
-        byte[] memImage = new Join().getMemberPic(context,TeaMemVO.getMemId());
-        TeaMemVO.setMemImage(memImage);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
-        holder.ivTeacherPic.setImageBitmap(bitmap);
+        new Join().setPicOn(holder.ivTeacherPic,TeaMemVO.getMemId());
     }
 
     @Override

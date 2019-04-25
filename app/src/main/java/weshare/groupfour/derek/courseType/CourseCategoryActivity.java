@@ -35,24 +35,26 @@ public class CourseCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_category);
 
         RecyclerView rvCategory = findViewById(R.id.rvCategory);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
-        rvCategory.setLayoutManager(staggeredGridLayoutManager);
+        rvCategory.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
 
         Gson gson = new Gson();
-        CallServlet callServlet = new CallServlet();
         Type listType = new TypeToken<List<CourseTypeVO>>() {}.getType();
+
         Map<String,String> requestMap = new HashMap<>();
         requestMap.put("action","get_all_type");
         String requestData= new Tools().RequestDataBuilder(requestMap);
         try{
             String result = new CallServlet().execute(ServerURL.IP_COURSETYPE,requestData).get();
             List<CourseTypeVO> courseTypeList = gson.fromJson(result,listType);
+
             if(courseTypeList != null){
                 rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));
-            }//查無?
+            }
         }catch (Exception e) {
             Log.e("連線錯誤",e.toString());
         }
+
+
     }
 
     private class CourseTypeAdapter extends RecyclerView.Adapter<CourseTypeAdapter.ViewHolder>{
@@ -91,8 +93,9 @@ public class CourseCategoryActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(CourseCategoryActivity.this, InsCourseBrowseActivity.class);
-                    intent.putExtra("data",requestData);
+                    intent.putExtra("requestData",requestData);
                     startActivity(intent);
+                    //CourseCategoryActivity.this.overridePendingTransition(android.R.anim.slide_out_right,android.R.anim.slide_out_right);
                 }
             });
         }

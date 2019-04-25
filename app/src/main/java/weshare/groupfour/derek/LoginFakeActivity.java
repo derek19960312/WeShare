@@ -11,18 +11,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.member.TeacherVO;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 
 import weshare.groupfour.derek.util.Tools;
@@ -33,19 +37,25 @@ public class LoginFakeActivity extends AppCompatActivity {
     EditText etMemPsw;
     TextInputLayout tilMemId;
     TextInputLayout tilMemPsw;
-
+    Button btnLogin;
+    Button btnCancel;
+    Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_login);
 
+        //先確認是否登入過
         String memId = new Tools().getSharePreAccount().getString("memId", null);
         if (memId != null) {
             finish();
         } else {
-            Tools.Toast(this, "請先登入");
-            //設定寬高
+
+
+            //設定畫面寬高
             Window win = getWindow();
             WindowManager.LayoutParams lp = win.getAttributes();
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -53,28 +63,26 @@ public class LoginFakeActivity extends AppCompatActivity {
             lp.dimAmount = 0.2f;
             win.setAttributes(lp);
 
-            etMemId = findViewById(R.id.etMemId);
-            etMemPsw = findViewById(R.id.etMemPsw);
-            tilMemId = findViewById(R.id.tilMemId);
-            tilMemPsw = findViewById(R.id.tilMemPsw);
-            Button btnLogin = findViewById(R.id.btnLogin);
+
+            findViews();
+
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     tilMemId.setError(null);
                     tilMemPsw.setError(null);
                     String memId = etMemId.getText().toString().trim();
                     String memPsw = etMemPsw.getText().toString().trim();
 
                     String requestData = "action=login&memId=" + memId + "&memPsw=" + memPsw;
-                    Gson gson = new GsonBuilder()
-                            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                            .create();
+
                     try {
 
                         String result = new CallServlet().execute(ServerURL.IP_MEMBER, requestData).get();
+                        //登入失敗
                         if (result.contains("LoginStatus")) {
-                            //登入失敗
+
                             JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
 
                             String errorMsgs = jsonObject.get("errorMsgs").getAsString();
@@ -94,21 +102,28 @@ public class LoginFakeActivity extends AppCompatActivity {
                                     Toast.makeText(LoginFakeActivity.this, "連線異常", Toast.LENGTH_LONG).show();
                                     return;
                             }
-                        } else {
+
                             //登入成功
+                        } else {
 
                             MemberVO memberVO = gson.fromJson(result, MemberVO.class);
-                            String memBase64 = new Join().getMemberPicB64(LoginFakeActivity.this,memberVO.getMemId());
+                            //查圖片
+                            Map<String,String> requestMap = new HashMap<>();
+                            requestMap.put("action","get_member_pic_base64");
+                            requestMap.put("memId",memberVO.getMemId());
+                            String requestData1 = Tools.RequestDataBuilder(requestMap);
+                            String base64 = new CallServlet().execute(ServerURL.IP_MEMBER,requestData1).get();
+
 
                             SharedPreferences sharedPreferences = Tools.getSharePreAccount();
                             sharedPreferences.edit()
                                     .putString("memId", memberVO.getMemId())
                                     .putString("memPsw", memberVO.getMemPsw())
-                                    .putString("memImage", memBase64)
-                                    .putString("memName",memberVO.getMemName())
+                                    .putString("memImage",base64)
+                                    .putString("memName", memberVO.getMemName())
                                     .apply();
                             isAteacher(memId);
-                            Toast.makeText(LoginFakeActivity.this, "登入成功", Toast.LENGTH_LONG).show();
+                            Tools.Toast(LoginFakeActivity.this,"登入成功");
                             finish();
                         }
                     } catch (Exception e) {
@@ -116,7 +131,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                     }
                 }
             });
-            Button btnCancel = findViewById(R.id.btnCancel);
+
             btnCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -126,6 +141,15 @@ public class LoginFakeActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void findViews() {
+        etMemId = findViewById(R.id.etMemId);
+        etMemPsw = findViewById(R.id.etMemPsw);
+        tilMemId = findViewById(R.id.tilMemId);
+        tilMemPsw = findViewById(R.id.tilMemPsw);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnCancel = findViewById(R.id.btnCancel);
     }
 
     public boolean isAteacher(String memId) {

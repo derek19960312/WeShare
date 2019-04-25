@@ -74,28 +74,21 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
 
         Join join = new Join();
         switch (myCourseRvVO.getIdFlag()){
-            case 1:
-
+            case 0:
+                //以老師身分
                 //加入學生名稱
                 MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId());
                 //加入學生圖片
-                byte[] memImage = join.getMemberPic(context,memVO.getMemId());
-                memVO.setMemImage(memImage);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
-
-                holder.civPic.setImageBitmap(bitmap);
+                join.setPicOn(holder.civPic,memVO.getMemId());
                 holder.tvName.setText("學生 "+memVO.getMemName());
                 break;
-            case 0:
-
+            case 1:
+                //以學生身分
                 //加入老師名稱
                 MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
                 //加入老師圖片
-                byte[] memtImage = join.getMemberPic(context,memtVO.getMemId());
-                //memVO.setMemImage(memtImage);
-                Bitmap bitmapt = BitmapFactory.decodeByteArray(memtImage, 0, memtImage.length);
+                join.setPicOn(holder.civPic,memtVO.getMemId());
 
-                holder.civPic.setImageBitmap(bitmapt);
                 holder.tvName.setText("老師  "+memtVO.getMemName());
 
 

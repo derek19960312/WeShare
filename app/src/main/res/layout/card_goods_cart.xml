@@ -4,7 +4,9 @@
     android:id="@+id/cvCourse"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:layout_margin="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="3dp"
     android:orientation="horizontal">
 
     <LinearLayout

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +43,13 @@ public class Tools {
             bPic = Base64.decode(base64,Base64.DEFAULT);
         }
         return BitmapFactory.decodeByteArray(bPic,0,bPic.length);
+    }
+
+    public static String gteBitMapByBase64(Bitmap bitmap) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        return Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);
     }
 
 }

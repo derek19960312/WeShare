@@ -32,6 +32,7 @@ import weshare.groupfour.derek.courseReservation.CourseReservationActivity;
 import weshare.groupfour.derek.member.TeacherVO;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseDetailActivity extends AppCompatActivity {
@@ -119,8 +120,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
 
 
         //塞資料
-        Bitmap bitmap = BitmapFactory.decodeByteArray(TeaMemVO.getMemImage(), 0, TeaMemVO.getMemImage().length);
-        ivTeacherPic.setImageBitmap(bitmap);
+        Join.setPicOn(ivTeacherPic,TeaMemVO.getMemId());
         tvTeacherName.setText(TeaMemVO.getMemName());
 
 

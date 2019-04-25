@@ -29,6 +29,7 @@ import java.util.Map;
 
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Holder;
+import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsCartActivity extends AppCompatActivity {
@@ -51,7 +52,7 @@ public class GoodsCartActivity extends AppCompatActivity {
             rvCart.setLayoutManager(new LinearLayoutManager(this));
 
             myCart = Holder.getCart();
-            rvCart.setAdapter(new GoodsCartAdapter(new ArrayList<GoodsVO>(myCart.keySet())));
+            rvCart.setAdapter(new GoodsCartAdapter(new ArrayList<>(myCart.keySet())));
 
 
             int total = 0;
@@ -170,8 +171,7 @@ public class GoodsCartActivity extends AppCompatActivity {
 
                 }
             });
-            //載入圖片
-            holder.ivIcon.setImageBitmap(Tools.getBitmapByBase64(goodsVO.getGoodImg()));
+
 
             //收藏
             holder.ivHeart.setOnClickListener(new View.OnClickListener() {
@@ -196,6 +196,10 @@ public class GoodsCartActivity extends AppCompatActivity {
 
                 }
             });
+
+            //載入圖片
+
+            Join.setPicOn(holder.ivIcon,goodsVO.getGoodId());
 
         }
 

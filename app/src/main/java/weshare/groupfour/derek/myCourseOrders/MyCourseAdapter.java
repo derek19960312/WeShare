@@ -77,11 +77,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId());
                 myCourseRvVO.setTeacherId("學生 "+memVO.getMemName());
                 //加入學生圖片
-                byte[] memImage = join.getMemberPic(context,memVO.getMemId());
-                memVO.setMemImage(memImage);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(memImage, 0, memImage.length);
+                join.setPicOn(holder.civPic,memVO.getMemId());
 
-                holder.civPic.setImageBitmap(bitmap);
                 holder.tvName.setText(myCourseRvVO.getTeacherId());
                 break;
             case MEMBER:
@@ -90,11 +87,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
                 myCourseRvVO.setTeacherId("老師  "+memtVO.getMemName());
                 //加入老師圖片
-                byte[] memtImage = join.getMemberPic(context,memtVO.getMemId());
-                //memVO.setMemImage(memtImage);
-                Bitmap bitmapt = BitmapFactory.decodeByteArray(memtImage, 0, memtImage.length);
+                join.setPicOn(holder.civPic,memtVO.getMemId());
 
-                holder.civPic.setImageBitmap(bitmapt);
                 holder.tvName.setText(myCourseRvVO.getTeacherId());
 
                 //可以展開Qrcode

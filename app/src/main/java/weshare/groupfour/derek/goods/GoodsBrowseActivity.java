@@ -34,7 +34,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         rvGoods.setLayoutManager(staggeredGridLayoutManager);
-        rvGoods.getBaseline();
+        
 
         Gson gson = new Gson();
         Map<String, String> request = new HashMap<>();
@@ -48,9 +48,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
             }.getType();
             List<GoodsVO> goodsVOList = gson.fromJson(result, listType);
             if (goodsVOList != null) {
-                for(GoodsVO gvo : goodsVOList){
-                    gvo.setGoodImg(new Join().getGoodsPicB64(this,gvo.getGoodId()));
-                }
+
                 rvGoods.setAdapter(new GoodsAdapter(goodsVOList));
             }
 
@@ -77,7 +75,6 @@ public class GoodsBrowseActivity extends AppCompatActivity {
                 staggeredGridLayoutManager.setSpanCount(1);
                 break;
         }
-        rvGoods.getBaseline();
     }
 
 }

@@ -24,6 +24,7 @@ public class ServerURL {
 
 
 
+//    final public static String PROJECT = "/WeShare_web";
     final public static String PROJECT = "/WeShare_web";
 
 
