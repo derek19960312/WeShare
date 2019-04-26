@@ -77,7 +77,7 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
             case 0:
                 //以老師身分
                 //加入學生名稱
-                MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId());
+                MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId(),context);
                 //加入學生圖片
                 join.setPicOn(holder.civPic,memVO.getMemId());
                 holder.tvName.setText("學生 "+memVO.getMemName());
@@ -85,7 +85,7 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
             case 1:
                 //以學生身分
                 //加入老師名稱
-                MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
+                MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId(),context);
                 //加入老師圖片
                 join.setPicOn(holder.civPic,memtVO.getMemId());
 

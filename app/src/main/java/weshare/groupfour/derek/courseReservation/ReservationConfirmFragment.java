@@ -115,7 +115,7 @@ public class ReservationConfirmFragment extends Fragment {
                 String request = Tools.RequestDataBuilder(requestMap);
                 String result = null;
                 try {
-                    result = new CallServlet().execute(ServerURL.IP_COURSERESERVATION,request).get();
+                    result = new CallServlet(getContext()).execute(ServerURL.IP_COURSERESERVATION,request).get();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

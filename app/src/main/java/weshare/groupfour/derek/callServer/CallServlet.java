@@ -1,6 +1,7 @@
 package weshare.groupfour.derek.callServer;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 
 import android.net.ConnectivityManager;
@@ -15,10 +16,24 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import weshare.groupfour.derek.util.Tools;
+
 
 public class CallServlet extends AsyncTask<String, Void, String> {
+    Context context;
 
-private final static String INTERNER_ERROR = "0";
+    public CallServlet(Context context) {
+        this.context = context;
+    }
+    ProgressDialog progressDialog;
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+         progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("請稍等");
+        progressDialog.show();
+    }
+
     @Override
     protected String doInBackground(String... strings) {
         StringBuilder sb = new StringBuilder();
@@ -51,9 +66,9 @@ private final static String INTERNER_ERROR = "0";
             return sb.toString();
     }
 
-    private boolean networkConnected() {
-        ConnectivityManager conManager = (ConnectivityManager) new AppCompatActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        //progressDialog.dismiss();
     }
 }

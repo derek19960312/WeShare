@@ -33,7 +33,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
         try {
             String data = getIntent().getStringExtra("requestData");
 
-            String result = new CallServlet().execute(ServerURL.IP_COURSE,data).get();
+            String result = new CallServlet(this).execute(ServerURL.IP_COURSE,data).get();
 
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);

@@ -45,7 +45,7 @@ public class MyTeachFragment extends Fragment {
         if (teacherId != null) {
         String resquestData = "action=find_my_reservation&param=" + teacherId;
         try {
-            String result = new CallServlet().execute(ServerURL.IP_COURSERESERVATION, resquestData).get();
+            String result = new CallServlet(getContext()).execute(ServerURL.IP_COURSERESERVATION, resquestData).get();
             Gson gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd HH:mm:ss")
                     .create();

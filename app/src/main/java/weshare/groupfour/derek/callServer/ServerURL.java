@@ -3,7 +3,7 @@ package weshare.groupfour.derek.callServer;
 public class ServerURL {
 
     //日本西岸
-  final public static String IP = "http://40.74.69.29:8081";
+//  final public static String IP = "http://40.74.69.29:8081";
 
     //迎刃
 //  final public static String IP = "http://18.191.251.39:8081";
@@ -20,7 +20,7 @@ public class ServerURL {
 //  final public static String IP = "http://192.168.1.108:8081";
 
     //模擬器
-//  final public static String IP = "http://10.0.2.2:8081";
+ final public static String IP = "http://10.0.2.2:8081";
 
 
 

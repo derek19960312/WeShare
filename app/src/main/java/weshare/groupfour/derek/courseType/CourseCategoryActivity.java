@@ -44,7 +44,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         requestMap.put("action","get_all_type");
         String requestData= new Tools().RequestDataBuilder(requestMap);
         try{
-            String result = new CallServlet().execute(ServerURL.IP_COURSETYPE,requestData).get();
+            String result = new CallServlet(this).execute(ServerURL.IP_COURSETYPE,requestData).get();
             List<CourseTypeVO> courseTypeList = gson.fromJson(result,listType);
 
             if(courseTypeList != null){

@@ -182,13 +182,13 @@ public class GoodsCartActivity extends AppCompatActivity {
                     switch (holder.heart) {
                         case 0:
                             holder.ivHeart.setImageResource(R.drawable.hearted);
-                            new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId());
+                            new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId(),holder.context);
                             Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
                             holder.heart = 1;
                             break;
                         case 1:
                             holder.ivHeart.setImageResource(R.drawable.heart);
-                            new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId());
+                            new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId(),holder.context);
                             Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
                             holder.heart = 0;
                             break;

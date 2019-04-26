@@ -1,5 +1,6 @@
 package weshare.groupfour.derek.goods;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -13,22 +14,22 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 
 public class GoodsLike {
-    public void addGoodsLike(String memId, String goodId){
+    public void addGoodsLike(String memId, String goodId, Context context){
         String reqData = "action=add_to_favorites&memId="+memId+"&goodId="+goodId;
-        new CallServlet().execute(ServerURL.IP_GOODSLIKE,reqData);
+        new CallServlet(context).execute(ServerURL.IP_GOODSLIKE,reqData);
     }
 
-    public void deleteGoodsLike(String memId, String goodId){
+    public void deleteGoodsLike(String memId, String goodId, Context context){
         String reqData = "action=delete_from_favorites&memId="+memId+"&goodId="+goodId;
-        new CallServlet().execute(ServerURL.IP_GOODSLIKE,reqData);
+        new CallServlet(context).execute(ServerURL.IP_GOODSLIKE,reqData);
     }
 
-    public List<GoodsVO> getMyLikeGoods(String memId){
+    public List<GoodsVO> getMyLikeGoods(String memId , Context context){
             String result = null;
             try {
                 String requestData = "action=look_my_favorites&memId="+memId;
 
-                result = new CallServlet().execute(ServerURL.IP_GOODSLIKE,requestData).get();
+                result = new CallServlet(context).execute(ServerURL.IP_GOODSLIKE,requestData).get();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

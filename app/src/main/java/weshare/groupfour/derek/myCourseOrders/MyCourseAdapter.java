@@ -74,7 +74,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             case TEACHER:
 
                 //加入學生名稱
-                MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId());
+                MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId(),context);
                 myCourseRvVO.setTeacherId("學生 "+memVO.getMemName());
                 //加入學生圖片
                 join.setPicOn(holder.civPic,memVO.getMemId());
@@ -84,7 +84,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             case MEMBER:
 
                 //加入老師名稱
-                MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId());
+                MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId(),context);
                 myCourseRvVO.setTeacherId("老師  "+memtVO.getMemName());
                 //加入老師圖片
                 join.setPicOn(holder.civPic,memtVO.getMemId());

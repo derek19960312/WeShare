@@ -37,7 +37,7 @@ public class MyLikeCourseActivity extends AppCompatActivity {
         SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
         String memId = spf.getString("memId",null);
         if(memId != null){
-            List<InsCourseVO> insCourseVOList = new CourseLike().getMyLikeCourse(memId);
+            List<InsCourseVO> insCourseVOList = new CourseLike().getMyLikeCourse(memId,this);
             if(insCourseVOList != null && insCourseVOList.size() != 0 ){
                 rvMyLikeCourse.setAdapter(new CourseAdapter(insCourseVOList,this));
             }else{

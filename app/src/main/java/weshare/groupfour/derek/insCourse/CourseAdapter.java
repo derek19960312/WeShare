@@ -73,7 +73,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         final Bundle bundle = new Bundle();
 
         //取回老師名稱+資料
-        MemberVO TeaMemVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId());
+        MemberVO TeaMemVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId(),context);
 
         //包裝資料 帶去下層
         bundle.putSerializable("insCourseVO", insCourseVO);
@@ -90,13 +90,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     switch (holder.like) {
                         case 0:
                             holder.ivLike.setImageResource(R.drawable.hearted);
-                            new CourseLike().addCourseLike(memId, insCourseVO.getInscId());
+                            new CourseLike().addCourseLike(memId, insCourseVO.getInscId(),context);
                             Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
                             holder.like = 1;
                             break;
                         case 1:
                             holder.ivLike.setImageResource(R.drawable.heart);
-                            new CourseLike().deleteCourseLike(memId, insCourseVO.getInscId());
+                            new CourseLike().deleteCourseLike(memId, insCourseVO.getInscId(),context);
                             Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
                             holder.like = 0;
                             break;
@@ -127,7 +127,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         final String memId = spf.getString("memId", null);
         //已經加入收藏的課程
         if (memId != null) {
-            List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId);
+            List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId,context);
             if (insCourseVOListbylike != null) {
                 for (InsCourseVO inscVObylike : insCourseVOListbylike) {
                     if (inscVObylike.getInscId().equals(insCourseVO.getInscId())) {

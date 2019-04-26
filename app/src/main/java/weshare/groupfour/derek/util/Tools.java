@@ -1,9 +1,12 @@
 package weshare.groupfour.derek.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -50,6 +53,16 @@ public class Tools {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         return Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);
+    }
+
+
+    // check if the device connect to the network
+    public static boolean networkConnected(Activity activity) {
+
+        ConnectivityManager conManager =
+                (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conManager != null ? conManager.getActiveNetworkInfo() : null;
+        return networkInfo != null && networkInfo.isConnected();
     }
 
 }

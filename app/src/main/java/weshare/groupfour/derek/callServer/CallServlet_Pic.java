@@ -96,15 +96,6 @@ public class CallServlet_Pic extends AsyncTask<String, Void, Bitmap> {
 
 
 
-
-    private boolean networkConnected() {
-        ConnectivityManager conManager = (ConnectivityManager) new AppCompatActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = conManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
-
-
-
     //觀察者模式
 //    public interface ISubject {
 //        void RegisterObserver(IObserver pObserver);

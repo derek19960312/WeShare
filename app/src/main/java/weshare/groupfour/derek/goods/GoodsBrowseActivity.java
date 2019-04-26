@@ -42,7 +42,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         String requestData = Tools.RequestDataBuilder(request);
         String result = null;
         try {
-            result = new CallServlet().execute(ServerURL.IP_GOODS, requestData).get();
+            result = new CallServlet(this).execute(ServerURL.IP_GOODS, requestData).get();
             Log.e("result", result);
             Type listType = new TypeToken<List<GoodsVO>>() {
             }.getType();

@@ -76,7 +76,7 @@ public class CalendarActivity extends AppCompatActivity {
         String requestData = Tools.RequestDataBuilder(requestMap);
         String result = null;
         try {
-            result = new CallServlet().execute(ServerURL.IP_COURSERESERVATION, requestData).get();
+            result = new CallServlet(this).execute(ServerURL.IP_COURSERESERVATION, requestData).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -92,7 +92,7 @@ public class CalendarActivity extends AppCompatActivity {
         requestMap.put("param", memId);
         requestData = Tools.RequestDataBuilder(requestMap);
         try {
-            result = new CallServlet().execute(ServerURL.IP_COURSERESERVATION, requestData).get();
+            result = new CallServlet(this).execute(ServerURL.IP_COURSERESERVATION, requestData).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

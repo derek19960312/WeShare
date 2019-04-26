@@ -79,7 +79,7 @@ public class LoginFakeActivity extends AppCompatActivity {
 
                     try {
 
-                        String result = new CallServlet().execute(ServerURL.IP_MEMBER, requestData).get();
+                        String result = new CallServlet(LoginFakeActivity.this).execute(ServerURL.IP_MEMBER, requestData).get();
                         //登入失敗
                         if (result.contains("LoginStatus")) {
 
@@ -112,7 +112,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                             requestMap.put("action","get_member_pic_base64");
                             requestMap.put("memId",memberVO.getMemId());
                             String requestData1 = Tools.RequestDataBuilder(requestMap);
-                            String base64 = new CallServlet().execute(ServerURL.IP_MEMBER,requestData1).get();
+                            String base64 = new CallServlet(LoginFakeActivity.this).execute(ServerURL.IP_MEMBER,requestData1).get();
 
 
                             SharedPreferences sharedPreferences = Tools.getSharePreAccount();
@@ -156,7 +156,7 @@ public class LoginFakeActivity extends AppCompatActivity {
         String action = "action=find_by_memId";
         String requestData = action + "&memId=" + memId;
         try {
-            String result = new CallServlet().execute(ServerURL.IP_TEACHER, requestData).get();
+            String result = new CallServlet(LoginFakeActivity.this).execute(ServerURL.IP_TEACHER, requestData).get();
             TeacherVO teacherVO = new Gson().fromJson(result, TeacherVO.class);
             if (teacherVO != null) {
                 SharedPreferences spf = getSharedPreferences("myAccount", MODE_PRIVATE);

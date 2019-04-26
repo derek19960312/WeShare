@@ -73,7 +73,7 @@ public class LoginDialog_deprecate extends DialogFragment {
                         .create();
                 try {
 
-                    String result = new CallServlet().execute(ServerURL.IP_MEMBER, requestData).get();
+                    String result = new CallServlet(getContext()).execute(ServerURL.IP_MEMBER, requestData).get();
                     if (result.contains("LoginStatus")) {
                         //登入失敗
                         JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
@@ -100,7 +100,7 @@ public class LoginDialog_deprecate extends DialogFragment {
                         //byte[] bmemImage = null;
                         String memBase64 = null;
                         try {
-                            memBase64 = new CallServlet().execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memId).get();
+                            memBase64 = new CallServlet(getContext()).execute(ServerURL.IP_GET_PIC, "action=get_member_pic&memId=" + memId).get();
                             if (memBase64 != null) {
                               //  bmemImage = Base64.decode(memBase64, Base64.DEFAULT);
                             }

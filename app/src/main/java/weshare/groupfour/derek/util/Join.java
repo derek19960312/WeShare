@@ -24,13 +24,13 @@ public class Join {
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
 
-    public MemberVO getMemberbyteacherId(String teacherId){
+    public MemberVO getMemberbyteacherId(String teacherId, Context context){
         String action = "action=get_one_by_teacherId";
         String requestData = action+"&teacherId="+teacherId;
 
         String result = null;
         try {
-            result = new CallServlet().execute(ServerURL.IP_MEMBER,requestData).get();
+            result = new CallServlet(context).execute(ServerURL.IP_MEMBER,requestData).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -38,13 +38,13 @@ public class Join {
         }
         return gson.fromJson(result,MemberVO.class);
     }
-    public MemberVO getMemberbyMemId(String memId){
+    public MemberVO getMemberbyMemId(String memId, Context context){
         String action = "action=get_one_by_memId";
         String requestData = action+"&memId="+memId;
 
         String result = null;
         try {
-            result = new CallServlet().execute(ServerURL.IP_MEMBER,requestData).get();
+            result = new CallServlet(context).execute(ServerURL.IP_MEMBER,requestData).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

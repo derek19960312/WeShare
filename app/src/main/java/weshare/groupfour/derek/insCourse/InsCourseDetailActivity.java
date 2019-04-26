@@ -63,7 +63,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         String requestDataT = Tools.RequestDataBuilder(requestT);
         String resultT = null;
         try {
-            resultT = new CallServlet().execute(ServerURL.IP_TEACHER, requestDataT).get();
+            resultT = new CallServlet(this).execute(ServerURL.IP_TEACHER, requestDataT).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -84,7 +84,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         String requestDataC = Tools.RequestDataBuilder(requestC);
         String resultC = null;
         try {
-            resultC = new CallServlet().execute(ServerURL.IP_INSCOURSE, requestDataC).get();
+            resultC = new CallServlet(this).execute(ServerURL.IP_INSCOURSE, requestDataC).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

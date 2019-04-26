@@ -183,7 +183,7 @@ public class CheckDateFragment extends Fragment {
 
                     try {
                         String request = Tools.RequestDataBuilder(requestMap);
-                        String result = new CallServlet().execute(ServerURL.IP_INSCOURSE, request).get();
+                        String result = new CallServlet(getContext()).execute(ServerURL.IP_INSCOURSE, request).get();
                         Type listType = new TypeToken<List<InsCourseTimeVO>>(){}.getType();
                         List<InsCourseTimeVO> inscTimes = gson.fromJson(result,listType);
 

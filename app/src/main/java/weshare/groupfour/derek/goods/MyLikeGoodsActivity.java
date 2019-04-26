@@ -37,7 +37,7 @@ public class MyLikeGoodsActivity extends AppCompatActivity {
         SharedPreferences spf = getSharedPreferences("myAccount", Context.MODE_PRIVATE);
         String memId = spf.getString("memId",null);
         if(memId != null){
-            List<GoodsVO> GoodsVOList = new GoodsLike().getMyLikeGoods(memId);
+            List<GoodsVO> GoodsVOList = new GoodsLike().getMyLikeGoods(memId,this);
             if(GoodsVOList != null && GoodsVOList.size() != 0 ){
                 rvMyLikeGoods.setAdapter(new GoodsAdapter(GoodsVOList));
             }else{
