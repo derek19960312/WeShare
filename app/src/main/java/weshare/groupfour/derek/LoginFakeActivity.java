@@ -1,6 +1,5 @@
 package weshare.groupfour.derek;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -11,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -26,8 +24,6 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.member.TeacherVO;
-import weshare.groupfour.derek.util.Holder;
-import weshare.groupfour.derek.util.Join;
 
 import weshare.groupfour.derek.util.Tools;
 
@@ -124,6 +120,11 @@ public class LoginFakeActivity extends AppCompatActivity {
                                     .apply();
                             isAteacher(memId);
                             Tools.Toast(LoginFakeActivity.this,"登入成功");
+
+                            new GetMyLikesThread().start();
+
+
+
                             finish();
                         }
                     } catch (Exception e) {

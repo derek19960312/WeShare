@@ -40,7 +40,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         Map<String, String> request = new HashMap<>();
         request.put("action", "get_all");
         String requestData = Tools.RequestDataBuilder(request);
-        String result = null;
+        String result;
         try {
             result = new CallServlet(this).execute(ServerURL.IP_GOODS, requestData).get();
             Log.e("result", result);

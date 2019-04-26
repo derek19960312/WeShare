@@ -4,8 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".util.App"
@@ -16,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".myGoodsOrders.MyGoodsActivity"
-            />
+
+        <activity android:name=".myGoodsOrders.MyGoodsActivity" />
         <activity android:name=".goods.MyLikeGoodsActivity" />
         <activity
             android:name=".goods.GoodsCartActivity"
@@ -30,8 +29,7 @@
             android:name=".LoginFakeActivity"
             android:theme="@style/AppTheme.Dialog" />
         <activity android:name=".member.MyWalletActivity" />
-        <activity
-            android:name=".calendar.CalendarActivity" />
+        <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".courseType.CourseCategoryActivity" />
         <activity android:name=".insCourse.MyLikeCourseActivity" />
         <activity android:name=".myCourseOrders.MyCourseActivity" />

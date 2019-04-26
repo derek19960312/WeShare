@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="2"
-            card_view:srcCompat="@drawable/pencil" />
+            card_view:srcCompat="@drawable/good_default" />
 
         <LinearLayout
             android:layout_width="match_parent"

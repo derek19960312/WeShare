@@ -19,7 +19,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
+import java.util.Set;
 
+import weshare.groupfour.derek.GetMyLikesThread;
 import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.R;
@@ -51,6 +53,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             tvTeacherName = view.findViewById(R.id.tvName);
             context = view.getContext();
             like = 0;
+
         }
     }
 
@@ -124,13 +127,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 view.getContext().startActivity(intent);
             }
         });
+
+
+
         final String memId = spf.getString("memId", null);
         //已經加入收藏的課程
         if (memId != null) {
-            List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId,context);
-            if (insCourseVOListbylike != null) {
-                for (InsCourseVO inscVObylike : insCourseVOListbylike) {
-                    if (inscVObylike.getInscId().equals(insCourseVO.getInscId())) {
+            Set<String> inscLikes = Tools.getSharePreAccount().getStringSet("inscLikes",null);
+            //List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId,context);
+            if (inscLikes != null) {
+                for (String inscLike : inscLikes) {
+                    if (inscLike.equals(insCourseVO.getInscId())) {
                         holder.ivLike.setImageResource(R.drawable.hearted);
                         holder.like = 1;
                     }

@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import weshare.groupfour.derek.GetMyLikesThread;
 import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.insCourse.CourseLike;
@@ -46,6 +48,7 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
             ivHeart = view.findViewById(R.id.ivHeart);
             context = view.getContext();
             heart = 0;
+
         }
     }
 
@@ -117,10 +120,11 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
         //秀出已經加入收藏者
         String memId = Tools.getSharePreAccount().getString("memId",null);
         if(memId != null){
-            List<GoodsVO> GoodsVOListbylike = new GoodsLike().getMyLikeGoods(memId,holder.context);
-            if(GoodsVOListbylike != null){
-                for(GoodsVO goodsVObylike : GoodsVOListbylike){
-                    if(goodsVObylike.getGoodId().equals(goodsVO.getGoodId())){
+            Set<String> goodsLikes = Tools.getSharePreAccount().getStringSet("goodsLikes",null);
+           // List<GoodsVO> GoodsVOListbylike = new GoodsLike().getMyLikeGoods(memId,holder.context);
+            if(goodsLikes != null){
+                for(String goodsLike : goodsLikes){
+                    if(goodsLike.equals(goodsVO.getGoodId())){
                         holder.ivHeart.setImageResource(R.drawable.hearted);
                         holder.heart = 1;
                     }

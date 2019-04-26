@@ -32,6 +32,7 @@ import weshare.groupfour.derek.goods.MyLikeGoodsActivity;
 import weshare.groupfour.derek.insCourse.MyLikeCourseActivity;
 import weshare.groupfour.derek.member.MyWalletActivity;
 import weshare.groupfour.derek.myCourseOrders.MyCourseActivity;
+import weshare.groupfour.derek.myGoodsOrders.MyGoodsActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -121,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
                         intent.setClass(MainActivity.this, GoodsBrowseActivity.class);
                         startActivity(intent);
                         return true;
-//                    case R.id.GoodsOrder:
-//                        intent.setClass(MainActivity.this, MyLikeCourseActivity.class);
-//                        startActivity(intent);
-//                        return true;
+                    case R.id.GoodsOrder:
+                        intent.setClass(MainActivity.this, MyGoodsActivity.class);
+                        startActivity(intent);
+                        return true;
                 }
                 return false;
             }
@@ -223,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //重新載入Headder
         addNavigationHeader();
+
     }
 
     public void onLogin(View v) {

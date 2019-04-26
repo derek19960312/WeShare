@@ -29,9 +29,14 @@ public class CallServlet extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("請稍等");
-        progressDialog.show();
+        try{
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage("請稍等");
+            progressDialog.show();
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override
@@ -69,6 +74,9 @@ public class CallServlet extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        //progressDialog.dismiss();
+        if (progressDialog != null){
+            progressDialog.dismiss();
+        }
+
     }
 }
