@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -37,11 +38,19 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
+
             if(insCourseVOList != null || insCourseVOList.size() != 0) {
-
-
-
-                recycleView.setAdapter(new CourseAdapter(insCourseVOList,this));
+                //判斷是否為該會員所開課程
+                String teacherId = Tools.getSharePreAccount().getString("teacherId",null);
+                List<InsCourseVO> inscVO_except_mine = new ArrayList<>();
+                if(teacherId != null){
+                    for(int i = 0; i< insCourseVOList.size(); i++){
+                        if(!insCourseVOList.get(i).getTeacherId().equals(teacherId)){
+                            inscVO_except_mine.add(insCourseVOList.get(i));
+                        }
+                    }
+                }
+                recycleView.setAdapter(new CourseAdapter(inscVO_except_mine,this));
             }else {
                 Tools.Toast(this,"查無資料");
             }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Tools;
@@ -47,6 +48,22 @@ public class CourseLike {
             Type listType = new TypeToken<List<InsCourseVO>>(){}.getType();
             Gson gson = new Gson();
             return gson.fromJson(result,listType);
+    }
+
+    public boolean isLikedCourse(String resultInsCourseId){
+
+        final String memId = Tools.getSharePreAccount().getString("memId", null);
+        if (memId != null) {
+            Set<String> inscLikes = Tools.getSharePreAccount().getStringSet("inscLikes",null);
+            if (inscLikes != null) {
+                for (String inscLike : inscLikes) {
+                    if (inscLike.equals(resultInsCourseId)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
 }

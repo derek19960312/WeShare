@@ -76,7 +76,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         final Bundle bundle = new Bundle();
 
         //取回老師名稱+資料
-        MemberVO TeaMemVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId(),context);
+        MemberVO TeaMemVO = new Join().getMemberbyteacherId(insCourseVO.getTeacherId(), context);
 
         //包裝資料 帶去下層
         bundle.putSerializable("insCourseVO", insCourseVO);
@@ -93,19 +93,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     switch (holder.like) {
                         case 0:
                             holder.ivLike.setImageResource(R.drawable.hearted);
-                            new CourseLike().addCourseLike(memId, insCourseVO.getInscId(),context);
+                            new CourseLike().addCourseLike(memId, insCourseVO.getInscId(), context);
                             Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
                             holder.like = 1;
                             break;
                         case 1:
                             holder.ivLike.setImageResource(R.drawable.heart);
-                            new CourseLike().deleteCourseLike(memId, insCourseVO.getInscId(),context);
+                            new CourseLike().deleteCourseLike(memId, insCourseVO.getInscId(), context);
                             Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
                             holder.like = 0;
                             break;
                     }
                 } else {
-                    Toast.makeText(holder.context, "請先登入", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(holder.context, LoginFakeActivity.class);
                     holder.context.startActivity(intent);
                 }
@@ -114,7 +113,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         holder.ivConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "分享", Toast.LENGTH_SHORT);
+                Toast.makeText(v.getContext(), "分享", Toast.LENGTH_SHORT).show();
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -129,24 +128,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         });
 
 
-
-        final String memId = spf.getString("memId", null);
         //已經加入收藏的課程
-        if (memId != null) {
-            Set<String> inscLikes = Tools.getSharePreAccount().getStringSet("inscLikes",null);
-            //List<InsCourseVO> insCourseVOListbylike = new CourseLike().getMyLikeCourse(memId,context);
-            if (inscLikes != null) {
-                for (String inscLike : inscLikes) {
-                    if (inscLike.equals(insCourseVO.getInscId())) {
-                        holder.ivLike.setImageResource(R.drawable.hearted);
-                        holder.like = 1;
-                    }
-                }
-            }
+        if (new CourseLike().isLikedCourse(insCourseVO.getInscId())) {
+            holder.ivLike.setImageResource(R.drawable.hearted);
+            holder.like = 1;
         }
 
+
         //取回圖片
-        new Join().setPicOn(holder.ivTeacherPic,TeaMemVO.getMemId());
+        new Join().setPicOn(holder.ivTeacherPic, TeaMemVO.getMemId());
     }
 
     @Override

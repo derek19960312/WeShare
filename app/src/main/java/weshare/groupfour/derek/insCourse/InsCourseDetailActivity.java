@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.LoginFakeActivity;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationActivity;
@@ -38,7 +40,7 @@ import weshare.groupfour.derek.util.Tools;
 public class InsCourseDetailActivity extends AppCompatActivity {
     InsCourseVO MinsCourseVO;
     MemberVO TeaMemVO;
-
+    int like;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +117,37 @@ public class InsCourseDetailActivity extends AppCompatActivity {
             }
         });
 
-
+        final ImageView ivLike = findViewById(R.id.ivLike);
         //收藏判斷
+        if(new CourseLike().isLikedCourse(MinsCourseVO.getInscId())){
+            ivLike.setImageResource(R.drawable.hearted);
+            like = 1;
+        }
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String memId = Tools.getSharePreAccount().getString("memId", null);
+                if (memId != null) {
+                    switch (like) {
+                        case 0:
+                            ivLike.setImageResource(R.drawable.hearted);
+                            new CourseLike().addCourseLike(memId, MinsCourseVO.getInscId(), InsCourseDetailActivity.this);
+                            Toast.makeText(InsCourseDetailActivity.this, "已加入收藏", Toast.LENGTH_SHORT).show();
+                            like = 1;
+                            break;
+                        case 1:
+                            ivLike.setImageResource(R.drawable.heart);
+                            new CourseLike().deleteCourseLike(memId, MinsCourseVO.getInscId(), InsCourseDetailActivity.this);
+                            Toast.makeText(InsCourseDetailActivity.this, "已取消收藏", Toast.LENGTH_SHORT).show();
+                            like = 0;
+                            break;
+                    }
+                } else {
+                    Intent intent = new Intent(InsCourseDetailActivity.this, LoginFakeActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
 
         //塞資料
