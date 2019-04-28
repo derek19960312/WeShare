@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatRoomActivity"></activity>
+        <activity android:name=".FriendsActivity"
+            android:theme="@style/Theme.AppCompat.Light"/>
+        <activity android:name=".ChatRoomActivity"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity android:name=".callServer.ChangeIPActivity"></activity>
         <activity android:name=".myGoodsOrders.MyGoodsActivity" />
         <activity android:name=".goods.MyLikeGoodsActivity" />

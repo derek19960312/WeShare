@@ -41,6 +41,7 @@
     <string name="MyWallet">我的錢包</string>
     <string name="Teacher">授課老師</string>
     <string name="InscLoc">上課地點</string>
+    <string name="text_Send">送出</string>
 
     <string-array name="goodsCount">
         <item>1</item>

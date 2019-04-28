@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import weshare.groupfour.derek.ChatRoomActivity;
+import weshare.groupfour.derek.FriendsActivity;
 import weshare.groupfour.derek.MypagerAdapter;
 import weshare.groupfour.derek.PageVO;
 import weshare.groupfour.derek.R;
@@ -84,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         return true;
                     case R.id.Friend:
-                        //intent.setClass(MainActivity.this, CourseCategoryActivity.class);
-                        //startActivity(intent);
+                        intent.setClass(MainActivity.this, FriendsActivity.class);
+                        startActivity(intent);
                         return true;
-                    case R.id.ChatRoom:
-                        //intent.setClass(MainActivity.this, MyCourseActivity.class);
-                        //startActivity(intent);
-                        return true;
+//                    case R.id.ChatRoom:
+//                        intent.setClass(MainActivity.this, ChatRoomActivity.class);
+//                        startActivity(intent);
+//                        return true;
                 }
                 return false;
             }
