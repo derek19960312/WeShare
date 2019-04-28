@@ -11,10 +11,10 @@ public class ServerURL {
 // final public static String IP = "http://localhost:8081";
 
     //中央宿舍
-//  final public static String IP = "http://192.168.168.123:8081";
+  final public static String IP = "http://192.168.168.123:8081";
 
     //資策會
- final public static String IP = "http://10.120.26.19:8081";
+// final public static String IP = "http://10.120.26.19:8081";
 
     //桃園家
 //  final public static String IP = "http://192.168.1.108:8081";
@@ -43,6 +43,7 @@ public class ServerURL {
     final public static String IP_TEACHER = IP+PROJECT+"/TeacherServlet";
     final public static String IP_GET_PIC = IP+PROJECT+"/DBGifReader";
     final public static String IP_WITHDRAEALRECORD = IP+PROJECT+"/WithdrawalRecordServlet";
+    final public static String IP_FRIENDS = IP+PROJECT+"/FriendNexusServlet";
 
 
 }
