@@ -12,7 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import java.util.List;
 
-import weshare.groupfour.derek.LoginFakeActivity;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.R;
 
 public class MyLikeGoodsActivity extends AppCompatActivity {
@@ -43,6 +43,7 @@ public class MyLikeGoodsActivity extends AppCompatActivity {
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("查無收藏清單")
+                        .setCancelable(false)
                         .setNegativeButton("確定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

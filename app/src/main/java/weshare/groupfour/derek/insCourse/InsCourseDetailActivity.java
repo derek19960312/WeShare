@@ -1,8 +1,6 @@
 package weshare.groupfour.derek.insCourse;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -27,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.LoginFakeActivity;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationActivity;

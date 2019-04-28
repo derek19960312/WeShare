@@ -4,9 +4,10 @@
     android:id="@+id/cvCourse"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:orientation="horizontal"
-    card_view:cardElevation="0dp"
-    card_view:cardMaxElevation="0dp">
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginRight="3dp"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +15,6 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-
-        <ImageView
-            android:id="@+id/ivIcon"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="4"
-            card_view:srcCompat="@drawable/good_default" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,20 +30,23 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvName"
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="交易編號"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tvWrName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="TextView"
+                    android:gravity="center"
                     android:textSize="18dp" />
 
-                <ImageView
-                    android:id="@+id/ivHeart"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="5"
-                    card_view:srcCompat="@drawable/heart" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,7 +62,24 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
                     android:gravity="center"
-                    android:text="單價" />
+                    android:text="時間" />
+
+                <TextView
+                    android:id="@+id/tvWrTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="09/09"
+                     />
+
+                <TextView
+                    android:id="@+id/tvType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:text="提領" />
 
                 <TextView
                     android:id="@+id/tvPrice"
@@ -76,21 +89,6 @@
                     android:gravity="center"
                     android:text="500"
                     android:textColor="@android:color/holo_red_dark" />
-
-                <TextView
-                    android:id="@+id/tvType"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.5"
-                    android:gravity="center"
-                    android:text="數量" />
-
-                <Spinner
-                    android:id="@+id/spCount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:entries="@array/goodsCount" />
 
             </LinearLayout>
         </LinearLayout>

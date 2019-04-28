@@ -3,11 +3,8 @@ package weshare.groupfour.derek.insCourse;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.List;
-import java.util.Set;
 
-import weshare.groupfour.derek.GetMyLikesThread;
-import weshare.groupfour.derek.LoginFakeActivity;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Join;

@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.home;
 
 
 import android.content.Context;
@@ -26,6 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import weshare.groupfour.derek.MypagerAdapter;
+import weshare.groupfour.derek.PageVO;
+import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.callServer.ChangeIPActivity;
+import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseType.CourseCategoryActivity;
 import weshare.groupfour.derek.goods.GoodsBrowseActivity;
 import weshare.groupfour.derek.goods.MyLikeGoodsActivity;
@@ -33,6 +38,7 @@ import weshare.groupfour.derek.insCourse.MyLikeCourseActivity;
 import weshare.groupfour.derek.member.MyWalletActivity;
 import weshare.groupfour.derek.myCourseOrders.MyCourseActivity;
 import weshare.groupfour.derek.myGoodsOrders.MyGoodsActivity;
+import weshare.groupfour.derek.util.Tools;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Tools.Toast(MainActivity.this, ServerURL.IP);
 
         toolbar = findViewById(R.id.toolbar);
         dlMain = findViewById(R.id.dlMain);

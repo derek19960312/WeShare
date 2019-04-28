@@ -12,7 +12,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-import weshare.groupfour.derek.LoginFakeActivity;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.MypagerAdapter;
 import weshare.groupfour.derek.PageVO;
 import weshare.groupfour.derek.R;

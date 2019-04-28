@@ -1,12 +1,9 @@
 package weshare.groupfour.derek.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import weshare.groupfour.derek.goods.GoodsVO;

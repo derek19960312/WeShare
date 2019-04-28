@@ -2,12 +2,15 @@ package weshare.groupfour.derek.goods;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,18 +26,29 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.callServer.CallServlet;
+import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.home.LoginFakeActivity;
+import weshare.groupfour.derek.myGoodsOrders.GoodsOrderVO;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsCartActivity extends AppCompatActivity {
     TextView tvTotalPrice;
-
+    int totalPrice = 0;
     Map<GoodsVO,Integer> myCart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +69,11 @@ public class GoodsCartActivity extends AppCompatActivity {
             rvCart.setAdapter(new GoodsCartAdapter(new ArrayList<>(myCart.keySet())));
 
 
-            int total = 0;
+
             for(GoodsVO gvo : myCart.keySet()){
-                total += myCart.get(gvo)*gvo.getGoodPrice();
+                totalPrice += myCart.get(gvo)*gvo.getGoodPrice();
             }
-            tvTotalPrice.setText(String.valueOf(total));
+            tvTotalPrice.setText(String.valueOf(totalPrice));
 
             //設定寬高
             Window win = getWindow();
@@ -83,13 +97,93 @@ public class GoodsCartActivity extends AppCompatActivity {
             btnBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Tools.Toast(GoodsCartActivity.this,"稍後為您處理訂單");
+
+                    final String memId = Tools.getSharePreAccount().getString("memId",null);
+                    if(memId != null){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GoodsCartActivity.this);
+                        builder.setTitle("確認付款")
+                                .setCancelable(false)
+                                .setMessage("共：  NT "+totalPrice)
+                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                })
+                                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        GoodsOrderVO goodsOrderVO = new GoodsOrderVO();
+                                        goodsOrderVO.setMemId(memId);
+                                        goodsOrderVO.setGoodTotalPrice(totalPrice);
+                                        goodsOrderVO.setGoodDate(new Timestamp(new GregorianCalendar().getTimeInMillis()));
+
+                                        Map<String,String> requestMap = new HashMap<>();
+                                        Gson gson = new GsonBuilder()
+
+                                                .enableComplexMapKeySerialization()
+                                                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                                                .create();
+                                        requestMap.put("action","add_new_good_order");
+                                        requestMap.put("myCart",gson.toJson(myCart));
+                                        requestMap.put("goodsOrderVO",gson.toJson(goodsOrderVO));
+                                        String request = Tools.RequestDataBuilder(requestMap);
+                                        Log.e("request",request);
+                                        String result = null;
+                                        try {
+                                            result = new CallServlet(GoodsCartActivity.this).execute(ServerURL.IP_GOODSORDER,request).get();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        if (result.equals("Insufficient_account_balance")){
+                                            Tools.Toast(GoodsCartActivity.this,"餘額不足，請先儲值");
+                                            AlertDialog.Builder builderSuccess = new AlertDialog.Builder(GoodsCartActivity.this);
+                                            builderSuccess
+                                                    .setMessage("餘額不足是否前往儲值頁面")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            //Intent intent = new Intent(GoodsCartActivity.this,);
+                                                            //startActivity(intent);
+                                                            //finish();
+                                                        }
+                                                    })
+                                                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+
+                                                        }
+                                                    }).create().show();
+
+                                        }else{
+                                            Tools.Toast(GoodsCartActivity.this,"訂購成功，請靜候賣家出貨");
+                                            myCart.clear();
+                                            finish();
+                                        }
+
+                                    }
+                                })
+                                .create().show();
+
+
+                    }else{
+                        Intent intent = new Intent(GoodsCartActivity.this,LoginFakeActivity.class);
+                        startActivity(intent);
+                    }
+
+
+
                 }
             });
 
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("購物車空空如也")
+                    .setCancelable(false)
                     .setNegativeButton("確定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -179,19 +273,25 @@ public class GoodsCartActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     SharedPreferences spf = Tools.getSharePreAccount();
                     String memId = spf.getString("memId",null);
-                    switch (holder.heart) {
-                        case 0:
-                            holder.ivHeart.setImageResource(R.drawable.hearted);
-                            new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId(),holder.context);
-                            Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
-                            holder.heart = 1;
-                            break;
-                        case 1:
-                            holder.ivHeart.setImageResource(R.drawable.heart);
-                            new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId(),holder.context);
-                            Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
-                            holder.heart = 0;
-                            break;
+                    if(memId != null){
+                        switch (holder.heart) {
+                            case 0:
+                                holder.ivHeart.setImageResource(R.drawable.hearted);
+                                new GoodsLike().addGoodsLike(memId,goodsVO.getGoodId(),holder.context);
+                                Toast.makeText(holder.context, "已加入收藏", Toast.LENGTH_SHORT).show();
+                                holder.heart = 1;
+                                break;
+                            case 1:
+                                holder.ivHeart.setImageResource(R.drawable.heart);
+                                new GoodsLike().deleteGoodsLike(memId,goodsVO.getGoodId(),holder.context);
+                                Toast.makeText(holder.context, "已取消收藏", Toast.LENGTH_SHORT).show();
+                                holder.heart = 0;
+                                break;
+                        }
+                    }else{
+                        Toast.makeText(holder.context,"請先登入",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(holder.context, LoginFakeActivity.class);
+                        holder.context.startActivity(intent);
                     }
 
                 }

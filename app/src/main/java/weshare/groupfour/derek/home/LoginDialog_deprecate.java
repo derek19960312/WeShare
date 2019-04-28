@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.home;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.member.MemberVO;

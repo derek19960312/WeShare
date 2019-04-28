@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.home;
 
 
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.SearchView;
 import java.util.HashMap;
 import java.util.Map;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.calendar.CalendarActivity;
 import weshare.groupfour.derek.insCourse.InsCourseBrowseActivity;
 import weshare.groupfour.derek.util.Tools;

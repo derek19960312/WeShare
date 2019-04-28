@@ -14,8 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
+        <activity android:name=".ChatRoomActivity"></activity>
+        <activity android:name=".callServer.ChangeIPActivity"></activity>
         <activity android:name=".myGoodsOrders.MyGoodsActivity" />
         <activity android:name=".goods.MyLikeGoodsActivity" />
         <activity
@@ -26,7 +26,7 @@
             android:label="@string/title_activity_ins_course_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginFakeActivity"
+            android:name=".home.LoginFakeActivity"
             android:theme="@style/AppTheme.Dialog" />
         <activity android:name=".member.MyWalletActivity" />
         <activity android:name=".calendar.CalendarActivity" />
@@ -39,7 +39,7 @@
         <activity
             android:name=".courseReservation.CourseReservationActivity"
             android:theme="@style/AppTheme.Dialog" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

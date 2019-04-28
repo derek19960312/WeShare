@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import weshare.groupfour.derek.LoginFakeActivity;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.R;
 
 public class MyCourseActivity extends AppCompatActivity {

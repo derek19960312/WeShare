@@ -1,5 +1,6 @@
 package weshare.groupfour.derek.courseReservation;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 
@@ -7,6 +8,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentHostCallback;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.goods.GoodsCartActivity;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.util.Tools;
@@ -125,6 +128,26 @@ public class ReservationConfirmFragment extends Fragment {
                 if(result != null || result.isEmpty()){
                     Tools.Toast(getContext(),"已成功預約");
                     getActivity().finish();
+                }else if(result.equals("Insufficient_account_balance")){
+                    Tools.Toast(getContext(),"餘額不足，請先儲值");
+                    AlertDialog.Builder builderSuccess = new AlertDialog.Builder(getContext());
+                    builderSuccess.setMessage("餘額不足是否前往儲值頁面")
+                            .setCancelable(false)
+                            .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Intent intent = new Intent(GoodsCartActivity.this,);
+                                    //startActivity(intent);
+                                    //finish();
+                                }
+                            })
+                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).create().show();
+
                 }else{
                     FragmentManager fm = getFragmentManager();
                     fm.popBackStack();

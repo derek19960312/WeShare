@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.home;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.GetMyLikesThread;
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.member.MemberVO;
@@ -121,6 +123,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                             isAteacher(memId);
                             Tools.Toast(LoginFakeActivity.this,"登入成功");
 
+                            //更新收藏
                             new GetMyLikesThread().start();
 
 

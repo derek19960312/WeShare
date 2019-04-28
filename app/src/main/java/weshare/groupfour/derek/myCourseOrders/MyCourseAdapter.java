@@ -37,6 +37,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         private TextView tvCourseEXP;
         private TextView tvCoursePlace;
         private TextView tvQrcode;
+        private TextView tvOrderNum;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -47,6 +49,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             tvCourseEXP = view.findViewById(R.id.tvCourseEXP);
             tvCoursePlace = view.findViewById(R.id.tvCoursePlace);
             tvQrcode = view.findViewById(R.id.tvQrcode);
+            tvOrderNum = view.findViewById(R.id.tvOrderNum);
         }
     }
 
@@ -66,7 +69,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd a h點");
         holder.tvCourseMFD.setText(sdf.format(myCourseRvVO.getCrvMFD()));
         holder.tvCourseEXP.setText(sdf.format(myCourseRvVO.getCrvEXP()));
-
+        holder.tvOrderNum.setText(myCourseRvVO.getCrvId());
 
 
         Join join = new Join();

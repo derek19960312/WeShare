@@ -9,7 +9,7 @@ public class GoodsVO implements Serializable{
 	private String goodName;
 	private Integer goodPrice;
 	private String goodInfo;
-	private String goodImg;
+	private byte[] goodImg;
 	private Integer goodStatus;
 	
 	public GoodsVO() {
@@ -46,10 +46,10 @@ public class GoodsVO implements Serializable{
 	public void setGoodInfo(String goodInfo) {
 		this.goodInfo = goodInfo;
 	}
-	public String getGoodImg() {
+	public byte[] getGoodImg() {
 		return goodImg;
 	}
-	public void setGoodImg(String goodImg) {
+	public void setGoodImg(byte[] goodImg) {
 		this.goodImg = goodImg;
 	}
 	public Integer getGoodStatus() {
@@ -58,11 +58,7 @@ public class GoodsVO implements Serializable{
 	public void setGoodStatus(Integer goodStatus) {
 		this.goodStatus = goodStatus;
 	}
-	@Override
-	public String toString() {
-		return "GoodsVO [goodId=" + goodId + ", teacherId=" + teacherId + ", goodName=" + goodName + ", goodPrice="
-				+ goodPrice + ", goodInfo=" + goodInfo + ", goodImg=" + goodImg + ", goodStatus=" + goodStatus + "]";
-	}
+
 
 	@Override
 	public boolean equals(Object o) {
