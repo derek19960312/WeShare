@@ -50,7 +50,7 @@ public class FriendsActivity extends AppCompatActivity {
     private List<FriendNexusVO> MyFriendOnline = new LinkedList<>();
     private List<FriendNexusVO> MyFriendOffline = new LinkedList<>();
     private LocalBroadcastManager broadcastManager;
-    private FriendNexusVO fnVO;
+    FriendNexusVO fnVO = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +115,7 @@ public class FriendsActivity extends AppCompatActivity {
             State stateMessage = new Gson().fromJson(message, State.class);
             String type = stateMessage.getType();
             String friend = stateMessage.getUser();
+            Log.e("type friend",type+friend);
             switch (type) {
                 // 有user連線
                 case "open":
@@ -137,7 +138,7 @@ public class FriendsActivity extends AppCompatActivity {
                         // 如果其他user連線且尚未加入聊天清單，就加上
 
                         for(FriendNexusVO nvo : allMyFriend){
-                            if(nvo.equals(friend)){
+                            if(nvo.getFriendAcc().equals(friend)){
                                 MyFriendOnline.add(nvo);
                                 MyFriendOffline.remove(nvo);
                             }
@@ -149,10 +150,10 @@ public class FriendsActivity extends AppCompatActivity {
                         Connect_WebSocket.showToast(FriendsActivity.this, friend + " is online");
                     }
                     // 重刷聊天清單
-
-
                     rvFriendsOnline.getAdapter().notifyDataSetChanged();
                     rvFriendsOffLine.getAdapter().notifyDataSetChanged();
+                    //new AfterChange().OnChange();
+
 
 
                     break;
@@ -160,20 +161,22 @@ public class FriendsActivity extends AppCompatActivity {
                 case "close":
                     // 將斷線的user從聊天清單中移除
                     for(FriendNexusVO nvo : allMyFriend){
-                        if(nvo.equals(friend)){
+                        if(nvo.getFriendAcc().equals(friend)){
                             MyFriendOnline.remove(nvo);
                             MyFriendOffline.add(nvo);
                         }
                     }
-
                     rvFriendsOnline.getAdapter().notifyDataSetChanged();
                     rvFriendsOffLine.getAdapter().notifyDataSetChanged();
+                    //new AfterChange().OnChange();
                     Connect_WebSocket.showToast(FriendsActivity.this, friend + " is offline");
             }
             Log.d(TAG, message);
         }
 
     }
+
+
 
     private class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder> {
         Context context;
@@ -216,14 +219,17 @@ public class FriendsActivity extends AppCompatActivity {
 
             if(line.equals("on")){
                 fnVO = MyFriendOnline.get(position);
+                final String friendName = fnVO.getMemId();
+                final String friendId = fnVO.getFriendAcc();
                 // 點選聊天清單上的user即開啟聊天頁面
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(FriendsActivity.this, ChatRoomActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("fnVO",fnVO);
-                        intent.putExtras(bundle);
+                        intent.putExtra("friendName",friendName);
+                        intent.putExtra("friendId",friendId);
+                        intent.putExtra("title",friendName);
+
                         startActivity(intent);
                     }
                 });
@@ -246,5 +252,10 @@ public class FriendsActivity extends AppCompatActivity {
         super.onDestroy();
         Connect_WebSocket.disconnectServer();
     }
+
+
+
+
+
 
 }

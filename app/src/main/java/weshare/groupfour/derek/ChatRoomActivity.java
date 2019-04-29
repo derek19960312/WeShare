@@ -14,13 +14,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import weshare.groupfour.derek.util.Connect_WebSocket;
-import weshare.groupfour.derek.util.Tools;
 
 import static weshare.groupfour.derek.util.Connect_WebSocket.getUserName;
 
@@ -30,7 +25,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private TextView tvMessage;
     private EditText etMessage;
     private ScrollView scrollView;
-    private String friend;
+    private String friendId, friendName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +36,10 @@ public class ChatRoomActivity extends AppCompatActivity {
         broadcastManager = LocalBroadcastManager.getInstance(this);
         registerChatReceiver();
         // 取得前頁傳來的聊天對象
-        friend = getIntent().getStringExtra("friend");
-        //setTitle("friend: " + friend);
+        friendId = getIntent().getStringExtra("friendId");
+        friendName = getIntent().getStringExtra("friendName");
         Connect_WebSocket.connectServer(this, getUserName() );
+
 //        getHistoryMessage();
     }
 
@@ -53,11 +49,11 @@ public class ChatRoomActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView);
     }
 
-    private void getHistoryMessage() {
-        ChatMessage chatMessage = new ChatMessage("history", getUserName(), friend, "");
-        String chatMessageJson = new Gson().toJson(chatMessage);
-        Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
-    }
+//    private void getHistoryMessage() {
+//        ChatMessage chatMessage = new ChatMessage("history", getUserName(), friendId, "");
+//        String chatMessageJson = new Gson().toJson(chatMessage);
+//        Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
+//    }
 
     private void registerChatReceiver() {
         IntentFilter chatFilter = new IntentFilter("chat");
@@ -85,8 +81,8 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             String sender = chatMessage.getSender();
             // 接收到聊天訊息，若發送者與目前聊天對象相同，就將訊息顯示在TextView
-            if (sender.equals(friend)) {
-                tvMessage.append(sender + ": " + chatMessage.getMessage() + "\n");
+            if (sender.equals(friendId)) {
+                tvMessage.append(friendName + ": " + chatMessage.getMessage() + "\n");
                 scrollView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -98,6 +94,8 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
     }
 
+
+
     // user點擊發送訊息按鈕
     public void clickSend(View view) {
         String message = etMessage.getText().toString();
@@ -107,7 +105,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
         String sender = getUserName();
         // 將欲傳送訊息先顯示在TextView上
-        tvMessage.append(sender + ": " + message + "\n");
+        tvMessage.append("me" + ": " + message + "\n");
         // 將輸入的訊息清空
         etMessage.setText(null);
         // 捲動至最新訊息
@@ -118,7 +116,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         });
         // 將欲傳送訊息轉成JSON後送出
-        ChatMessage chatMessage = new ChatMessage("chat", sender, friend, message);
+        ChatMessage chatMessage = new ChatMessage("chat", sender, friendId, message);
         String chatMessageJson = new Gson().toJson(chatMessage);
         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
         Log.d(TAG, "output: " + chatMessageJson);

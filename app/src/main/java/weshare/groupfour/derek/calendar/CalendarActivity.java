@@ -101,13 +101,11 @@ public class CalendarActivity extends AppCompatActivity {
 
         final List<CourseReservationVO> mycrvMem = gson.fromJson(result, listType);
 
-
-
-
         final RecyclerView rvClendar = findViewById(R.id.rvClendar);
         rvClendar.setLayoutManager(new LinearLayoutManager(this));
 
         CalendarView calendarView = findViewById(R.id.calendarView);
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {

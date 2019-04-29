@@ -17,7 +17,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Connect_WebSocket {
     private final static String TAG = "Util";
     public static final String SERVER_URI =
-            "ws://192.168.168.123:8081/WeShare_web/FriendWS/";
+            "ws://10.120.26.19:8081/WeShare_web/FriendWS/";
     public static ChatWebSocketClient chatWebSocketClient;
 
     // 建立WebSocket連線
