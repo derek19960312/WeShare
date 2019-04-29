@@ -94,7 +94,8 @@ public class FriendsActivity extends AppCompatActivity {
         rvFriendsOffLine.setLayoutManager(new LinearLayoutManager(this));
         rvFriendsOffLine.setAdapter(new FriendAdapter(this, "off"));
 
-        Connect_WebSocket.connectServer(this, user);
+        //建立連線
+        Connect_WebSocket.connectServerChat(this, user, ServerURL.WS_CHATROOM);
     }
 
 
@@ -152,7 +153,6 @@ public class FriendsActivity extends AppCompatActivity {
                     // 重刷聊天清單
                     rvFriendsOnline.getAdapter().notifyDataSetChanged();
                     rvFriendsOffLine.getAdapter().notifyDataSetChanged();
-                    //new AfterChange().OnChange();
 
 
 
@@ -168,7 +168,6 @@ public class FriendsActivity extends AppCompatActivity {
                     }
                     rvFriendsOnline.getAdapter().notifyDataSetChanged();
                     rvFriendsOffLine.getAdapter().notifyDataSetChanged();
-                    //new AfterChange().OnChange();
                     Connect_WebSocket.showToast(FriendsActivity.this, friend + " is offline");
             }
             Log.d(TAG, message);
@@ -250,7 +249,7 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Connect_WebSocket.disconnectServer();
+        Connect_WebSocket.disconnectServerChat();
     }
 
 

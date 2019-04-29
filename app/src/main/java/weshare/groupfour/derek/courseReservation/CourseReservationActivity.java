@@ -1,20 +1,40 @@
 package weshare.groupfour.derek.courseReservation;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.LinkedList;
+
+import weshare.groupfour.derek.FriendNexusVO;
+import weshare.groupfour.derek.FriendsActivity;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.State;
+import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.insCourse.InsCourseTimeVO;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
+import weshare.groupfour.derek.util.Connect_WebSocket;
 
 
 public class CourseReservationActivity extends AppCompatActivity {
@@ -46,6 +66,18 @@ public class CourseReservationActivity extends AppCompatActivity {
             ft.add(R.id.clReservation,cdf,"DatePickFragment");
             ft.commit();
         }
+        //連接搶課大聊天室
+        InsCourseVO insCourseVO = (InsCourseVO) getIntent().getExtras().getSerializable("insCourseVO");
+        String user = Connect_WebSocket.getUserName();
+
+        //註冊
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+        //判斷進來的訊息
+        IntentFilter lockCourseFilter = new IntentFilter(insCourseVO.getInscId());
+        GrabCourseReceiver grabCourseReceiver = new GrabCourseReceiver();
+        broadcastManager.registerReceiver(grabCourseReceiver, lockCourseFilter);
+
+        Connect_WebSocket.connectServerGrab(this, user, ServerURL.WS_GRABCOURSE);
 
 
     }
@@ -57,4 +89,39 @@ public class CourseReservationActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.close_menu, menu);
         return true;
     }
+
+
+    private class GrabCourseReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra("message");
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+            InsCourseTimeVO inscTimeVO = gson.fromJson(message, InsCourseTimeVO.class);
+
+            RadioGroup rgDate = CheckDateFragment.rgDate;
+            for(int i=0; i<rgDate.getChildCount(); i++){
+                RadioButton rb = (RadioButton) rgDate.getChildAt(i);
+                String inscTimeId = rb.getTag().toString();
+                if(inscTimeVO.getInscTimeId().equals(inscTimeId)){
+                    rb.setClickable(false);
+                    rb.setTextColor(Color.GRAY);
+                }else{
+                    rb.setClickable(true);
+                    rb.setTextColor(Color.BLACK);
+                }
+
+            }
+
+        }
+
+    }
+
+
+    // Activity結束即中斷WebSocket連線
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Connect_WebSocket.disconnectServerGrab();
+    }
+
 }

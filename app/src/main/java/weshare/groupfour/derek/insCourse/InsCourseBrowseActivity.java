@@ -38,22 +38,24 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
+            //測試
+            recycleView.setAdapter(new CourseAdapter(insCourseVOList,this));
 
-            if(insCourseVOList != null || insCourseVOList.size() != 0) {
-                //判斷是否為該會員所開課程
-                String teacherId = Tools.getSharePreAccount().getString("teacherId",null);
-                List<InsCourseVO> inscVO_except_mine = new ArrayList<>();
-                if(teacherId != null){
-                    for(int i = 0; i< insCourseVOList.size(); i++){
-                        if(!insCourseVOList.get(i).getTeacherId().equals(teacherId)){
-                            inscVO_except_mine.add(insCourseVOList.get(i));
-                        }
-                    }
-                }
-                recycleView.setAdapter(new CourseAdapter(inscVO_except_mine,this));
-            }else {
-                Tools.Toast(this,"查無資料");
-            }
+//            if(insCourseVOList != null || insCourseVOList.size() != 0) {
+//                //判斷是否為該會員所開課程
+//                String teacherId = Tools.getSharePreAccount().getString("teacherId",null);
+//                List<InsCourseVO> inscVO_except_mine = new ArrayList<>();
+//                if(teacherId != null){
+//                    for(int i = 0; i< insCourseVOList.size(); i++){
+//                        if(!insCourseVOList.get(i).getTeacherId().equals(teacherId)){
+//                            inscVO_except_mine.add(insCourseVOList.get(i));
+//                        }
+//                    }
+//                }
+//                recycleView.setAdapter(new CourseAdapter(inscVO_except_mine,this));
+//            }else {
+//                Tools.Toast(this,"查無資料");
+//            }
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

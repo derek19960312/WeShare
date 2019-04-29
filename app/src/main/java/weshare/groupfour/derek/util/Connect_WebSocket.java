@@ -11,20 +11,21 @@ import java.net.URISyntaxException;
 
 
 import weshare.groupfour.derek.ws.ChatWebSocketClient;
+import weshare.groupfour.derek.ws.GrabCourseWebSocketClient;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Connect_WebSocket {
     private final static String TAG = "Util";
-    public static final String SERVER_URI =
-            "ws://10.120.26.19:8081/WeShare_web/FriendWS/";
-    public static ChatWebSocketClient chatWebSocketClient;
 
-    // 建立WebSocket連線
-    public static void connectServer(Context context, String userName) {
+    public static ChatWebSocketClient chatWebSocketClient;
+    public static GrabCourseWebSocketClient grabCourseWebSocketClient;
+
+    // 建立ChatWebSocket連線
+    public static void connectServerChat(Context context, String userName, String ws) {
         URI uri = null;
         try {
-            uri = new URI(SERVER_URI + userName);
+            uri = new URI(ws + "/"+userName);
         } catch (URISyntaxException e) {
             Log.e(TAG, e.toString());
         }
@@ -33,20 +34,42 @@ public class Connect_WebSocket {
             chatWebSocketClient.connect();
         }
     }
-
-    // 中斷WebSocket連線
-    public static void disconnectServer() {
+    // 中斷ChatWebSocket連線
+    public static void disconnectServerChat() {
         if (chatWebSocketClient != null) {
             chatWebSocketClient.close();
             chatWebSocketClient = null;
         }
     }
 
-    public static void setUserName(Context context, String userName) {
-        SharedPreferences preferences =
-                context.getSharedPreferences("user", MODE_PRIVATE);
-        preferences.edit().putString("userName", userName).apply();
+    // 建立GrabWebSocket連線
+    public static void connectServerGrab(Context context, String userName, String ws) {
+        URI uri = null;
+        try {
+            uri = new URI(ws + "/"+userName);
+        } catch (URISyntaxException e) {
+            Log.e(TAG, e.toString());
+        }
+        if (grabCourseWebSocketClient == null) {
+            grabCourseWebSocketClient = new GrabCourseWebSocketClient(uri, context);
+            grabCourseWebSocketClient.connect();
+        }
     }
+    // 中斷GrabWebSocket連線
+    public static void disconnectServerGrab() {
+        if (grabCourseWebSocketClient != null) {
+            grabCourseWebSocketClient.close();
+            grabCourseWebSocketClient = null;
+        }
+    }
+
+
+
+
+
+
+
+
 
     public static String getUserName() {
         String userName = Tools.getSharePreAccount().getString("memId","XXX");

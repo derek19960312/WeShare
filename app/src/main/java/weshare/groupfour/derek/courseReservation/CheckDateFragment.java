@@ -45,17 +45,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.ChatMessage;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.insCourse.InsCourseTimeVO;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
+import weshare.groupfour.derek.util.Connect_WebSocket;
 import weshare.groupfour.derek.util.Tools;
 
 public class CheckDateFragment extends Fragment {
+
     private static int year, month, day;
     private static Button btnDate;
-    private static RadioGroup rgDate = null;
+    public static RadioGroup rgDate = null;
     private static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
             .create();
@@ -106,7 +109,7 @@ public class CheckDateFragment extends Fragment {
 
                     crVO = new CourseReservationVO();
                     //取出timeId
-                    crVO.setInscTimeId(rb.getHint().toString());
+                    crVO.setInscTimeId(rb.getTag().toString());
                     //塞入開始結束時間
                     String MDFTime = btnDate.getText().toString() + " " + times[0];
                     String EXPTime = btnDate.getText().toString() + " " + times[1];
@@ -170,6 +173,7 @@ public class CheckDateFragment extends Fragment {
                     month = m;
                     day = d;
                     updateInfo();
+
                     //取得課程資訊
                     InsCourseVO insCourseVO = (InsCourseVO) getActivity().getIntent().getExtras().get("insCourseVO");
                     java.sql.Date inscDate = new java.sql.Date(new GregorianCalendar(y,m,d).getTimeInMillis());
@@ -199,11 +203,22 @@ public class CheckDateFragment extends Fragment {
                             for(int i=0; i<inscTimes.size(); i++){
                                 RadioButton radioButton = new RadioButton(getContext());
                                 radioButton.setTextSize(25);
-                                InsCourseTimeVO inscTime = inscTimes.get(i);
+                                final InsCourseTimeVO inscTime = inscTimes.get(i);
                                 SimpleDateFormat sdf = new SimpleDateFormat("kk:mm");
                                 radioButton.setText(sdf.format(inscTime.getInscMFD())+"-"+sdf.format(inscTime.getInscEXP()));
                                 //放入timeId
-                                radioButton.setHint(inscTime.getInscTimeId());
+                                radioButton.setTag(inscTime.getInscTimeId());
+
+                                //加入按下推撥事件
+                                radioButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        String inscTimeVOJson = gson.toJson(inscTime);
+                                        Connect_WebSocket.grabCourseWebSocketClient.send(inscTimeVOJson);
+                                    }
+                                });
+
+
                                 rgDate.addView(radioButton);
                             }
                         }else{

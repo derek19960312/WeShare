@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Connect_WebSocket;
 
 import static weshare.groupfour.derek.util.Connect_WebSocket.getUserName;
@@ -38,7 +39,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         // 取得前頁傳來的聊天對象
         friendId = getIntent().getStringExtra("friendId");
         friendName = getIntent().getStringExtra("friendName");
-        Connect_WebSocket.connectServer(this, getUserName() );
+        Connect_WebSocket.connectServerChat(this, getUserName(), ServerURL.WS_CHATROOM);
 
 //        getHistoryMessage();
     }
