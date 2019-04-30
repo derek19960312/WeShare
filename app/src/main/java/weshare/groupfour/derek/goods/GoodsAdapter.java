@@ -3,6 +3,7 @@ package weshare.groupfour.derek.goods;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,11 +45,8 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
             ivHeart = view.findViewById(R.id.ivHeart);
             context = view.getContext();
             heart = 0;
-
         }
     }
-
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
@@ -131,12 +129,11 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(GoodsBrowseActivity.this,goodsVO.getName()+"查看詳情",Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(GoodsBrowseActivity.this, GoodsDetailActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable("goodsVO", goodsVO);
-//                    intent.putExtras(bundle);
-//                    startActivity(intent);
+                    Intent intent = new Intent(holder.context, GoodsDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("goodsVO", goodsVO);
+                    intent.putExtras(bundle);
+                    holder.context.startActivity(intent);
             }
         });
 

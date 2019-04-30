@@ -11,7 +11,6 @@ import weshare.groupfour.derek.goods.GoodsVO;
 public class Holder {
     private static Context applicationContext;
     private static Map<GoodsVO,Integer> cart = new HashMap<>();
-    private static ImageView imageView;
     public static void initial(Context context){
         applicationContext = context;
     }
@@ -24,10 +23,6 @@ public class Holder {
         return cart;
     }
 
-    public static ImageView getMemImgV(){
-        imageView = new ImageView(applicationContext);
-        imageView.setTag(new Integer(0));
-        return imageView;
-    }
+
 }
 

@@ -123,7 +123,7 @@ public class CalendarActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     if(clicked == crMFD){
-                        crVO.setIdFlag(1);
+                        crVO.setIdFlag(0);
                         myCourseRvList.add(crVO);
                     }
                 }
@@ -136,7 +136,7 @@ public class CalendarActivity extends AppCompatActivity {
                     }
 
                     if(crMFD == clicked){
-                        crVO.setIdFlag(0);
+                        crVO.setIdFlag(1);
                         myCourseRvList.add(crVO);
                     }
                 }

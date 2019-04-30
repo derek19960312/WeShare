@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Join;
 
 public class GoodsDetailActivity extends AppCompatActivity {
 
@@ -17,8 +18,8 @@ public class GoodsDetailActivity extends AppCompatActivity {
         TextView tvDetail = findViewById(R.id.tvDetail),tvName = findViewById(R.id.tvName);
 
         GoodsVO goodsVO = (GoodsVO)getIntent().getExtras().getSerializable("goodsVO");
-        //ivPic.setImageResource(goodsVO.getIcon());
+        Join.setPicOn(ivPic,goodsVO.getGoodId());
         tvName.setText(goodsVO.getGoodName());
-        tvDetail.setText(goodsVO.getGoodPrice());
+        tvDetail.setText(String.valueOf(goodsVO.getGoodPrice()));
     }
 }

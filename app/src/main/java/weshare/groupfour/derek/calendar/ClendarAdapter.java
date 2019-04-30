@@ -80,7 +80,7 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
                 MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId(),context);
                 //加入學生圖片
                 join.setPicOn(holder.civPic,memVO.getMemId());
-                holder.tvName.setText("學生 "+memVO.getMemName());
+                holder.tvName.setText("學生姓名："+memVO.getMemName());
                 break;
             case 1:
                 //以學生身分
@@ -89,7 +89,7 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
                 //加入老師圖片
                 join.setPicOn(holder.civPic,memtVO.getMemId());
 
-                holder.tvName.setText("老師  "+memtVO.getMemName());
+                holder.tvName.setText("老師姓名："+memtVO.getMemName());
 
 
                 //可以展開Qrcode

@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/pencil2" />
+                app:srcCompat="@drawable/good_default" />
 
             <LinearLayout
                 android:layout_width="match_parent"
