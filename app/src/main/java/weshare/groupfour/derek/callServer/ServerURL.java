@@ -2,8 +2,8 @@ package weshare.groupfour.derek.callServer;
 
 public class ServerURL {
 
-    //日本西岸
-//  final public static String IP = "40.74.69.29:8081";
+    //GCP
+//  final public static String IP = "34.80.204.33:8081";
 
     //迎刃
 //  final public static String IP = "18.191.251.39:8081";
@@ -11,10 +11,10 @@ public class ServerURL {
 // final public static String IP = "localhost:8081";
 
     //中央宿舍
-//  final public static String IP = "192.168.168.123:8081";
+  final public static String IP = "192.168.168.123:8081";
 
     //資策會
- final public static String IP = "10.120.26.19:8081";
+// final public static String IP = "10.120.26.19:8081";
 
     //桃園家
 //  final public static String IP = "192.168.1.108:8081";

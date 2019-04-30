@@ -111,10 +111,12 @@
                     <LinearLayout
                         android:id="@+id/detail2"
                         android:layout_width="match_parent"
-                        android:layout_height="216dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:padding="10dp"
+                        android:visibility="visible"
+                        tools:visibility="gone">
 
                         <TextView
                             android:id="@+id/tvDegree"
@@ -122,7 +124,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|left"
-                            android:text="學歷" />
+                            android:text="學歷"
+                            android:textSize="20sp" />
 
                         <TextView
                             android:id="@+id/tvAbouts"
@@ -130,7 +133,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|left"
-                            android:text="關於老師" />
+                            android:text="關於老師"
+                            android:textSize="20sp" />
 
                     </LinearLayout>
                 </LinearLayout>

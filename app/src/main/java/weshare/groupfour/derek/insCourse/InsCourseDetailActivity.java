@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,22 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         MinsCourseVO = (InsCourseVO) intent.getExtras().getSerializable("insCourseVO");
         TeaMemVO = (MemberVO) intent.getExtras().getSerializable("TeaMemVO");
 
+        //分享按鈕
+        ImageView ivConnect = findViewById(R.id.ivConnect);
+        ivConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Tools.Toast(InsCourseDetailActivity.this,"以分享");
+            }
+        });
+
+
+        //評分星星
+        RatingBar rbCourse = findViewById(R.id.rbCourse);
+
+
+
+
         //撈老師資料
         Map<String, String> requestT = new HashMap<>();
         requestT.put("action", "find_by_teacherId");
@@ -73,8 +90,8 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         TextView tvDrgee = findViewById(R.id.tvDegree);
         TextView tvAbouts = findViewById(R.id.tvAbouts);
         if (teacherVO != null) {
-            tvDrgee.setText(teacherVO.getTeacherEdu());
-            tvAbouts.setText(teacherVO.getTeacherText());
+            tvDrgee.setText("學歷：  "+teacherVO.getTeacherEdu());
+            tvAbouts.setText("關於老師："+teacherVO.getTeacherText());
         }
 
         //去撈課程

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +39,9 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         private TextView tvCoursePlace;
         private TextView tvQrcode;
         private TextView tvOrderNum;
+        private ImageView ivMap;
+        private ImageView ivQrcode;
+
 
 
         public ViewHolder(View view) {
@@ -50,6 +54,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             tvCoursePlace = view.findViewById(R.id.tvCoursePlace);
             tvQrcode = view.findViewById(R.id.tvQrcode);
             tvOrderNum = view.findViewById(R.id.tvOrderNum);
+            ivMap = view.findViewById(R.id.ivMap);
+            ivQrcode = view.findViewById(R.id.ivQrcode);
         }
     }
 
@@ -64,13 +70,20 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         CourseReservationVO myCourseRvVO = myCourseRvList.get(position);
 
 
-        holder.tvCourseName.setText(myCourseRvVO.getInscId());
+
+        holder.tvCourseName.setText("課程名稱："+myCourseRvVO.getInscId());
         holder.tvCoursePlace.setText(myCourseRvVO.getCrvLoc());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd a h點");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd a hh:mm");
         holder.tvCourseMFD.setText(sdf.format(myCourseRvVO.getCrvMFD()));
         holder.tvCourseEXP.setText(sdf.format(myCourseRvVO.getCrvEXP()));
-        holder.tvOrderNum.setText(myCourseRvVO.getCrvId());
+        holder.tvOrderNum.setText("預約編號："+myCourseRvVO.getCrvId());
 
+        holder.ivMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         Join join = new Join();
         switch (fromWhere){
@@ -78,24 +91,35 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 //加入學生名稱
                 MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId(),context);
-                myCourseRvVO.setTeacherId("學生 "+memVO.getMemName());
+                myCourseRvVO.setTeacherId(memVO.getMemName());
                 //加入學生圖片
                 join.setPicOn(holder.civPic,memVO.getMemId());
 
-                holder.tvName.setText(myCourseRvVO.getTeacherId());
+                holder.tvName.setText("學生姓名："+myCourseRvVO.getTeacherId());
+
+
+                //開啟QRcode掃描器
+                holder.ivQrcode.setImageResource(R.drawable.scan_qr_code);
+                holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
                 break;
             case MEMBER:
 
                 //加入老師名稱
                 MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId(),context);
-                myCourseRvVO.setTeacherId("老師  "+memtVO.getMemName());
+                myCourseRvVO.setTeacherId(memtVO.getMemName());
                 //加入老師圖片
                 join.setPicOn(holder.civPic,memtVO.getMemId());
 
-                holder.tvName.setText(myCourseRvVO.getTeacherId());
+                holder.tvName.setText("老師姓名："+myCourseRvVO.getTeacherId());
 
                 //可以展開Qrcode
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         switch (holder.tvQrcode.getVisibility()){

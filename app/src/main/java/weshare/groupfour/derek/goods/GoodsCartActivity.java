@@ -254,6 +254,7 @@ public class GoodsCartActivity extends AppCompatActivity {
                             total += myCart.get(gvo)*gvo.getGoodPrice();
                         }
                         tvTotalPrice.setText(String.valueOf(total));
+                        totalPrice = total;
                     }else{
 
                     }

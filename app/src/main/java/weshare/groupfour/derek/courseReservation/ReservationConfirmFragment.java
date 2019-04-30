@@ -108,6 +108,8 @@ public class ReservationConfirmFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Gson gson = new GsonBuilder()
                         .setDateFormat("yyyy-MM-dd HH:mm:ss")
                         .create();
@@ -125,9 +127,10 @@ public class ReservationConfirmFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                if(result != null || result.isEmpty()){
+                if(result.isEmpty()){
                     Tools.Toast(getContext(),"已成功預約");
                     getActivity().finish();
+
                 }else if(result.equals("Insufficient_account_balance")){
                     Tools.Toast(getContext(),"餘額不足，請先儲值");
                     AlertDialog.Builder builderSuccess = new AlertDialog.Builder(getContext());
@@ -148,7 +151,13 @@ public class ReservationConfirmFragment extends Fragment {
                                 }
                             }).create().show();
 
-                }else{
+                }else if(result.equals("can't_buy_your_course")){
+
+                    Tools.Toast(getContext(),"無法購買自己開授的課程");
+                    getActivity().finish();
+
+                }else if(result.equals("course_not_exsist")){
+                    Tools.Toast(getContext(),"不好意思，課程已被訂走，請您重新選擇");
                     FragmentManager fm = getFragmentManager();
                     fm.popBackStack();
                 }
