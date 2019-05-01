@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +40,8 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
         private TextView tvCoursePlace;
         private TextView tvQrcode;
         private LinearLayout llCalendar;
+        private ImageView ivQrcode;
+        private ImageView ivMap;
 
         public ViewHolder(View view) {
             super(view);
@@ -50,6 +53,8 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
             tvCoursePlace = view.findViewById(R.id.tvCoursePlace);
             tvQrcode = view.findViewById(R.id.tvQrcode);
             llCalendar = view.findViewById(R.id.llCalendar);
+            ivMap = view.findViewById(R.id.ivMap);
+            ivQrcode = view.findViewById(R.id.ivQrcode);
         }
     }
 
@@ -64,12 +69,11 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
         CourseReservationVO myCourseRvVO = myCourseRvList.get(position);
 
 
-        holder.tvCourseName.setText(myCourseRvVO.getInscId());
+        holder.tvCourseName.setText("課程名稱："+myCourseRvVO.getInscId());
         holder.tvCoursePlace.setText(myCourseRvVO.getCrvLoc());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd a h點");
         holder.tvCourseMFD.setText(sdf.format(myCourseRvVO.getCrvMFD()));
         holder.tvCourseEXP.setText(sdf.format(myCourseRvVO.getCrvEXP()));
-
 
 
         Join join = new Join();
@@ -81,7 +85,17 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
                 //加入學生圖片
                 join.setPicOn(holder.civPic,memVO.getMemId());
                 holder.tvName.setText("學生姓名："+memVO.getMemName());
+                //可打開Qrcode掃描器
+                holder.ivQrcode.setImageResource(R.drawable.scan_qr_code);
+                holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
                 break;
+
             case 1:
                 //以學生身分
                 //加入老師名稱
@@ -90,20 +104,10 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
                 join.setPicOn(holder.civPic,memtVO.getMemId());
 
                 holder.tvName.setText("老師姓名："+memtVO.getMemName());
-
-
                 //可以展開Qrcode
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        switch (holder.llCalendar.getVisibility()){
-                            case View.VISIBLE:
-                                holder.llCalendar.setVisibility(View.GONE);
-                                break;
-                            case View.GONE:
-                                holder.llCalendar.setVisibility(View.VISIBLE);
-                                break;
-                        }
+                    public void onClick(View v) {
                         switch (holder.tvQrcode.getVisibility()){
                             case View.VISIBLE:
                                 holder.tvQrcode.setVisibility(View.GONE);
@@ -118,7 +122,28 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
         }
 
 
+        //可打開詳情
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (holder.llCalendar.getVisibility()){
+                    case View.VISIBLE:
+                        holder.llCalendar.setVisibility(View.GONE);
+                        break;
+                    case View.GONE:
+                        holder.llCalendar.setVisibility(View.VISIBLE);
+                        break;
+                }
 
+            }
+        });
+        //可開啟地圖
+        holder.ivMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
     }

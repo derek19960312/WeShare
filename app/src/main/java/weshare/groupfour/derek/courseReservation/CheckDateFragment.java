@@ -213,6 +213,7 @@ public class CheckDateFragment extends Fragment {
                                 radioButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+
                                         String inscTimeVOJson = gson.toJson(inscTime);
                                         Connect_WebSocket.grabCourseWebSocketClient.send(inscTimeVOJson);
                                     }

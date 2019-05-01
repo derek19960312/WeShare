@@ -26,14 +26,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tbCalender" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvClendar"
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarView">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvClendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="5dp" />
+
+        <TextView
+            android:id="@+id/tvNoReservation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="本日沒有預約"
+            android:textSize="40sp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>

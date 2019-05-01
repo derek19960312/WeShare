@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -58,6 +59,10 @@ public class CalendarActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        //本日無預約
+        TextView tvNoReservation = findViewById(R.id.tvNoReservation);
+
 
 
         //撈取我的課程資料
@@ -142,6 +147,7 @@ public class CalendarActivity extends AppCompatActivity {
                 }
 
                 rvClendar.setAdapter(new ClendarAdapter(myCourseRvList,CalendarActivity.this));
+
 
 
             }

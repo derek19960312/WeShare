@@ -60,4 +60,9 @@
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="title_activity_ins_course_detail">InsCourseDetailActivity</string>
     <string name="title_activity_maps">Map</string>
+
+
+
+
+    <string name="text_NotGranted">not granted</string>
 </resources>

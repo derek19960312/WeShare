@@ -1,6 +1,7 @@
 package weshare.groupfour.derek.myCourseOrders;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import weshare.groupfour.derek.MapsActivity;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.R;
@@ -81,7 +83,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         holder.ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context,MapsActivity.class);
+                context.startActivity(intent);
             }
         });
 
