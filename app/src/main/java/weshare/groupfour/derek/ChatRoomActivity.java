@@ -4,16 +4,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.LayoutDirection;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Connect_WebSocket;
@@ -23,16 +34,19 @@ import static weshare.groupfour.derek.util.Connect_WebSocket.getUserName;
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatActivity";
     private LocalBroadcastManager broadcastManager;
-    private TextView tvMessage;
     private EditText etMessage;
-    private ScrollView scrollView;
     private String friendId, friendName;
+    private RecyclerView rvChat;
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
         findViews();
+        LinearLayoutManager lm = new LinearLayoutManager(this);
+
+        rvChat.setLayoutManager(lm);
         // 初始化LocalBroadcastManager並註冊BroadcastReceiver
         broadcastManager = LocalBroadcastManager.getInstance(this);
         registerChatReceiver();
@@ -45,9 +59,8 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        tvMessage = findViewById(R.id.tvMessage);
         etMessage = findViewById(R.id.etMessage);
-        scrollView = findViewById(R.id.scrollView);
+        rvChat = findViewById(R.id.rvChat);
     }
 
 //    private void getHistoryMessage() {
@@ -83,15 +96,11 @@ public class ChatRoomActivity extends AppCompatActivity {
             String sender = chatMessage.getSender();
             // 接收到聊天訊息，若發送者與目前聊天對象相同，就將訊息顯示在TextView
             if (sender.equals(friendId)) {
-                tvMessage.append(friendName + ": " + chatMessage.getMessage() + "\n");
-                scrollView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        scrollView.fullScroll(View.FOCUS_DOWN);
-                    }
-                });
+                chatMessages.add(chatMessage);
+                rvChat.setAdapter(new ChatMessageAdapter());
+                rvChat.getAdapter().notifyDataSetChanged();
+                rvChat.scrollToPosition(chatMessages.size()-1);
             }
-            Log.d(TAG, message);
         }
     }
 
@@ -105,21 +114,65 @@ public class ChatRoomActivity extends AppCompatActivity {
             return;
         }
         String sender = getUserName();
-        // 將欲傳送訊息先顯示在TextView上
-        tvMessage.append("me" + ": " + message + "\n");
+
         // 將輸入的訊息清空
         etMessage.setText(null);
-        // 捲動至最新訊息
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(View.FOCUS_DOWN);
-            }
-        });
+
         // 將欲傳送訊息轉成JSON後送出
         ChatMessage chatMessage = new ChatMessage("chat", sender, friendId, message);
         String chatMessageJson = new Gson().toJson(chatMessage);
         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
-        Log.d(TAG, "output: " + chatMessageJson);
+        chatMessages.add(chatMessage);
+        rvChat.setAdapter(new ChatMessageAdapter());
+        rvChat.getAdapter().notifyDataSetChanged();
+        rvChat.scrollToPosition(chatMessages.size()-1);
+    }
+
+
+    private class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.ChatMessageViewHolder> {
+
+
+        class ChatMessageViewHolder extends RecyclerView.ViewHolder {
+            TextView tvMessageR,tvMessageL;
+            CardView cardRight,cardLeft;
+
+            ChatMessageViewHolder(View itemView) {
+                super(itemView);
+                tvMessageL = itemView.findViewById(R.id.tvMessageL);
+                tvMessageR = itemView.findViewById(R.id.tvMessageR);
+                cardRight = itemView.findViewById(R.id.cardRight);
+                cardLeft = itemView.findViewById(R.id.cardLeft);
+            }
+        }
+        @Override
+        public ChatMessageViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_chat_message,parent,false);
+            return new ChatMessageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ChatMessageViewHolder holder, int position) {
+            ChatMessage ctm = chatMessages.get(position);
+
+            if(ctm.getSender().equals(friendId)){
+                holder.tvMessageR.setText(ctm.getMessage()+"："+friendName);
+                holder.cardRight.setVisibility(View.VISIBLE);
+                holder.cardLeft.setVisibility(View.GONE);
+            }else{
+                holder.tvMessageL.setText("我："+ctm.getMessage());
+                holder.cardRight.setVisibility(View.GONE);
+                holder.cardLeft.setVisibility(View.VISIBLE);
+            }
+
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return chatMessages.size();
+        }
+
+
     }
 }
