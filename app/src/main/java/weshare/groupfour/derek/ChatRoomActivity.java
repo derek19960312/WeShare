@@ -95,6 +95,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             String sender = chatMessage.getSender();
             // 接收到聊天訊息，若發送者與目前聊天對象相同，就將訊息顯示在TextView
+
             if (sender.equals(friendId)) {
                 chatMessages.add(chatMessage);
                 rvChat.setAdapter(new ChatMessageAdapter());

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -66,12 +67,14 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         return true;
     }
 
-    public static void changeStyle(){
+    public static void changeStyle(MenuItem item){
         switch (staggeredGridLayoutManager.getSpanCount()) {
             case 1:
+                item.setIcon(R.drawable.list);
                 staggeredGridLayoutManager.setSpanCount(2);
                 break;
             case 2:
+                item.setIcon(R.drawable.grid);
                 staggeredGridLayoutManager.setSpanCount(1);
                 break;
         }

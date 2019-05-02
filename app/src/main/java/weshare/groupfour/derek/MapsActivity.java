@@ -54,11 +54,11 @@ public class MapsActivity  extends AppCompatActivity implements OnMapReadyCallba
         //縮放按鈕
         uiSettings.setZoomControlsEnabled(true);
         //地圖捲動手勢
-        uiSettings.setScrollGesturesEnabled(true);
+        //uiSettings.setScrollGesturesEnabled(true);
         //自己位置按鈕
         uiSettings.setMyLocationButtonEnabled(true);
         //地圖縮放手勢
-        uiSettings.setZoomGesturesEnabled(true);
+        //uiSettings.setZoomGesturesEnabled(true);
         String locationName = getIntent().getStringExtra("locationName");
         locationNameToMarker(locationName);
     }

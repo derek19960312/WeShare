@@ -70,7 +70,9 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_margin="3dp"
-                                android:layout_weight="1" />
+                                android:layout_weight="1"
+                                android:isIndicator="true"
+                                android:scrollbarSize="4dp" />
 
                             <LinearLayout
                                 android:id="@+id/linearLayout8"

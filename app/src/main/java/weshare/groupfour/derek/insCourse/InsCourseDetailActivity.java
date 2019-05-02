@@ -62,15 +62,26 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         ivConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Tools.Toast(InsCourseDetailActivity.this,"以分享");
+                Tools.Toast(InsCourseDetailActivity.this,"已分享");
             }
         });
 
 
         //評分星星
         RatingBar rbCourse = findViewById(R.id.rbCourse);
-
-
+        Map<String, String> request = new HashMap<>();
+        request.put("action", "get_star_count");
+        request.put("param", MinsCourseVO.getTeacherId());
+        String requestData = Tools.RequestDataBuilder(request);
+        String result = null;
+        try {
+            result = new CallServlet(this).execute(ServerURL.IP_COURSERESERVATION, requestData).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        rbCourse.setRating((float) Double.parseDouble(result));
 
 
         //撈老師資料

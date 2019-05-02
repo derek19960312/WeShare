@@ -59,7 +59,7 @@ public class ToolbarBackFragment extends Fragment {
                 startActivity(intent);
                 return true;
             case R.id.styleChange:
-                GoodsBrowseActivity.changeStyle();
+                GoodsBrowseActivity.changeStyle(item);
                 return true;
             default:
                 getActivity().finish();

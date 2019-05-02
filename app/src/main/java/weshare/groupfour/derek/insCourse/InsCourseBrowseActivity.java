@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,7 +31,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
         RecyclerView recycleView = findViewById(R.id.rvGoods);
         recycleView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
-
+        TextView tvNoCourse = findViewById(R.id.tvNoCourse);
 
         try {
             String data = getIntent().getStringExtra("requestData");
@@ -53,9 +55,9 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
                 }else {
                     recycleView.setAdapter(new CourseAdapter(insCourseVOList,this));
                 }
-
+                tvNoCourse.setVisibility(View.GONE);
             }else {
-                Tools.Toast(this,"查無資料");
+                tvNoCourse.setVisibility(View.VISIBLE);
             }
         } catch (ExecutionException e) {
             e.printStackTrace();
