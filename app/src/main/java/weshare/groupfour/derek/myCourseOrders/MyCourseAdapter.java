@@ -69,7 +69,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        CourseReservationVO myCourseRvVO = myCourseRvList.get(position);
+        final CourseReservationVO myCourseRvVO = myCourseRvList.get(position);
 
 
 
@@ -84,6 +84,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,MapsActivity.class);
+                intent.putExtra("locationName",myCourseRvVO.getCrvLoc());
                 context.startActivity(intent);
             }
         });
