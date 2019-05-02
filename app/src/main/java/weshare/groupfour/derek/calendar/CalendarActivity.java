@@ -109,49 +109,49 @@ public class CalendarActivity extends AppCompatActivity {
         final RecyclerView rvClendar = findViewById(R.id.rvClendar);
         rvClendar.setLayoutManager(new LinearLayoutManager(this));
 
-        CalendarView calendarView = findViewById(R.id.calendarView);
-
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-
-                List<CourseReservationVO> myCourseRvList = new ArrayList<>();
-
-                long clicked = new GregorianCalendar(year, month, dayOfMonth).getTimeInMillis();
-
-                SimpleDateFormat sdf = new SimpleDateFormat("yy,MM,dd");
-                for(CourseReservationVO crVO : mycrvTec){
-                    long crMFD = 0;
-                    try {
-                        crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    if(clicked == crMFD){
-                        crVO.setIdFlag(0);
-                        myCourseRvList.add(crVO);
-                    }
-                }
-                for(CourseReservationVO crVO : mycrvMem){
-                    long crMFD = 0;
-                    try {
-                        crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
-                    if(crMFD == clicked){
-                        crVO.setIdFlag(1);
-                        myCourseRvList.add(crVO);
-                    }
-                }
-
-                rvClendar.setAdapter(new ClendarAdapter(myCourseRvList,CalendarActivity.this));
-
-
-
-            }
-        });
+//        CalendarView calendarView = findViewById(R.id.calendarView);
+//
+//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+//
+//                List<CourseReservationVO> myCourseRvList = new ArrayList<>();
+//
+//                long clicked = new GregorianCalendar(year, month, dayOfMonth).getTimeInMillis();
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat("yy,MM,dd");
+//                for(CourseReservationVO crVO : mycrvTec){
+//                    long crMFD = 0;
+//                    try {
+//                        crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if(clicked == crMFD){
+//                        crVO.setIdFlag(0);
+//                        myCourseRvList.add(crVO);
+//                    }
+//                }
+//                for(CourseReservationVO crVO : mycrvMem){
+//                    long crMFD = 0;
+//                    try {
+//                        crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    if(crMFD == clicked){
+//                        crVO.setIdFlag(1);
+//                        myCourseRvList.add(crVO);
+//                    }
+//                }
+//
+//                rvClendar.setAdapter(new ClendarAdapter(myCourseRvList,CalendarActivity.this));
+//
+//
+//
+//            }
+//        });
 
 
 

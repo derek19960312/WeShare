@@ -16,23 +16,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+    <com.applandeo.materialcalendarview.CalendarView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:importantForAccessibility="auto"
-        android:layoutMode="clipBounds"
+        app:headerColor="@color/primarySuperLightColor"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbCalender" />
+        app:layout_constraintTop_toBottomOf="@+id/tbCalender"
+        app:selectionColor="@color/primaryDarkColor"
+        app:headerLabelColor="#000"
+
+        app:type="one_day_picker"></com.applandeo.materialcalendarview.CalendarView>
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView">
+        app:layout_constraintStart_toStartOf="parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvClendar"
@@ -49,7 +52,6 @@
             android:textSize="40sp"
             android:visibility="gone" />
     </FrameLayout>
-
 
 
 </android.support.constraint.ConstraintLayout>
