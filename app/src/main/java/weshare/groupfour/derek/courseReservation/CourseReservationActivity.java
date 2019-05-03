@@ -66,6 +66,7 @@ public class CourseReservationActivity extends AppCompatActivity {
             ft.add(R.id.clReservation,cdf,"DatePickFragment");
             ft.commit();
         }
+
         //連接搶課大聊天室
         InsCourseVO insCourseVO = (InsCourseVO) getIntent().getExtras().getSerializable("insCourseVO");
         String user = Connect_WebSocket.getUserName();

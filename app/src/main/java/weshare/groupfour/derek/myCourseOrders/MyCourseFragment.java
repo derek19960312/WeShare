@@ -28,7 +28,6 @@ import weshare.groupfour.derek.R;
 public class MyCourseFragment extends Fragment {
     TextView tvNoData;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class MyCourseFragment extends Fragment {
             }.getType();
             List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
             if (myCourseRvList != null && myCourseRvList.size() != 0) {
-                rvMyCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.MEMBER,getContext()));
+                rvMyCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.MEMBER,getContext(),this));
             } else {
                 tvNoData = view.findViewById(R.id.tvNoData);
                 tvNoData.setVisibility(View.VISIBLE);
@@ -62,11 +61,7 @@ public class MyCourseFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-    }
 
 
 }

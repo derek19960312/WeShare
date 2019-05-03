@@ -1,11 +1,7 @@
 package weshare.groupfour.derek.calendar;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CalendarView;
+
+import com.applandeo.materialcalendarview.CalendarView;
+
 import android.widget.TextView;
 
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -27,17 +26,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
-import weshare.groupfour.derek.myCourseOrders.MyReservationFragment;
+import weshare.groupfour.derek.util.RequestDataBuilder;
 import weshare.groupfour.derek.util.Tools;
 
 
@@ -48,21 +49,20 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        Toolbar tbCalender = findViewById(R.id.tbCalender);
-        tbCalender.setTitle(R.string.calender);
-        setSupportActionBar(tbCalender);
-        //toolbar 事件
-        tbCalender.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                finish();
-                return true;
-            }
-        });
+//        Toolbar tbCalender = findViewById(R.id.tbCalender);
+//        tbCalender.setTitle(R.string.calender);
+//        setSupportActionBar(tbCalender);
+//        //toolbar 事件
+//        tbCalender.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem menuItem) {
+//                finish();
+//                return true;
+//            }
+//        });
 
         //本日無預約
         TextView tvNoReservation = findViewById(R.id.tvNoReservation);
-
 
 
         //撈取我的課程資料
@@ -92,10 +92,11 @@ public class CalendarActivity extends AppCompatActivity {
 
         //我是學生
         String memId = spf.getString("memId", null);
-        requestMap = new HashMap<>();
-        requestMap.put("action", "find_my_reservation");
-        requestMap.put("param", memId);
-        requestData = Tools.RequestDataBuilder(requestMap);
+        requestData = new RequestDataBuilder().build()
+                .setAction("find_my_reservation")
+                .setData("param", memId)
+                .create();
+
         try {
             result = new CallServlet(this).execute(ServerURL.IP_COURSERESERVATION, requestData).get();
         } catch (ExecutionException e) {
@@ -106,70 +107,81 @@ public class CalendarActivity extends AppCompatActivity {
 
         final List<CourseReservationVO> mycrvMem = gson.fromJson(result, listType);
 
+        List<EventDay> events = new ArrayList<>();
+        for (CourseReservationVO crvo : mycrvMem) {
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTimeInMillis(crvo.getCrvMFD().getTime());
+            events.add(new EventDay(calendar, R.drawable.circle_dot));
+        }
+        for (CourseReservationVO crvo : mycrvTec) {
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.setTimeInMillis(crvo.getCrvMFD().getTime());
+            events.add(new EventDay(calendar, R.drawable.circle_dot));
+        }
+
+        CalendarView calendarView = findViewById(R.id.calendarView);
+        try {
+            calendarView.setDate(new Date());
+        } catch (OutOfDateRangeException e) {
+            e.printStackTrace();
+        }
+        calendarView.setEvents(events);
+
+
         final RecyclerView rvClendar = findViewById(R.id.rvClendar);
         rvClendar.setLayoutManager(new LinearLayoutManager(this));
 
-//        CalendarView calendarView = findViewById(R.id.calendarView);
-//
-//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//            @Override
-//            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-//
-//                List<CourseReservationVO> myCourseRvList = new ArrayList<>();
-//
-//                long clicked = new GregorianCalendar(year, month, dayOfMonth).getTimeInMillis();
-//
-//                SimpleDateFormat sdf = new SimpleDateFormat("yy,MM,dd");
-//                for(CourseReservationVO crVO : mycrvTec){
-//                    long crMFD = 0;
-//                    try {
-//                        crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    if(clicked == crMFD){
-//                        crVO.setIdFlag(0);
-//                        myCourseRvList.add(crVO);
-//                    }
-//                }
-//                for(CourseReservationVO crVO : mycrvMem){
-//                    long crMFD = 0;
-//                    try {
-//                        crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    if(crMFD == clicked){
-//                        crVO.setIdFlag(1);
-//                        myCourseRvList.add(crVO);
-//                    }
-//                }
-//
-//                rvClendar.setAdapter(new ClendarAdapter(myCourseRvList,CalendarActivity.this));
-//
-//
-//
-//            }
-//        });
+        calendarView.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+
+                Calendar calendar = eventDay.getCalendar();
+                List<CourseReservationVO> myCourseRvList = new ArrayList<>();
+
+                long clicked = calendar.getTimeInMillis();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yy,MM,dd");
+                for (CourseReservationVO crVO : mycrvTec) {
+                        long crMFD = 0;
+                        try {
+                            crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (clicked == crMFD) {
+                            crVO.setIdFlag(0);
+                            myCourseRvList.add(crVO);
+                        }
+                    }
+                    for (CourseReservationVO crVO : mycrvMem) {
+                        long crMFD = 0;
+                        try {
+                            crMFD = sdf.parse(sdf.format(crVO.getCrvMFD())).getTime();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (crMFD == clicked) {
+                            crVO.setIdFlag(1);
+                            myCourseRvList.add(crVO);
+                        }
+                    }
+
+                    rvClendar.setAdapter(new ClendarAdapter(myCourseRvList, CalendarActivity.this));
 
 
+                }
+            });
 
 
+        }
 
-
-
-
+//        @Override
+//        public boolean onCreateOptionsMenu (Menu menu){
+//            // 為了讓Toolbar的 Menu有作用，這邊的程式不可以拿掉
+//            getMenuInflater().inflate(R.menu.close_menu, menu);
+//            return true;
+//        }
 
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // 為了讓Toolbar的 Menu有作用，這邊的程式不可以拿掉
-        getMenuInflater().inflate(R.menu.close_menu, menu);
-        return true;
-    }
-
-
-}

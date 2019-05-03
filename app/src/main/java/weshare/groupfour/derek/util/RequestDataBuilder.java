@@ -4,9 +4,13 @@ public class RequestDataBuilder {
 
     private StringBuilder sb;
 
+    public RequestDataBuilder() {
+        sb = new StringBuilder();
+
+    }
 
     public RequestDataBuilder build(){
-        sb = new StringBuilder();
+
         return new RequestDataBuilder();
     }
 

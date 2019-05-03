@@ -1,7 +1,7 @@
 package weshare.groupfour.derek.myCourseOrders;
 
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -29,6 +32,9 @@ import weshare.groupfour.derek.util.Tools;
 
 
 public class MyTeachFragment extends Fragment {
+
+
+
     TextView tvNoData;
 
     @Override
@@ -54,7 +60,7 @@ public class MyTeachFragment extends Fragment {
             List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
 
             if (myCourseRvList.size() != 0) {
-                rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.TEACHER,getContext()));
+                rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.TEACHER,getContext(),this));
             } else {
                 view.findViewById(R.id.tvNoData).setVisibility(View.VISIBLE);
             }
@@ -70,6 +76,20 @@ public class MyTeachFragment extends Fragment {
             tvNoData.setText("您並非老師身分");
        }
         return view;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        if(result !=null){
+            if(result.getContents() == null){
+                Toast.makeText(getContext(),"You can't celled the scanning",Toast.LENGTH_SHORT).show();;
+            }else {
+                Toast.makeText(getContext(),result.getContents(),Toast.LENGTH_LONG).show();
+            }
+        }else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 }

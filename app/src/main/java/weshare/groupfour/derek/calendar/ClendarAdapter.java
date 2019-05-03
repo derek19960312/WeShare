@@ -1,6 +1,7 @@
 package weshare.groupfour.derek.calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import weshare.groupfour.derek.MapsActivity;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.member.MemberVO;
@@ -141,7 +143,9 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
         holder.ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, MapsActivity.class);
+                intent.putExtra("locationName",myCourseRvVO.getCrvLoc());
+                context.startActivity(intent);
             }
         });
 

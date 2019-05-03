@@ -31,7 +31,7 @@ public class MyCourseActivity extends AppCompatActivity {
         ft.add(R.id.clMyInsCourse,new MyReservationFragment(),"flMyInsCourse");
         ft.commit();
 
-
     }
+
 
 }
