@@ -48,7 +48,7 @@ public class Tools {
         return BitmapFactory.decodeByteArray(bPic,0,bPic.length);
     }
 
-    public static String gteBitMapByBase64(Bitmap bitmap) {
+    public static String getBase64ByBitMap(Bitmap bitmap) {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);

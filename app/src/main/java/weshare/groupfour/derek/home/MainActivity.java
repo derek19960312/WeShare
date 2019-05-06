@@ -34,12 +34,10 @@ import java.util.List;
 import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import weshare.groupfour.derek.ChatRoomActivity;
-import weshare.groupfour.derek.FriendsActivity;
+import weshare.groupfour.derek.FriendChat.FriendsActivity;
 import weshare.groupfour.derek.MypagerAdapter;
 import weshare.groupfour.derek.PageVO;
 import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.callServer.ChangeIPActivity;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseType.CourseCategoryActivity;
 import weshare.groupfour.derek.goods.GoodsBrowseActivity;
@@ -287,8 +285,7 @@ public class MainActivity extends AppCompatActivity {
         String[] permissions = {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                LocationManager.NETWORK_PROVIDER,
-                LocationManager.GPS_PROVIDER
+
         };
 
         Set<String> permissionsRequest = new HashSet<>();

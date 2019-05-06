@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +14,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioButton;
@@ -25,12 +23,7 @@ import android.widget.RadioGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.LinkedList;
-
-import weshare.groupfour.derek.FriendNexusVO;
-import weshare.groupfour.derek.FriendsActivity;
 import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.State;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.insCourse.InsCourseTimeVO;
 import weshare.groupfour.derek.insCourse.InsCourseVO;

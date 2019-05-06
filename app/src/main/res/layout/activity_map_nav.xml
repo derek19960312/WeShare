@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mapNavActivity">
+    tools:context=".mapNavActivity_test">
     <fragment
         android:id="@+id/navMap"
         class="com.google.android.gms.maps.SupportMapFragment"

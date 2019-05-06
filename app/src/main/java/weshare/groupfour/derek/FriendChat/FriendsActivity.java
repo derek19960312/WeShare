@@ -1,4 +1,4 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.FriendChat;
 
 
 import android.content.BroadcastReceiver;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.UiThread;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Connect_WebSocket;
@@ -116,7 +116,6 @@ public class FriendsActivity extends AppCompatActivity {
             State stateMessage = new Gson().fromJson(message, State.class);
             String type = stateMessage.getType();
             String friend = stateMessage.getUser();
-            Log.e("type friend",type+friend);
             switch (type) {
                 // 有user連線
                 case "open":
@@ -246,11 +245,11 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     // Activity結束即中斷WebSocket連線
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Connect_WebSocket.disconnectServerChat();
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        Connect_WebSocket.disconnectServerChat();
+//    }
 
 
 

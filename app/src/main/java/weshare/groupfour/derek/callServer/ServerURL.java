@@ -3,7 +3,7 @@ package weshare.groupfour.derek.callServer;
 public class ServerURL {
 
     //GCP
-  final public static String IP = "35.229.129.153:8081";
+  final public static String IP = "34.80.204.33:8081";
 
     //迎刃
 //  final public static String IP = "18.191.251.39:8081";

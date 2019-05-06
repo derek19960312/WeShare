@@ -3,7 +3,6 @@ package weshare.groupfour.derek.myCourseOrders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,7 +13,7 @@ import com.google.zxing.integration.android.IntentResult;
 import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.State;
+import weshare.groupfour.derek.FriendChat.State;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;

@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".myCourseOrders.QrcodeCheck"></activity>
-        <activity android:name=".mapNavActivity" />
+        <activity android:name=".mapNavActivity_test" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
@@ -47,8 +47,8 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/AppTheme.Dialog" />
-        <activity android:name=".FriendsActivity" />
-        <activity android:name=".ChatRoomActivity" />
+        <activity android:name=".FriendChat.FriendsActivity" />
+        <activity android:name=".FriendChat.ChatRoomActivity" />
         <activity android:name=".callServer.ChangeIPActivity" />
         <activity android:name=".myGoodsOrders.MyGoodsActivity" />
         <activity android:name=".goods.MyLikeGoodsActivity" />

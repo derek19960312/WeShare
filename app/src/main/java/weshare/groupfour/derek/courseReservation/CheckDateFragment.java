@@ -7,22 +7,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Constraints;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 
-import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -32,12 +27,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.time.Instant;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -45,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.ChatMessage;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;

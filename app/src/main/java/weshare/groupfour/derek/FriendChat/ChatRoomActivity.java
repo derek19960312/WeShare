@@ -1,36 +1,36 @@
-package weshare.groupfour.derek;
+package weshare.groupfour.derek.FriendChat;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.LayoutDirection;
-import android.util.Log;
-import android.view.Gravity;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import weshare.groupfour.derek.callServer.CallServlet_Pic;
+import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Connect_WebSocket;
 import weshare.groupfour.derek.util.Join;
+import weshare.groupfour.derek.util.RequestDataBuilder;
+import weshare.groupfour.derek.util.Tools;
 
 import static weshare.groupfour.derek.util.Connect_WebSocket.getUserName;
 
@@ -41,6 +41,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private String friendId, friendName;
     private RecyclerView rvChat;
     private List<ChatMessage> chatMessages = new ArrayList<>();
+    private String FriendPic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,25 @@ public class ChatRoomActivity extends AppCompatActivity {
         friendId = getIntent().getStringExtra("friendId");
         friendName = getIntent().getStringExtra("friendName");
         Connect_WebSocket.connectServerChat(this, getUserName(), ServerURL.WS_CHATROOM);
+
+
+        //取得聊天對象頭貼
+        try {
+
+            RequestDataBuilder rdb = new RequestDataBuilder();
+            rdb.build()
+                    .setAction("get_member_pic_base64")
+                    .setData("memId",friendId);
+
+
+
+            FriendPic = new CallServlet(this).execute(ServerURL.IP_MEMBER,rdb.create()).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
 //        getHistoryMessage();
     }
@@ -139,7 +159,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         class ChatMessageViewHolder extends RecyclerView.ViewHolder {
             TextView tvMessageR,tvMessageL;
             CardView cardRight,cardLeft;
-            CircleImageView civFri, civMe;
+            CircleImageView civFri;
 
             ChatMessageViewHolder(View itemView) {
                 super(itemView);
@@ -148,7 +168,6 @@ public class ChatRoomActivity extends AppCompatActivity {
                 cardRight = itemView.findViewById(R.id.cardRight);
                 cardLeft = itemView.findViewById(R.id.cardLeft);
                 civFri = itemView.findViewById(R.id.civFri);
-                civMe = itemView.findViewById(R.id.civMe);
             }
         }
         @Override
@@ -162,17 +181,16 @@ public class ChatRoomActivity extends AppCompatActivity {
             ChatMessage ctm = chatMessages.get(position);
 
             if(ctm.getSender().equals(friendId)){
-                holder.tvMessageR.setText(ctm.getMessage());
-                holder.cardRight.setVisibility(View.VISIBLE);
-                holder.cardLeft.setVisibility(View.GONE);
-                holder.civMe.setVisibility(View.GONE);
-                Join.setPicOn(holder.civFri,ctm.getSender());
-            }else{
                 holder.tvMessageL.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.GONE);
                 holder.cardLeft.setVisibility(View.VISIBLE);
+                holder.civFri.setImageBitmap(Tools.getBitmapByBase64(FriendPic));
+
+            }else{
+                holder.tvMessageR.setText(ctm.getMessage());
+                holder.cardRight.setVisibility(View.VISIBLE);
+                holder.cardLeft.setVisibility(View.GONE);
                 holder.civFri.setVisibility(View.GONE);
-                Join.setPicOn(holder.civMe,ctm.getSender());
             }
 
 
