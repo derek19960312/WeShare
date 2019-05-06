@@ -9,15 +9,9 @@ import android.view.ViewGroup;
 
 import weshare.groupfour.derek.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class MySoldFragment extends Fragment {
 
-
-    public MySoldFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override

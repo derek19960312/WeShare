@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@android:color/transparent"
@@ -11,40 +12,81 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardLeft"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            app:cardCornerRadius="5dp"
-            app:contentPadding="5dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvMessageL"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civMe"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/default_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cardLeft"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="TextView"
-                android:textSize="20sp" />
-        </android.support.v7.widget.CardView>
+                app:cardCornerRadius="5dp"
+                app:contentPadding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginBottom="3dp"
-            app:cardCornerRadius="5dp"
-            app:contentPadding="5dp">
+                <TextView
+                    android:id="@+id/tvMessageL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="TextView"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tvMessageR"
+            </android.support.v7.widget.CardView>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civFri"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/default_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="TextView"
-                android:textSize="20sp" />
-        </android.support.v7.widget.CardView>
+                android:layout_gravity="right"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="5dp"
+                app:contentPadding="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/civFri"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:id="@+id/tvMessageR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="TextView"
+                    android:textSize="20sp" />
+            </android.support.v7.widget.CardView>
+
+        </android.support.constraint.ConstraintLayout>
+
     </FrameLayout>
 
 </android.support.v7.widget.CardView>

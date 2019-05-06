@@ -11,7 +11,7 @@ public class RequestDataBuilder {
 
     public RequestDataBuilder build(){
 
-        return new RequestDataBuilder();
+        return this;
     }
 
     public RequestDataBuilder setAction(String action){

@@ -1,7 +1,6 @@
 package weshare.groupfour.derek.myCourseOrders;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,10 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +19,7 @@ import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Tools;
 
 
-public class MyReservationFragment extends Fragment {
+public class MyReservationFragment_deprecate extends Fragment {
 
     ViewPager vpMyInsCourse;
 
@@ -32,7 +27,7 @@ public class MyReservationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_my_reservation, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_reservation_deprecate, container, false);
         vpMyInsCourse = view.findViewById(R.id.vpMyInsCourse);
         SharedPreferences spf = Tools.getSharePreAccount();
         String memId = spf.getString("memId", null);

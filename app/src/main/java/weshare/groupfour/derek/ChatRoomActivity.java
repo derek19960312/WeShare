@@ -26,8 +26,11 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import weshare.groupfour.derek.callServer.CallServlet_Pic;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.Join;
 
 import static weshare.groupfour.derek.util.Connect_WebSocket.getUserName;
 
@@ -136,6 +139,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         class ChatMessageViewHolder extends RecyclerView.ViewHolder {
             TextView tvMessageR,tvMessageL;
             CardView cardRight,cardLeft;
+            CircleImageView civFri, civMe;
 
             ChatMessageViewHolder(View itemView) {
                 super(itemView);
@@ -143,6 +147,8 @@ public class ChatRoomActivity extends AppCompatActivity {
                 tvMessageR = itemView.findViewById(R.id.tvMessageR);
                 cardRight = itemView.findViewById(R.id.cardRight);
                 cardLeft = itemView.findViewById(R.id.cardLeft);
+                civFri = itemView.findViewById(R.id.civFri);
+                civMe = itemView.findViewById(R.id.civMe);
             }
         }
         @Override
@@ -156,13 +162,17 @@ public class ChatRoomActivity extends AppCompatActivity {
             ChatMessage ctm = chatMessages.get(position);
 
             if(ctm.getSender().equals(friendId)){
-                holder.tvMessageR.setText(ctm.getMessage()+"："+friendName);
+                holder.tvMessageR.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.VISIBLE);
                 holder.cardLeft.setVisibility(View.GONE);
+                holder.civMe.setVisibility(View.GONE);
+                Join.setPicOn(holder.civFri,ctm.getSender());
             }else{
-                holder.tvMessageL.setText("我："+ctm.getMessage());
+                holder.tvMessageL.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.GONE);
                 holder.cardLeft.setVisibility(View.VISIBLE);
+                holder.civFri.setVisibility(View.GONE);
+                Join.setPicOn(holder.civMe,ctm.getSender());
             }
 
 

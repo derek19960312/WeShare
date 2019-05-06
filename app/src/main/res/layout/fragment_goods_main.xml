@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".home.GoodsMainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="我是傷城"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <com.youth.banner.Banner
+    android:id="@+id/goodsBanner"
+    android:layout_width="match_parent"
+    android:layout_height="194dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"></com.youth.banner.Banner>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCart"

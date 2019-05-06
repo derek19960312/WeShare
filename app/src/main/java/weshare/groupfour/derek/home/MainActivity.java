@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -285,7 +286,9 @@ public class MainActivity extends AppCompatActivity {
     private void askPermissions() {
         String[] permissions = {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                LocationManager.NETWORK_PROVIDER,
+                LocationManager.GPS_PROVIDER
         };
 
         Set<String> permissionsRequest = new HashSet<>();

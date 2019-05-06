@@ -2,226 +2,238 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/courseCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp">
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/civPic"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:layout_weight="2"
-                />
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="120dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="2" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvOrderNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="訂單編號"
+                            android:textSize="20sp" />
+
+                        <ImageView
+                            android:id="@+id/ivQrcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:layout_weight="3"
+                            app:srcCompat="@drawable/qr_code" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tvOrderNum"
+                        android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="訂單編號"
+                        android:text="名稱"
                         android:textSize="20sp" />
 
-                    <ImageView
-                        android:id="@+id/ivQrcode"
+                    <TextView
+                        android:id="@+id/tvCourseName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:layout_weight="3"
-                        app:srcCompat="@drawable/qr_code" />
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="課程名稱"
+                        android:textSize="20sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="名稱"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tvCourseName"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="課程名稱"
-                    android:textSize="20sp" />
             </LinearLayout>
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout10"
-            android:layout_width="match_parent"
-            android:layout_height="145dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <LinearLayout
-                android:id="@+id/linearLayout9"
+                android:id="@+id/linearLayout10"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="145dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-                android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <android.support.constraint.ConstraintLayout
+                <LinearLayout
+                    android:id="@+id/linearLayout9"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
 
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="76dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="FROM："
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvCourseMFD"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/tvCourseMFD"
-                        android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="76dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="FROM："
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tvCourseMFD"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvCourseMFD"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView15"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView15"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                        android:layout_weight="1">
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="76dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="TO："
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/tvCourseEXP"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="76dp"
+                        <TextView
+                            android:id="@+id/tvCourseEXP"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView16"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="TO："
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/tvCourseEXP"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/tvCourseEXP"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView16"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:text="上課地點："
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                        <ImageView
+                            android:id="@+id/ivMap"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView19"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/map" />
 
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="上課地點："
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/tvCoursePlace"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:text="上課地點"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivMap"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/ivMap"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textView19"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/map" />
+                    </android.support.constraint.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/tvCoursePlace"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:text="上課地點"
-                        android:textSize="15sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivMap"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </android.support.constraint.ConstraintLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/sQrcode"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="106dp"
+                android:layout_marginEnd="106dp"
+                android:gravity="center"
+                android:textSize="50sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
 
-        <ImageView
-            android:id="@+id/Qrcode"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="106dp"
-            android:layout_marginLeft="106dp"
-            android:layout_marginEnd="106dp"
-            android:layout_marginRight="106dp"
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvAlready"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="QRCODE"
-            android:textSize="50sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout10" />
-
-    </android.support.constraint.ConstraintLayout>
+            android:rotation="330"
+            android:text="已上課"
+            android:textSize="40sp"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

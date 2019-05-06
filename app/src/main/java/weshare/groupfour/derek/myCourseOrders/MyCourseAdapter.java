@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +53,11 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         private TextView tvCourseEXP;
         private TextView tvCoursePlace;
         private TextView tvOrderNum;
+        private TextView tvAlready;
         private ImageView ivMap;
         private ImageView ivQrcode;
         private ImageView Qrcode;
-
+        private CardView courseCard;
 
         public ViewHolder(View view) {
             super(view);
@@ -67,7 +70,9 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
             tvOrderNum = view.findViewById(R.id.tvOrderNum);
             ivMap = view.findViewById(R.id.ivMap);
             ivQrcode = view.findViewById(R.id.ivQrcode);
-            Qrcode = view.findViewById(R.id.Qrcode);
+            Qrcode = view.findViewById(R.id.sQrcode);
+            courseCard = view.findViewById(R.id.courseCard);
+            tvAlready = view.findViewById(R.id.tvAlready);
         }
     }
 
@@ -80,6 +85,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final CourseReservationVO myCourseRvVO = myCourseRvList.get(position);
+
 
 
         holder.tvCourseName.setText("課程名稱：" + myCourseRvVO.getInscId());
@@ -116,13 +122,11 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(fragment);
-                        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                        integrator.setPrompt("Scan");       //底部提示的文字
-                        integrator.setCameraId(0);          //前面或後面的相機
-                        integrator.setBeepEnabled(true);    //掃描成功後發出 BB 聲
-                        integrator.setBarcodeImageEnabled(false);
-                        integrator.initiateScan();
+                        Intent intent = new Intent(context,QrcodeCheck.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("CrvVO",myCourseRvVO);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
                     }
                 });
 
@@ -169,6 +173,12 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 break;
         }
 
+        if(myCourseRvVO.getClassStatus() == 1){
+            holder.ivMap.setClickable(false);
+            holder.courseCard.setAlpha(0.5f);
+            holder.tvAlready.setVisibility(View.VISIBLE);
+            holder.ivQrcode.setClickable(false);
+        }
 
     }
 

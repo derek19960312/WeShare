@@ -16,6 +16,10 @@ public class State {
         this.user = user;
         this.users = users;
     }
+    public State(String type, String user) {
+        this.type = type;
+        this.user = user;
+    }
 
     public String getType() {
         return type;

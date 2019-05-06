@@ -24,4 +24,6 @@
         android:text="目前沒有預約"
         android:textSize="40sp"
         android:visibility="gone" />
+
+
 </FrameLayout>

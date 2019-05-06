@@ -77,19 +77,6 @@ public class MyTeachFragment extends Fragment {
        }
         return view;
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
-        if(result !=null){
-            if(result.getContents() == null){
-                Toast.makeText(getContext(),"You can't celled the scanning",Toast.LENGTH_SHORT).show();;
-            }else {
-                Toast.makeText(getContext(),result.getContents(),Toast.LENGTH_LONG).show();
-            }
-        }else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
 
 }

@@ -1,13 +1,18 @@
 package weshare.groupfour.derek;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +36,8 @@ public class MapsActivity  extends AppCompatActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -115,6 +122,19 @@ public class MapsActivity  extends AppCompatActivity implements OnMapReadyCallba
         }
         return true;
     }
+
+
+
+    private LatLng getMyDirection(){
+        double lat, lng;
+        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        lat = location.getLatitude();  // 取得經度
+        lng = location.getLongitude(); // 取得緯度
+        LatLng HOME = new LatLng(lat, lng);
+        return HOME;
+    }
+
 
     // 開啟Google地圖應用程式來完成導航要求
     private void direct(double fromLat, double fromLng, double toLat, double toLng) {

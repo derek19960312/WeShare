@@ -100,7 +100,7 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
         holder.tvOrderPrice.setText(String.valueOf(myGoodsOrder.getGoodTotalPrice()));
         holder.tvOrderNumber.setText(myGoodsOrder.getGoodOrderId());
 
-        switch ((int) Math.random() * 2) {
+        switch ((int) (Math.random() * 2)) {
             case 0:
                 holder.tvOrderType.setText("宅配");
                 break;

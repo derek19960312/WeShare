@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 
 
 import weshare.groupfour.derek.ws.ChatWebSocketClient;
+import weshare.groupfour.derek.ws.ConfirmCourseWebSocketClient;
 import weshare.groupfour.derek.ws.GrabCourseWebSocketClient;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -20,6 +21,7 @@ public class Connect_WebSocket {
 
     public static ChatWebSocketClient chatWebSocketClient;
     public static GrabCourseWebSocketClient grabCourseWebSocketClient;
+    public static ConfirmCourseWebSocketClient confirmCourseWebSocketClient;
 
     // 建立ChatWebSocket連線
     public static void connectServerChat(Context context, String userName, String ws) {
@@ -60,6 +62,27 @@ public class Connect_WebSocket {
         if (grabCourseWebSocketClient != null) {
             grabCourseWebSocketClient.close();
             grabCourseWebSocketClient = null;
+        }
+    }
+
+    // 建立ConfirmWebSocket連線
+    public static void connectServerConfirm(Context context, String userName, String ws) {
+        URI uri = null;
+        try {
+            uri = new URI(ws + "/"+userName);
+        } catch (URISyntaxException e) {
+            Log.e(TAG, e.toString());
+        }
+        if (confirmCourseWebSocketClient == null) {
+            confirmCourseWebSocketClient = new ConfirmCourseWebSocketClient(uri, context);
+            confirmCourseWebSocketClient.connect();
+        }
+    }
+    // 中斷ConfirmWebSocket連線
+    public static void disconnectServerConfirm() {
+        if (confirmCourseWebSocketClient != null) {
+            confirmCourseWebSocketClient.close();
+            confirmCourseWebSocketClient = null;
         }
     }
 
