@@ -23,13 +23,19 @@ import weshare.groupfour.derek.util.RequestDataBuilder;
 public class QrcodeCheck extends AppCompatActivity {
     CourseReservationVO crVO;
     Gson gson = new Gson();
+    String request;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_check);
 
         crVO = (CourseReservationVO) getIntent().getExtras().getSerializable("CrvVO");
-
+        RequestDataBuilder rdb = new RequestDataBuilder();
+        rdb.build()
+                .setAction("confirm_for_course")
+                .setData("crvId", crVO.getCrvId());
+        request = rdb.create();
         startQrcodeScanner();
 
     }
@@ -51,41 +57,25 @@ public class QrcodeCheck extends AppCompatActivity {
 
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
-            if (result.getContents() == null) {
 
-                Toast.makeText(this, "You can't celled the scanning", Toast.LENGTH_SHORT).show();
+
+            if (crVO.getCrvId().equals(result.getContents())) {
+                Toast.makeText(this, "驗證成功", Toast.LENGTH_LONG).show();
+                //new CallServlet(this).execute(ServerURL.IP_COURSERESERVATION, request);
+
+                Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(new State("success", crVO.getMemId())));
+                finish();
 
             } else {
+                Toast.makeText(this, "請掃描正確QRCODE", Toast.LENGTH_LONG).show();
 
-
-                if (crVO.getCrvId().equals(result.getContents())) {
-                    RequestDataBuilder rdb = new RequestDataBuilder();
-                    rdb.build()
-                            .setAction("confirm_for_course")
-                            .setData("crvId", crVO.getCrvId());
-                    String request = rdb.create();
-                    Log.e("request", request);
-                    try {
-                        new CallServlet(this).execute(ServerURL.IP_COURSERESERVATION, request).get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(new State("success",crVO.getMemId())));
-                    finish();
-
-                } else {
-                    Toast.makeText(this, "請掃描正確QRCODE", Toast.LENGTH_LONG).show();
-
-                    Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(new State("fail",crVO.getMemId())));
-                    finish();
-                }
-
+                Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(new State("fail", crVO.getMemId())));
+                finish();
             }
+
         } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            finish();
         }
     }
+
 }

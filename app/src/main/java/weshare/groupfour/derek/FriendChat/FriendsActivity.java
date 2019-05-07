@@ -245,11 +245,11 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     // Activity結束即中斷WebSocket連線
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        Connect_WebSocket.disconnectServerChat();
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Connect_WebSocket.disconnectServerChat();
+    }
 
 
 

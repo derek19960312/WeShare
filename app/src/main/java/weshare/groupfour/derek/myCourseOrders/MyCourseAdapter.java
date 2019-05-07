@@ -87,7 +87,6 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
         final CourseReservationVO myCourseRvVO = myCourseRvList.get(position);
 
 
-
         holder.tvCourseName.setText("課程名稱：" + myCourseRvVO.getInscId());
         holder.tvCoursePlace.setText(myCourseRvVO.getCrvLoc());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd a hh:mm");
@@ -122,11 +121,13 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(context,QrcodeCheck.class);
+                        Intent intent = new Intent(context, QrcodeCheck.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("CrvVO",myCourseRvVO);
+                        bundle.putSerializable("CrvVO", myCourseRvVO);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
+
+
                     }
                 });
 
@@ -141,9 +142,9 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 holder.tvName.setText("老師姓名：" + myCourseRvVO.getTeacherId());
 
-
+                String QrcodeData = myCourseRvVO.getCrvId();
                 //設定QRCODE
-                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(myCourseRvVO.getCrvId(), null,
+                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(QrcodeData, null,
                         Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
                         200);
                 Bitmap bitmap = null;
@@ -156,24 +157,24 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
 
                 //可以展開Qrcode
-                    holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
+                holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View view) {
-                            switch (holder.Qrcode.getVisibility()) {
-                                case View.VISIBLE:
-                                    holder.Qrcode.setVisibility(View.GONE);
-                                    break;
-                                case View.GONE:
-                                    holder.Qrcode.setVisibility(View.VISIBLE);
-                                    break;
-                            }
+                    @Override
+                    public void onClick(View view) {
+                        switch (holder.Qrcode.getVisibility()) {
+                            case View.VISIBLE:
+                                holder.Qrcode.setVisibility(View.GONE);
+                                break;
+                            case View.GONE:
+                                holder.Qrcode.setVisibility(View.VISIBLE);
+                                break;
                         }
-                    });
+                    }
+                });
                 break;
         }
 
-        if(myCourseRvVO.getClassStatus() == 1){
+        if (myCourseRvVO.getClassStatus() == 1) {
             holder.ivMap.setClickable(false);
             holder.courseCard.setAlpha(0.5f);
             holder.tvAlready.setVisibility(View.VISIBLE);
