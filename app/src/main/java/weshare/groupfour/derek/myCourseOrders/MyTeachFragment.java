@@ -24,10 +24,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
-import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.RequestDataBuilder;
 import weshare.groupfour.derek.util.Tools;
 
 
@@ -36,7 +38,7 @@ public class MyTeachFragment extends Fragment {
 
 
     TextView tvNoData;
-
+    public static List<CourseReservationVO> myTeachRvList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,10 +59,10 @@ public class MyTeachFragment extends Fragment {
                     .create();
             Type listType = new TypeToken<List<CourseReservationVO>>() {
             }.getType();
-            List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
+            myTeachRvList = gson.fromJson(result, listType);
 
-            if (myCourseRvList == null || myCourseRvList.size() != 0) {
-                rvMyTeachCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.TEACHER,getContext(),this));
+            if (myTeachRvList !=null && myTeachRvList.size() != 0) {
+                rvMyTeachCourse.setAdapter(new MyCourseAdapter(myTeachRvList, MyCourseAdapter.TEACHER,getContext(),this));
             } else {
                 view.findViewById(R.id.tvNoData).setVisibility(View.VISIBLE);
             }
@@ -76,6 +78,27 @@ public class MyTeachFragment extends Fragment {
             tvNoData.setText("您並非老師身分");
        }
         return view;
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+
+                Toast.makeText(getContext(), "You can't celled the scanning", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                Connect_WebSocket.confirmCourseWebSocketClient.send(result.getContents());
+
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
 

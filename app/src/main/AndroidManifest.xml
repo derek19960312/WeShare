@@ -5,7 +5,7 @@
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
+         location permissions for the 'GetMyLocation' functionality.
     -->
     <!-- 網路定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- GPS定位 -->
@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".myCourseOrders.QrcodeCheck"></activity>
+        <activity android:name=".myCourseOrders.QrcodeCheck_deprecate"></activity>
         <activity android:name=".mapNavActivity_test" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

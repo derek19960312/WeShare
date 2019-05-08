@@ -2,19 +2,17 @@ package weshare.groupfour.derek.util;
 
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-
 import weshare.groupfour.derek.ws.ChatWebSocketClient;
 import weshare.groupfour.derek.ws.ConfirmCourseWebSocketClient;
 import weshare.groupfour.derek.ws.GrabCourseWebSocketClient;
-
-import static android.content.Context.MODE_PRIVATE;
+import weshare.groupfour.derek.ws.WhoAroundsWebSocketClient;
 
 public class Connect_WebSocket {
     private final static String TAG = "Util";
@@ -22,6 +20,7 @@ public class Connect_WebSocket {
     public static ChatWebSocketClient chatWebSocketClient;
     public static GrabCourseWebSocketClient grabCourseWebSocketClient;
     public static ConfirmCourseWebSocketClient confirmCourseWebSocketClient;
+    public static WhoAroundsWebSocketClient whoAroundsWebSocketClient;
 
     // 建立ChatWebSocket連線
     public static void connectServerChat(Context context, String userName, String ws) {
@@ -69,6 +68,8 @@ public class Connect_WebSocket {
     public static void connectServerConfirm(Context context, String userName, String ws) {
         URI uri = null;
         try {
+
+
             uri = new URI(ws + "/"+userName);
         } catch (URISyntaxException e) {
             Log.e(TAG, e.toString());
@@ -83,6 +84,29 @@ public class Connect_WebSocket {
         if (confirmCourseWebSocketClient != null) {
             confirmCourseWebSocketClient.close();
             confirmCourseWebSocketClient = null;
+        }
+    }
+    // 建立ConfirmWebSocket連線
+    public static void connectServerWhoArround(Context context, String userName, String ws, Location mylocation) {
+        URI uri = null;
+        try {
+
+            Double lat = mylocation.getLatitude();
+            Double lng = mylocation.getLongitude();
+            uri = new URI(ws + "/"+userName+"/"+lat+"/"+lng);
+        } catch (URISyntaxException e) {
+            Log.e(TAG, e.toString());
+        }
+        if (whoAroundsWebSocketClient == null) {
+            whoAroundsWebSocketClient = new WhoAroundsWebSocketClient(uri, context);
+            whoAroundsWebSocketClient.connect();
+        }
+    }
+    // 中斷ConfirmWebSocket連線
+    public static void connectServerWhoArround() {
+        if (whoAroundsWebSocketClient != null) {
+            whoAroundsWebSocketClient.close();
+            whoAroundsWebSocketClient = null;
         }
     }
 

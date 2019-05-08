@@ -18,12 +18,12 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.util.Locale;
 
-public class ConfirmCourseWebSocketClient extends WebSocketClient {
+public class WhoAroundsWebSocketClient extends WebSocketClient {
     private static final String TAG = "ChatWebSocketClient";
     private LocalBroadcastManager broadcastManager;
     private Gson gson;
 
-    public ConfirmCourseWebSocketClient(URI serverURI, Context context) {
+    public WhoAroundsWebSocketClient(URI serverURI, Context context) {
         // Draft_17是連接協議，就是標準的RFC 6455（JSR356）
         super(serverURI, new Draft_17());
         broadcastManager = LocalBroadcastManager.getInstance(context);
@@ -41,9 +41,15 @@ public class ConfirmCourseWebSocketClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-
-            sendMessageBroadcast("check", message);
-
+        String type;
+        try {
+            JsonObject jsonObject = gson.fromJson(message, JsonObject.class);
+            type = jsonObject.get("type").getAsString();
+            sendMessageBroadcast(type, message);
+        }catch (Exception e){
+            type = "nearby";
+            sendMessageBroadcast(type, message);
+        }
 
 
         Log.d(TAG, "onMessage: " + message);

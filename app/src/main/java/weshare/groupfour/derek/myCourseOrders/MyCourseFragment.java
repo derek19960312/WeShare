@@ -19,15 +19,15 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
-import weshare.groupfour.derek.R;
 
 
 public class MyCourseFragment extends Fragment {
     TextView tvNoData;
-
+    public static List<CourseReservationVO> myCourseRvList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class MyCourseFragment extends Fragment {
                     .create();
             Type listType = new TypeToken<List<CourseReservationVO>>() {
             }.getType();
-            List<CourseReservationVO> myCourseRvList = gson.fromJson(result, listType);
+            myCourseRvList = gson.fromJson(result, listType);
             if (myCourseRvList != null && myCourseRvList.size() != 0) {
                 rvMyCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.MEMBER,getContext(),this));
             } else {

@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -121,11 +123,14 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(context, QrcodeCheck.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("CrvVO", myCourseRvVO);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
+                        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(fragment);
+
+                        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                        integrator.setPrompt("Scan");       //底部提示的文字
+                        integrator.setCameraId(0);          //前面或後面的相機
+                        integrator.setBeepEnabled(true);    //掃描成功後發出 BB 聲
+                        integrator.setBarcodeImageEnabled(false);
+                        integrator.initiateScan();
 
 
                     }
@@ -142,7 +147,12 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 holder.tvName.setText("老師姓名：" + myCourseRvVO.getTeacherId());
 
-                String QrcodeData = myCourseRvVO.getCrvId();
+
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                        .create();
+
+                String QrcodeData = gson.toJson(myCourseRvVO);
                 //設定QRCODE
                 QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(QrcodeData, null,
                         Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
