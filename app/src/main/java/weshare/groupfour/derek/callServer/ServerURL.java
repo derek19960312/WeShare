@@ -3,7 +3,7 @@ package weshare.groupfour.derek.callServer;
 public class ServerURL {
 
     //GCP
-  final public static String IP = "34.80.204.33:8081";
+//  final public static String IP = "34.80.204.33:8081";
 
     //迎刃
 //  final public static String IP = "18.191.251.39:8081";
@@ -14,7 +14,7 @@ public class ServerURL {
 //  final public static String IP = "192.168.168.123:8081";
 
     //資策會
-// final public static String IP = "10.120.26.19:8081";
+final public static String IP = "10.120.26.19:8081";
 
     //桃園家
 //  final public static String IP = "192.168.1.108:8081";
@@ -49,5 +49,6 @@ public class ServerURL {
     final public static String WS_CHATROOM = WS+IP+PROJECT_WEB+"/FriendWS";
     final public static String WS_GRABCOURSE = WS+IP+PROJECT_WEB+"/GrabCourseWS";
     final public static String WS_CONFIRMCOURSE = WS+IP+PROJECT_WEB+"/ConfirmCourseWS";
+    final public static String WS_AROUNDS = WS+IP+PROJECT_WEB+"/WhoAroundsWS";
 
 }

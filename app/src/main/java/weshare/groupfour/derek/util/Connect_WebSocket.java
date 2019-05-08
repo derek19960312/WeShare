@@ -86,14 +86,12 @@ public class Connect_WebSocket {
             confirmCourseWebSocketClient = null;
         }
     }
-    // 建立ConfirmWebSocket連線
-    public static void connectServerWhoArround(Context context, String userName, String ws, Location mylocation) {
+    // 建立WhoArroundWebSocket連線
+    public static void connectServerWhoArround(Context context, String userName, String ws) {
         URI uri = null;
         try {
 
-            Double lat = mylocation.getLatitude();
-            Double lng = mylocation.getLongitude();
-            uri = new URI(ws + "/"+userName+"/"+lat+"/"+lng);
+            uri = new URI(ws + "/"+userName);
         } catch (URISyntaxException e) {
             Log.e(TAG, e.toString());
         }
@@ -102,7 +100,7 @@ public class Connect_WebSocket {
             whoAroundsWebSocketClient.connect();
         }
     }
-    // 中斷ConfirmWebSocket連線
+    // 中斷WhoArroundWebSocket連線
     public static void connectServerWhoArround() {
         if (whoAroundsWebSocketClient != null) {
             whoAroundsWebSocketClient.close();

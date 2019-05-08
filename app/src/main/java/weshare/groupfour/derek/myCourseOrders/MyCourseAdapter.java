@@ -111,11 +111,10 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 //加入學生名稱
                 MemberVO memVO = join.getMemberbyMemId(myCourseRvVO.getMemId(), context);
-                myCourseRvVO.setTeacherId(memVO.getMemName());
                 //加入學生圖片
                 join.setPicOn(holder.civPic, memVO.getMemId());
 
-                holder.tvName.setText("學生姓名：" + myCourseRvVO.getTeacherId());
+                holder.tvName.setText("學生姓名：" + memVO.getMemName());
 
 
                 //開啟QRcode掃描器
@@ -128,7 +127,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
                         integrator.setPrompt("Scan");       //底部提示的文字
                         integrator.setCameraId(0);          //前面或後面的相機
-                        integrator.setBeepEnabled(true);    //掃描成功後發出 BB 聲
+                        integrator.setBeepEnabled(false);    //掃描成功後發出 BB 聲
                         integrator.setBarcodeImageEnabled(false);
                         integrator.initiateScan();
 
@@ -141,11 +140,10 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 //加入老師名稱
                 MemberVO memtVO = join.getMemberbyteacherId(myCourseRvVO.getTeacherId(), context);
-                myCourseRvVO.setTeacherId(memtVO.getMemName());
                 //加入老師圖片
                 join.setPicOn(holder.civPic, memtVO.getMemId());
 
-                holder.tvName.setText("老師姓名：" + myCourseRvVO.getTeacherId());
+                holder.tvName.setText("老師姓名：" + memtVO.getMemName());
 
 
                 Gson gson = new GsonBuilder()

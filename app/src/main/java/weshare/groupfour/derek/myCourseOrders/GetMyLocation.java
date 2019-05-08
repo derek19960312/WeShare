@@ -63,6 +63,7 @@ public class GetMyLocation {
                 location = locationResult.getLastLocation();
                 MyLat = location.getLatitude();
                 MyLng = location.getLongitude();
+
                 myCourseActivity.connectWS(location);
 
             }
@@ -72,7 +73,7 @@ public class GetMyLocation {
     private void createLocationRequest() {
         locationRequest = new LocationRequest();
         // 10秒要一次位置資料 (但不一定, 有可能不到10秒, 也有可能超過10秒才要一次)
-        locationRequest.setInterval(10000);
+        locationRequest.setInterval(30000);
         // 若有其他app也使用了LocationServices, 就會以此時間為取得位置資料的依據
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);

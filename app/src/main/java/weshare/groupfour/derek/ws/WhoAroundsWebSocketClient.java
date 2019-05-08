@@ -41,15 +41,9 @@ public class WhoAroundsWebSocketClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        String type;
-        try {
-            JsonObject jsonObject = gson.fromJson(message, JsonObject.class);
-            type = jsonObject.get("type").getAsString();
-            sendMessageBroadcast(type, message);
-        }catch (Exception e){
-            type = "nearby";
-            sendMessageBroadcast(type, message);
-        }
+
+        sendMessageBroadcast("nearby", message);
+
 
 
         Log.d(TAG, "onMessage: " + message);

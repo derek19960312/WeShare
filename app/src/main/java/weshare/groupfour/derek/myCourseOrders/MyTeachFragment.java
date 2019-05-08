@@ -92,7 +92,6 @@ public class MyTeachFragment extends Fragment {
                 Toast.makeText(getContext(), "You can't celled the scanning", Toast.LENGTH_SHORT).show();
 
             } else {
-
                 Connect_WebSocket.confirmCourseWebSocketClient.send(result.getContents());
 
             }
