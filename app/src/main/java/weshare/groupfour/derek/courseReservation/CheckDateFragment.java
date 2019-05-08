@@ -5,32 +5,26 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -44,6 +38,7 @@ import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.insCourse.InsCourseTimeVO;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
 import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class CheckDateFragment extends Fragment {
@@ -51,9 +46,7 @@ public class CheckDateFragment extends Fragment {
     private static int year, month, day;
     private static Button btnDate;
     public static RadioGroup rgDate = null;
-    private static Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .create();
+
     private static CourseReservationVO crVO;
     private static View view;
     private static ConstraintLayout clBolder;
@@ -181,7 +174,7 @@ public class CheckDateFragment extends Fragment {
                         String request = Tools.RequestDataBuilder(requestMap);
                         String result = new CallServlet(getContext()).execute(ServerURL.IP_INSCOURSE, request).get();
                         Type listType = new TypeToken<List<InsCourseTimeVO>>(){}.getType();
-                        List<InsCourseTimeVO> inscTimes = gson.fromJson(result,listType);
+                        List<InsCourseTimeVO> inscTimes = Holder.gson.fromJson(result,listType);
 
                         rgDate.removeAllViews();
 
@@ -206,7 +199,7 @@ public class CheckDateFragment extends Fragment {
                                     @Override
                                     public void onClick(View v) {
 
-                                        String inscTimeVOJson = gson.toJson(inscTime);
+                                        String inscTimeVOJson = Holder.gson.toJson(inscTime);
                                         Connect_WebSocket.grabCourseWebSocketClient.send(inscTimeVOJson);
                                     }
                                 });

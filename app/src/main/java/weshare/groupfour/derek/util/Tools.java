@@ -57,10 +57,10 @@ public class Tools {
 
 
     // check if the device connect to the network
-    public static boolean networkConnected(Activity activity) {
+    public static boolean networkConnected() {
 
         ConnectivityManager conManager =
-                (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) Holder.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = conManager != null ? conManager.getActiveNetworkInfo() : null;
         return networkInfo != null && networkInfo.isConnected();
     }

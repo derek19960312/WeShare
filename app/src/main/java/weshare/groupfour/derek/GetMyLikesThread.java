@@ -9,7 +9,6 @@ import java.util.Set;
 import weshare.groupfour.derek.goods.GoodsLike;
 import weshare.groupfour.derek.goods.GoodsVO;
 import weshare.groupfour.derek.insCourse.CourseLike;
-import weshare.groupfour.derek.insCourse.CourseVO;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;

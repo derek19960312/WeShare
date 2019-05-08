@@ -1,9 +1,9 @@
 package weshare.groupfour.derek.member;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -26,6 +24,7 @@ import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.home.LoginFakeActivity;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
@@ -69,10 +68,7 @@ public class MyWalletActivity extends AppCompatActivity {
                 String result = new CallServlet(this).execute(ServerURL.IP_WITHDRAEALRECORD, request).get();
                 Type listType = new TypeToken<List<WithdrawalRecordVO>>() {
                 }.getType();
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .create();
-                List<WithdrawalRecordVO> withdrawalRecordVOs = gson.fromJson(result, listType);
+                List<WithdrawalRecordVO> withdrawalRecordVOs = Holder.gson.fromJson(result, listType);
 
                 RecyclerView rvMyWallet = findViewById(R.id.rvMyWallet);
                 rvMyWallet.setLayoutManager(new LinearLayoutManager(this));

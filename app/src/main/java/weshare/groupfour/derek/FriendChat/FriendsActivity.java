@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -30,7 +31,11 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.home.LoginFakeActivity;
+import weshare.groupfour.derek.myCourseOrders.GetMyLocation;
+import weshare.groupfour.derek.myCourseOrders.MyCourseActivity;
 import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 
@@ -51,10 +56,21 @@ public class FriendsActivity extends AppCompatActivity {
     private List<FriendNexusVO> MyFriendOffline = new LinkedList<>();
     private LocalBroadcastManager broadcastManager;
     FriendNexusVO fnVO = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_inscourse);
+        //登入驗證
+        Intent intent = new Intent(FriendsActivity.this, LoginFakeActivity.class);
+        startActivityForResult(intent, 88800);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //成功驗證登入
         setContentView(R.layout.activity_friends);
         // 初始化LocalBroadcastManager並註冊BroadcastReceiver
         broadcastManager = LocalBroadcastManager.getInstance(this);
@@ -65,7 +81,6 @@ public class FriendsActivity extends AppCompatActivity {
         //setTitle("I am " + user);
 
         //取回我的好友
-        Gson gson = new Gson();
         Map<String,String> requestMap = new HashMap<>();
         requestMap.put("action","get_my_friends");
         requestMap.put("memId", user);
@@ -79,7 +94,7 @@ public class FriendsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Type listType = new TypeToken<List<FriendNexusVO>>(){}.getType();
-        allMyFriend = gson.fromJson(result,listType);
+        allMyFriend = Holder.gson.fromJson(result,listType);
 
 
         // 初始化聊天清單
@@ -96,7 +111,13 @@ public class FriendsActivity extends AppCompatActivity {
 
         //建立連線
         Connect_WebSocket.connectServerChat(this, user, ServerURL.WS_CHATROOM);
+
     }
+
+
+
+
+
 
 
     // 攔截user連線或斷線的Broadcast
@@ -113,7 +134,7 @@ public class FriendsActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            State stateMessage = new Gson().fromJson(message, State.class);
+            State stateMessage = Holder.gson.fromJson(message, State.class);
             String type = stateMessage.getType();
             String friend = stateMessage.getUser();
             switch (type) {

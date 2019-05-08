@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -23,6 +21,7 @@ import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
+import weshare.groupfour.derek.util.Holder;
 
 
 public class MyCourseFragment extends Fragment {
@@ -41,12 +40,9 @@ public class MyCourseFragment extends Fragment {
         String resquestData = "action=find_my_reservation&param=" + memId;
         try {
             String result = new CallServlet(getContext()).execute(ServerURL.IP_COURSERESERVATION, resquestData).get();
-            Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .create();
             Type listType = new TypeToken<List<CourseReservationVO>>() {
             }.getType();
-            myCourseRvList = gson.fromJson(result, listType);
+            myCourseRvList = Holder.gson.fromJson(result, listType);
             if (myCourseRvList != null && myCourseRvList.size() != 0) {
                 rvMyCourse.setAdapter(new MyCourseAdapter(myCourseRvList, MyCourseAdapter.MEMBER,getContext(),this));
             } else {

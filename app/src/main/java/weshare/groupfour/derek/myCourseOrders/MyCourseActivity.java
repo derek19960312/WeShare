@@ -2,6 +2,7 @@ package weshare.groupfour.derek.myCourseOrders;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Sensor;
@@ -14,11 +15,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -27,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import weshare.groupfour.derek.MypagerAdapter;
 import weshare.groupfour.derek.PageVO;
@@ -37,6 +41,7 @@ import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.RequestDataBuilder;
 import weshare.groupfour.derek.util.Tools;
@@ -71,8 +76,7 @@ public class MyCourseActivity extends AppCompatActivity {
         tbMyInsCourse.setupWithViewPager(vpMyInsCourse);
 
 
-
-        //註冊
+        //註冊廣播接收
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         //判斷進來的訊息
         IntentFilter CourseComFilter = new IntentFilter("check");
@@ -83,6 +87,15 @@ public class MyCourseActivity extends AppCompatActivity {
 
         broadcastManager.registerReceiver(confirmCourseReceiver, CourseComFilter);
         broadcastManager.registerReceiver(nearByReceiver, NearByFilter);
+
+
+        //驗證上課聊天室
+        Connect_WebSocket.connectServerConfirm(this, user, ServerURL.WS_CONFIRMCOURSE);
+        Connect_WebSocket.connectServerWhoArround(this, user, ServerURL.WS_AROUNDS);
+
+        //更新最新位置
+        getMyLocation = new GetMyLocation(this, this);
+        getMyLocation.startLocationUpdates();
 
 
     }
@@ -100,37 +113,42 @@ public class MyCourseActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            Gson gson = new Gson();
             Type setType = new TypeToken<Set<MyLocationVO>>() {
             }.getType();
-            Set<MyLocationVO> myLocationVOS = gson.fromJson(message, setType);
+            Set<MyLocationVO> myLocationVOS = Holder.gson.fromJson(message, setType);
             nearbyme = new HashSet<>();
             for (MyLocationVO myLocationVO : myLocationVOS) {
                 if (!myLocationVO.getMemberId().equals(Connect_WebSocket.getUserName()) && distance(myLocationVO) < 500f) {
-                    nearbyme.add(myLocationVO.getMemberId());
-                    Log.e("myLocationVO", String.valueOf(myLocationVO.getMemberId()));
-                }
-            }
+                    if (nearbyme.contains(myLocationVO.getMemberId())) {
 
-            myNearByCourseRv = new ArrayList<>();
-            if ( MyTeachFragment.myTeachRvList != null) {
-                for (CourseReservationVO crVO : MyTeachFragment.myTeachRvList) {
-                    if (crVO.getClassStatus() != 1 && nearbyme.contains(crVO.getMemId())) {
-                        myNearByCourseRv.add(crVO);
-                    }
-                }
-            }
-            if (MyCourseFragment.myCourseRvList != null) {
-                for (CourseReservationVO crVO :MyCourseFragment.myCourseRvList ) {
-                    MemberVO MemVO = new Join().getMemberbyteacherId(crVO.getTeacherId(), MyCourseActivity.this);
-                    if (crVO.getClassStatus() != 1 && nearbyme.contains(MemVO.getMemId())) {
-                        myNearByCourseRv.add(crVO);
+                    } else {
+                        nearbyme.add(myLocationVO.getMemberId());
+                        refreshMyNearBYCourse();
                     }
                 }
             }
         }
     }
 
+    private void refreshMyNearBYCourse() {
+
+        myNearByCourseRv = new ArrayList<>();
+        if (MyTeachFragment.myTeachRvList != null) {
+            for (CourseReservationVO crVO : MyTeachFragment.myTeachRvList) {
+                if (crVO.getClassStatus() != 1 && nearbyme.contains(crVO.getMemId())) {
+                    myNearByCourseRv.add(crVO);
+                }
+            }
+        }
+        if (MyCourseFragment.myCourseRvList != null) {
+            for (CourseReservationVO crVO : MyCourseFragment.myCourseRvList) {
+                MemberVO MemVO = new Join().getMemberbyteacherId(crVO.getTeacherId(), MyCourseActivity.this);
+                if (crVO.getClassStatus() != 1 && nearbyme.contains(MemVO.getMemId())) {
+                    myNearByCourseRv.add(crVO);
+                }
+            }
+        }
+    }
 
     private class ConfirmCourseReceiver extends BroadcastReceiver {
         @Override
@@ -187,13 +205,6 @@ public class MyCourseActivity extends AppCompatActivity {
             sm.unregisterListener(listener);
         }
 
-        //驗證上課聊天室
-        Connect_WebSocket.connectServerConfirm(this, user, ServerURL.WS_CONFIRMCOURSE);
-        Connect_WebSocket.connectServerWhoArround(this, user, ServerURL.WS_AROUNDS);
-
-        //更新最新位置
-        getMyLocation = new GetMyLocation(this, this);
-        getMyLocation.startLocationUpdates();
 
     }
 
@@ -204,8 +215,7 @@ public class MyCourseActivity extends AppCompatActivity {
         mylVO.setMemberId(user);
         mylVO.setLat(location.getLatitude());
         mylVO.setLng(location.getLongitude());
-        Gson gson = new Gson();
-        Connect_WebSocket.whoAroundsWebSocketClient.send(gson.toJson(mylVO));
+        Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
     }
 
     @Override
@@ -270,29 +280,46 @@ public class MyCourseActivity extends AppCompatActivity {
                             if (myNearByCourseRv != null && myNearByCourseRv.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
-                                RequestDataBuilder rdb = new RequestDataBuilder();
-                                rdb.build()
-                                        .setAction("confirm_for_course_shake")
-                                        .setData("crvId", myNearByCourseRv.get(0).getCrvId());
+                                List<String> list = myNearByCourseRv.stream().map(crvo -> crvo.getCrvId()).collect(Collectors.toList());
+                                ListAdapter adapter = new ArrayAdapter<>(MyCourseActivity.this, android.R.layout.activity_list_item, (String[]) list.toArray());
 
-                                Gson gson = new GsonBuilder()
-                                        .setDateFormat("yyyy-MM-dd hh:mm:ss")
-                                        .create();
-                                try {
-                                    String status = new CallServlet(MyCourseActivity.this).execute(ServerURL.IP_COURSERESERVATION, rdb.create()).get();
-                                    switch (status) {
-                                        case "success":
-                                            Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(myNearByCourseRv.get(0)));
-                                            break;
-                                        case "wait":
-                                            Tools.Toast(MyCourseActivity.this, "等待驗證");
-                                            break;
-                                    }
-                                } catch (ExecutionException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
+                                builder.setTitle("請選擇要驗證的課")
+                                        .setItems((CharSequence[]) list.toArray(), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                RequestDataBuilder rdb = new RequestDataBuilder();
+                                                rdb.build()
+                                                        .setAction("confirm_for_course_shake")
+                                                        .setData("crvId", myNearByCourseRv.get(which).getCrvId());
+
+                                                try {
+                                                    String status = new CallServlet(MyCourseActivity.this).execute(ServerURL.IP_COURSERESERVATION, rdb.create()).get();
+                                                    switch (status) {
+                                                        case "success":
+                                                            Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(myNearByCourseRv.get(0)));
+                                                            break;
+                                                        case "wait":
+                                                            Tools.Toast(MyCourseActivity.this, "等待驗證");
+                                                            break;
+                                                        case "hadCome":
+                                                            Tools.Toast(MyCourseActivity.this, "請勿重複驗證");
+                                                            break;
+                                                    }
+                                                } catch (ExecutionException e) {
+                                                    e.printStackTrace();
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                }
+
+
+
+                                            }
+                                        }).create().show();
+
+
+
                             }
 
 

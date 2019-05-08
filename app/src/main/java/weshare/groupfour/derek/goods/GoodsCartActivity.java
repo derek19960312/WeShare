@@ -5,12 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Point;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.support.v7.widget.Toolbar;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -119,6 +118,7 @@ public class GoodsCartActivity extends AppCompatActivity {
                                 .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+
                                         GoodsOrderVO goodsOrderVO = new GoodsOrderVO();
                                         goodsOrderVO.setMemId(memId);
                                         goodsOrderVO.setGoodTotalPrice(totalPrice);
@@ -126,10 +126,10 @@ public class GoodsCartActivity extends AppCompatActivity {
 
                                         Map<String,String> requestMap = new HashMap<>();
                                         Gson gson = new GsonBuilder()
-
                                                 .enableComplexMapKeySerialization()
                                                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                                                 .create();
+
                                         requestMap.put("action","add_new_good_order");
                                         requestMap.put("myCart",gson.toJson(myCart));
                                         requestMap.put("goodsOrderVO",gson.toJson(goodsOrderVO));

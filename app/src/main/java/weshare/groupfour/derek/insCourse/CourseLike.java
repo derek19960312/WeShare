@@ -3,7 +3,6 @@ package weshare.groupfour.derek.insCourse;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -11,9 +10,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class CourseLike {
@@ -46,8 +45,7 @@ public class CourseLike {
                 e.printStackTrace();
             }
             Type listType = new TypeToken<List<InsCourseVO>>(){}.getType();
-            Gson gson = new Gson();
-            return gson.fromJson(result,listType);
+            return Holder.gson.fromJson(result,listType);
     }
 
     public boolean isLikedCourse(String resultInsCourseId){

@@ -5,20 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.applandeo.materialcalendarview.CalendarView;
-
 import android.widget.TextView;
 
+import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -32,12 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Function;
 
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.RequestDataBuilder;
 import weshare.groupfour.derek.util.Tools;
 
@@ -68,9 +60,6 @@ public class CalendarActivity extends AppCompatActivity {
         //撈取我的課程資料
         SharedPreferences spf = Tools.getSharePreAccount();
         Map<String, String> requestMap;
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
         Type listType = new TypeToken<List<CourseReservationVO>>() {
         }.getType();
         //我是老師
@@ -88,7 +77,7 @@ public class CalendarActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final List<CourseReservationVO> mycrvTec = gson.fromJson(result, listType);
+        final List<CourseReservationVO> mycrvTec = Holder.gson.fromJson(result, listType);
 
         //我是學生
         String memId = spf.getString("memId", null);
@@ -105,7 +94,7 @@ public class CalendarActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final List<CourseReservationVO> mycrvMem = gson.fromJson(result, listType);
+        final List<CourseReservationVO> mycrvMem = Holder.gson.fromJson(result, listType);
 
         List<EventDay> events = new ArrayList<>();
         for (CourseReservationVO crvo : mycrvMem) {

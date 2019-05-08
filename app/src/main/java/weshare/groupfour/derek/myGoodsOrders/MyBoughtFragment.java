@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -23,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
-import weshare.groupfour.derek.myCourseOrders.MyCourseAdapter;
+import weshare.groupfour.derek.util.Holder;
 
 
 public class MyBoughtFragment extends Fragment {
@@ -45,12 +43,9 @@ public class MyBoughtFragment extends Fragment {
         String resquestData = "action=find_my_good_by_memId&memId=" + memId;
         try {
             String result = new CallServlet(getContext()).execute(ServerURL.IP_GOODSORDER, resquestData).get();
-            Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .create();
             Type listType = new TypeToken<List<GoodsOrderVO>>() {
             }.getType();
-            List<GoodsOrderVO> myGoodsOrderRvList = gson.fromJson(result, listType);
+            List<GoodsOrderVO> myGoodsOrderRvList = Holder.gson.fromJson(result, listType);
             if (myGoodsOrderRvList != null && myGoodsOrderRvList.size() != 0) {
                 rvMyBoughtGood.setAdapter(new MyGoodsAdapter(myGoodsOrderRvList, MyGoodsAdapter.BUYER,getContext()));
             } else {

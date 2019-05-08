@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -19,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
 
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
@@ -36,9 +33,6 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
     private int fromWhere;
     private Context context;
 
-    Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .create();
 
     public List<GoodsOrderVO> myGoodsOrderRvList = null;
 
@@ -126,7 +120,7 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
             String result = new CallServlet(context).execute(ServerURL.IP_GOODSDETAILS, request).get();
             Type listType = new TypeToken<List<GoodsVO>>() {
             }.getType();
-            List<GoodsVO> GoodsVOs = gson.fromJson(result, listType);
+            List<GoodsVO> GoodsVOs = Holder.gson.fromJson(result, listType);
             if (GoodsVOs != null && GoodsVOs.size() != 0) {
                 holder.rvOrderDetail.setAdapter(new MyGoodsDetailsAdapter(GoodsVOs, context));
             }

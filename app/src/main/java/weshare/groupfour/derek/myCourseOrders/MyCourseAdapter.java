@@ -3,8 +3,6 @@ package weshare.groupfour.derek.myCourseOrders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -25,11 +21,12 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import weshare.groupfour.derek.MapsActivity;
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.member.MemberVO;
-import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.qrCode.Contents;
 import weshare.groupfour.derek.qrCode.QRCodeEncoder;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 
 public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHolder> {
@@ -146,11 +143,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
                 holder.tvName.setText("老師姓名：" + memtVO.getMemName());
 
 
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd hh:mm:ss")
-                        .create();
 
-                String QrcodeData = gson.toJson(myCourseRvVO);
+                String QrcodeData = Holder.gson.toJson(myCourseRvVO);
                 //設定QRCODE
                 QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(QrcodeData, null,
                         Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),

@@ -1,13 +1,7 @@
 package weshare.groupfour.derek.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.widget.ImageView;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +14,6 @@ import weshare.groupfour.derek.member.MemberVO;
 
 public class Join {
 
-    Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .create();
 
     public MemberVO getMemberbyteacherId(String teacherId, Context context){
         String action = "action=get_one_by_teacherId";
@@ -36,7 +27,7 @@ public class Join {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return gson.fromJson(result,MemberVO.class);
+        return Holder.gson.fromJson(result,MemberVO.class);
     }
     public MemberVO getMemberbyMemId(String memId, Context context){
         String action = "action=get_one_by_memId";
@@ -50,7 +41,7 @@ public class Join {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return gson.fromJson(result,MemberVO.class);
+        return Holder.gson.fromJson(result,MemberVO.class);
     }
 
 

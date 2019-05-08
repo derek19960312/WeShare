@@ -2,9 +2,7 @@ package weshare.groupfour.derek.goods;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -14,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class GoodsLike {
@@ -47,8 +46,7 @@ public class GoodsLike {
                 e.printStackTrace();
             }
             Type listType = new TypeToken<List<GoodsVO>>(){}.getType();
-            Gson gson = new Gson();
-            return gson.fromJson(result,listType);
+            return Holder.gson.fromJson(result,listType);
     }
 
 }

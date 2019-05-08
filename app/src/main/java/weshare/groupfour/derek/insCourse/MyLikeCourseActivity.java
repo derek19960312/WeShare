@@ -12,8 +12,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import java.util.List;
 
-import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 
 public class MyLikeCourseActivity extends AppCompatActivity {
     RecyclerView rvMyLikeCourse;

@@ -4,20 +4,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +25,7 @@ import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Connect_WebSocket;
-import weshare.groupfour.derek.util.Join;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.RequestDataBuilder;
 import weshare.groupfour.derek.util.Tools;
 
@@ -105,7 +102,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            ChatMessage chatMessage = new Gson().fromJson(message, ChatMessage.class);
+            ChatMessage chatMessage = Holder.gson.fromJson(message, ChatMessage.class);
 
 //            if ("history".equals(chatMessage.getType())) {
 //                Type type = new TypeToken<List<String>>(){}.getType();
@@ -144,7 +141,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         // 將欲傳送訊息轉成JSON後送出
         ChatMessage chatMessage = new ChatMessage("chat", sender, friendId, message);
-        String chatMessageJson = new Gson().toJson(chatMessage);
+        String chatMessageJson = Holder.gson.toJson(chatMessage);
         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
         chatMessages.add(chatMessage);
         rvChat.setAdapter(new ChatMessageAdapter());

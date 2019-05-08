@@ -1,7 +1,5 @@
 package weshare.groupfour.derek.FriendChat;
 
-import java.sql.Date;
-
 public class FriendNexusVO implements java.io.Serializable {
 
 	private String memId;

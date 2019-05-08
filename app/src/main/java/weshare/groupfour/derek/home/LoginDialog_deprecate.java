@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.util.concurrent.ExecutionException;
@@ -24,6 +22,7 @@ import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.member.MemberVO;
+import weshare.groupfour.derek.util.Holder;
 
 
 public class LoginDialog_deprecate extends DialogFragment {
@@ -69,15 +68,12 @@ public class LoginDialog_deprecate extends DialogFragment {
 
 
                 String requestData = "action=login&memId=" + memId + "&memPsw=" + memPsw;
-                Gson gson = new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                        .create();
                 try {
 
                     String result = new CallServlet(getContext()).execute(ServerURL.IP_MEMBER, requestData).get();
                     if (result.contains("LoginStatus")) {
                         //登入失敗
-                        JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
+                        JsonObject jsonObject = Holder.gson.fromJson(result, JsonObject.class);
                         String errorMsgs = jsonObject.get("errorMsgs").getAsString();
                         switch (errorMsgs) {
                             case "NoAccount":
@@ -97,7 +93,7 @@ public class LoginDialog_deprecate extends DialogFragment {
                         }
                     } else {
                         //登入成功
-                        MemberVO memberVO = gson.fromJson(result, MemberVO.class);
+                        MemberVO memberVO = Holder.gson.fromJson(result, MemberVO.class);
                         //byte[] bmemImage = null;
                         String memBase64 = null;
                         try {

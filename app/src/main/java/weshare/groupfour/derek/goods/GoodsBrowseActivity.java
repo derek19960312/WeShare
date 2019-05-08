@@ -8,20 +8,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
-import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.util.Join;
-import weshare.groupfour.derek.util.Tools;
+import weshare.groupfour.derek.util.Holder;
+import weshare.groupfour.derek.util.RequestDataBuilder;
 
 public class GoodsBrowseActivity extends AppCompatActivity {
     static StaggeredGridLayoutManager staggeredGridLayoutManager;
@@ -35,19 +32,18 @@ public class GoodsBrowseActivity extends AppCompatActivity {
 
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         rvGoods.setLayoutManager(staggeredGridLayoutManager);
-        
 
-        Gson gson = new Gson();
-        Map<String, String> request = new HashMap<>();
-        request.put("action", "get_all");
-        String requestData = Tools.RequestDataBuilder(request);
+        RequestDataBuilder rdb = new RequestDataBuilder();
+        rdb.build()
+                .setAction("get_all");
+
         String result;
         try {
-            result = new CallServlet(this).execute(ServerURL.IP_GOODS, requestData).get();
+            result = new CallServlet(this).execute(ServerURL.IP_GOODS, rdb.create()).get();
             Log.e("result", result);
             Type listType = new TypeToken<List<GoodsVO>>() {
             }.getType();
-            List<GoodsVO> goodsVOList = gson.fromJson(result, listType);
+            List<GoodsVO> goodsVOList = Holder.gson.fromJson(result, listType);
             if (goodsVOList != null) {
 
                 rvGoods.setAdapter(new GoodsAdapter(goodsVOList));

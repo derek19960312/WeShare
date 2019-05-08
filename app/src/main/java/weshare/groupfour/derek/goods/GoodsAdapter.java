@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;

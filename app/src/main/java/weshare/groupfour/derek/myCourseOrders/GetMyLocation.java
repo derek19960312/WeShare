@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import weshare.groupfour.derek.myCourseOrders.MyCourseActivity;
 import weshare.groupfour.derek.util.Holder;
 
 public class GetMyLocation {

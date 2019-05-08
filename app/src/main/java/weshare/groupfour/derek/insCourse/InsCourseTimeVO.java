@@ -1,6 +1,6 @@
 package weshare.groupfour.derek.insCourse;
 
-import java.sql.Timestamp ;
+import java.sql.Timestamp;
 
 public class InsCourseTimeVO implements java.io.Serializable  {
 	private String inscTimeId;

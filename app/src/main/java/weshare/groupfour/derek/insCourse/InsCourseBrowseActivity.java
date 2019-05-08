@@ -7,7 +7,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -15,9 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
-import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseBrowseActivity extends AppCompatActivity {
@@ -39,7 +39,7 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
             String result = new CallServlet(this).execute(ServerURL.IP_COURSE,data).get();
 
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
-            List<InsCourseVO> insCourseVOList = new Gson().fromJson(result,listType);
+            List<InsCourseVO> insCourseVOList = Holder.gson.fromJson(result,listType);
 
             if(insCourseVOList != null || insCourseVOList.size() != 0) {
                 //判斷是否為該會員所開課程

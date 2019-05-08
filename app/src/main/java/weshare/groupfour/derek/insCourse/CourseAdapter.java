@@ -12,14 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.List;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.member.MemberVO;
-import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
@@ -63,9 +60,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         final SharedPreferences spf = new Tools().getSharePreAccount();
 
         final InsCourseVO insCourseVO = insCourseVOList.get(position);
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
 
 
         final Bundle bundle = new Bundle();

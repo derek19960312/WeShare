@@ -3,11 +3,7 @@ package weshare.groupfour.derek.callServer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -29,6 +25,13 @@ public class CallServlet extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        if(!Tools.networkConnected()){
+            Tools.Toast(context,"請確認網路連線");
+            return;
+        }
+
+
+
         try{
             progressDialog = new ProgressDialog(context);
             progressDialog.setMessage("請稍等");

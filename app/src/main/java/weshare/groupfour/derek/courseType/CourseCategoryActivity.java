@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -19,10 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.insCourse.InsCourseBrowseActivity;
-import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 
@@ -37,7 +37,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         RecyclerView rvCategory = findViewById(R.id.rvCategory);
         rvCategory.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
 
-        Gson gson = new Gson();
+
         Type listType = new TypeToken<List<CourseTypeVO>>() {}.getType();
 
         Map<String,String> requestMap = new HashMap<>();
@@ -45,7 +45,7 @@ public class CourseCategoryActivity extends AppCompatActivity {
         String requestData= new Tools().RequestDataBuilder(requestMap);
         try{
             String result = new CallServlet(this).execute(ServerURL.IP_COURSETYPE,requestData).get();
-            List<CourseTypeVO> courseTypeList = gson.fromJson(result,listType);
+            List<CourseTypeVO> courseTypeList = Holder.gson.fromJson(result,listType);
 
             if(courseTypeList != null){
                 rvCategory.setAdapter(new CourseTypeAdapter(courseTypeList));

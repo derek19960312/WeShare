@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
@@ -26,7 +24,7 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.member.MemberVO;
 import weshare.groupfour.derek.member.TeacherVO;
-
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class LoginFakeActivity extends AppCompatActivity {
@@ -37,9 +35,7 @@ public class LoginFakeActivity extends AppCompatActivity {
     TextInputLayout tilMemPsw;
     Button btnLogin;
     Button btnCancel;
-    Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .create();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +77,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                         //登入失敗
                         if (result.contains("LoginStatus")) {
 
-                            JsonObject jsonObject = gson.fromJson(result, JsonObject.class);
+                            JsonObject jsonObject = Holder.gson.fromJson(result, JsonObject.class);
 
                             String errorMsgs = jsonObject.get("errorMsgs").getAsString();
                             switch (errorMsgs) {
@@ -104,7 +100,7 @@ public class LoginFakeActivity extends AppCompatActivity {
                             //登入成功
                         } else {
 
-                            MemberVO memberVO = gson.fromJson(result, MemberVO.class);
+                            MemberVO memberVO = Holder.gson.fromJson(result, MemberVO.class);
                             //查圖片
                             Map<String,String> requestMap = new HashMap<>();
                             requestMap.put("action","get_member_pic_base64");
@@ -161,7 +157,7 @@ public class LoginFakeActivity extends AppCompatActivity {
         String requestData = action + "&memId=" + memId;
         try {
             String result = new CallServlet(LoginFakeActivity.this).execute(ServerURL.IP_TEACHER, requestData).get();
-            TeacherVO teacherVO = new Gson().fromJson(result, TeacherVO.class);
+            TeacherVO teacherVO = Holder.gson.fromJson(result, TeacherVO.class);
             if (teacherVO != null) {
                 SharedPreferences spf = getSharedPreferences("myAccount", MODE_PRIVATE);
                 spf.edit().putString("teacherId", teacherVO.getTeacherId()).apply();

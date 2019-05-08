@@ -19,15 +19,12 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.insCourse.InsCourseTimeVO;
 import weshare.groupfour.derek.insCourse.InsCourseVO;
 import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.Holder;
 
 
 public class CourseReservationActivity extends AppCompatActivity {
@@ -89,8 +86,8 @@ public class CourseReservationActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
-            InsCourseTimeVO inscTimeVO = gson.fromJson(message, InsCourseTimeVO.class);
+
+            InsCourseTimeVO inscTimeVO = Holder.gson.fromJson(message, InsCourseTimeVO.class);
 
             RadioGroup rgDate = CheckDateFragment.rgDate;
             for(int i=0; i<rgDate.getChildCount(); i++){

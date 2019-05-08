@@ -2,22 +2,19 @@ package weshare.groupfour.derek.myGoodsOrders;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.MypagerAdapter;
 import weshare.groupfour.derek.PageVO;
 import weshare.groupfour.derek.R;
-
-
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.util.Tools;
 
 public class MyGoodsActivity extends AppCompatActivity {

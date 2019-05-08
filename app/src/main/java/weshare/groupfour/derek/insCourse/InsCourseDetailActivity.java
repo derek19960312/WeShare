@@ -16,8 +16,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -26,13 +24,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import weshare.groupfour.derek.home.LoginFakeActivity;
+import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationActivity;
-import weshare.groupfour.derek.member.TeacherVO;
+import weshare.groupfour.derek.home.LoginFakeActivity;
 import weshare.groupfour.derek.member.MemberVO;
-import weshare.groupfour.derek.R;
+import weshare.groupfour.derek.member.TeacherVO;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Join;
 import weshare.groupfour.derek.util.Tools;
 
@@ -49,9 +48,6 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         rvCourse.setLayoutManager(new LinearLayoutManager(this));
         ImageView ivTeacherPic = findViewById(R.id.ivTeacherPic);
         TextView tvTeacherName = findViewById(R.id.tvName);
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create();
         //上層傳來
         Intent intent = getIntent();
         MinsCourseVO = (InsCourseVO) intent.getExtras().getSerializable("insCourseVO");
@@ -97,7 +93,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        TeacherVO teacherVO = gson.fromJson(resultT, TeacherVO.class);
+        TeacherVO teacherVO = Holder.gson.fromJson(resultT, TeacherVO.class);
         TextView tvDrgee = findViewById(R.id.tvDegree);
         TextView tvAbouts = findViewById(R.id.tvAbouts);
         if (teacherVO != null) {
@@ -120,7 +116,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         }
         Type listType = new TypeToken<List<InsCourseVO>>() {
         }.getType();
-        List<InsCourseVO> insCourseVOS = gson.fromJson(resultC, listType);
+        List<InsCourseVO> insCourseVOS = Holder.gson.fromJson(resultC, listType);
         if (insCourseVOS != null) {
             rvCourse.setAdapter(new InscAdpter(insCourseVOS));
         }

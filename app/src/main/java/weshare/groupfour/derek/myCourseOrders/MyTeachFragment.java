@@ -7,15 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -29,7 +26,7 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.util.Connect_WebSocket;
-import weshare.groupfour.derek.util.RequestDataBuilder;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 
@@ -54,12 +51,9 @@ public class MyTeachFragment extends Fragment {
         String resquestData = "action=find_my_reservation&param=" + teacherId;
         try {
             String result = new CallServlet(getContext()).execute(ServerURL.IP_COURSERESERVATION, resquestData).get();
-            Gson gson = new GsonBuilder()
-                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .create();
             Type listType = new TypeToken<List<CourseReservationVO>>() {
             }.getType();
-            myTeachRvList = gson.fromJson(result, listType);
+            myTeachRvList = Holder.gson.fromJson(result, listType);
 
             if (myTeachRvList !=null && myTeachRvList.size() != 0) {
                 rvMyTeachCourse.setAdapter(new MyCourseAdapter(myTeachRvList, MyCourseAdapter.TEACHER,getContext(),this));

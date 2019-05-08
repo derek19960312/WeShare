@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -17,11 +16,11 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.courseReservation.CourseReservationVO;
 import weshare.groupfour.derek.util.Connect_WebSocket;
+import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.RequestDataBuilder;
 
 public class QrcodeCheck_deprecate extends AppCompatActivity {
     CourseReservationVO crVO;
-    Gson gson = new Gson();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +71,13 @@ public class QrcodeCheck_deprecate extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(new ComfirmState("check",crVO.getMemId(),"success")));
+                    Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(new ComfirmState("check",crVO.getMemId(),"success")));
                     finish();
 
                 } else {
                     Toast.makeText(this, "請掃描正確QRCODE", Toast.LENGTH_LONG).show();
 
-                    Connect_WebSocket.confirmCourseWebSocketClient.send(gson.toJson(new ComfirmState("check",crVO.getMemId(),"fail")));
+                    Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(new ComfirmState("check",crVO.getMemId(),"fail")));
                     finish();
                 }
 

@@ -2,7 +2,6 @@ package weshare.groupfour.derek.util;
 
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
