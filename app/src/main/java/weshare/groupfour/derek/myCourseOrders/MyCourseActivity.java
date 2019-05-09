@@ -26,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,12 +52,15 @@ public class MyCourseActivity extends AppCompatActivity {
     Set<String> nearbyme;
     GetMyLocation getMyLocation;
     String user;
+    //搖搖用參數
+    SensorManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_inscourse);
         //登入驗證
+        sm = (SensorManager) getSystemService(SENSOR_SERVICE);
         Intent intent = new Intent(MyCourseActivity.this, LoginFakeActivity.class);
         startActivityForResult(intent, 0);
 
@@ -68,34 +72,36 @@ public class MyCourseActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         //成功驗證登入
-        vpMyInsCourse = findViewById(R.id.vpMyInsCourse);
+        if (requestCode == 0) {
+            vpMyInsCourse = findViewById(R.id.vpMyInsCourse);
 
-        setViewPager();
+            setViewPager();
 
-        TabLayout tbMyInsCourse = findViewById(R.id.tbMyInsCourse);
-        tbMyInsCourse.setupWithViewPager(vpMyInsCourse);
-
-
-        //註冊廣播接收
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
-        //判斷進來的訊息
-        IntentFilter CourseComFilter = new IntentFilter("check");
-        IntentFilter NearByFilter = new IntentFilter("nearby");
-
-        ConfirmCourseReceiver confirmCourseReceiver = new ConfirmCourseReceiver();
-        NearByReceiver nearByReceiver = new NearByReceiver();
-
-        broadcastManager.registerReceiver(confirmCourseReceiver, CourseComFilter);
-        broadcastManager.registerReceiver(nearByReceiver, NearByFilter);
+            TabLayout tbMyInsCourse = findViewById(R.id.tbMyInsCourse);
+            tbMyInsCourse.setupWithViewPager(vpMyInsCourse);
 
 
-        //驗證上課聊天室
-        Connect_WebSocket.connectServerConfirm(this, user, ServerURL.WS_CONFIRMCOURSE);
-        Connect_WebSocket.connectServerWhoArround(this, user, ServerURL.WS_AROUNDS);
+            //註冊廣播接收
+            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+            //判斷進來的訊息
+            IntentFilter CourseComFilter = new IntentFilter("check");
+            IntentFilter NearByFilter = new IntentFilter("nearby");
 
-        //更新最新位置
-        getMyLocation = new GetMyLocation(this, this);
-        getMyLocation.startLocationUpdates();
+            ConfirmCourseReceiver confirmCourseReceiver = new ConfirmCourseReceiver();
+            NearByReceiver nearByReceiver = new NearByReceiver();
+
+            broadcastManager.registerReceiver(confirmCourseReceiver, CourseComFilter);
+            broadcastManager.registerReceiver(nearByReceiver, NearByFilter);
+
+
+            //驗證上課聊天室
+            Connect_WebSocket.connectServerConfirm(this, user, ServerURL.WS_CONFIRMCOURSE);
+            Connect_WebSocket.connectServerWhoArround(this, user, ServerURL.WS_AROUNDS);
+
+            //更新最新位置
+            getMyLocation = new GetMyLocation(this, this);
+            getMyLocation.startLocationUpdates();
+        }
 
 
     }
@@ -123,6 +129,7 @@ public class MyCourseActivity extends AppCompatActivity {
 
                     } else {
                         nearbyme.add(myLocationVO.getMemberId());
+                        Log.e("CourseReservationVO", myLocationVO.getMemberId());
                         refreshMyNearBYCourse();
                     }
                 }
@@ -172,16 +179,11 @@ public class MyCourseActivity extends AppCompatActivity {
     Location location;
 
     // 計算距離
-    public float distance(MyLocationVO myLocationVOVO) {
-
-        Log.e("MyLat", String.valueOf(location.getLatitude()));
-        Log.e("MyLng", String.valueOf(location.getLongitude()));
-
-
+    public float distance(MyLocationVO myLocationVO) {
         float[] results = new float[1];
         // 計算自己位置與使用者輸入地點，此2點間的距離(公尺)，結果會存入results[0]
         Location.distanceBetween(location.getLatitude(), location.getLongitude(),
-                myLocationVOVO.getLat(), myLocationVOVO.getLng(), results);
+                myLocationVO.getLat(), myLocationVO.getLng(), results);
         return results[0];
 
     }
@@ -192,7 +194,6 @@ public class MyCourseActivity extends AppCompatActivity {
 
         user = Connect_WebSocket.getUserName();
         //開啟搖搖功能
-        sm = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 
         //搖搖
@@ -221,8 +222,6 @@ public class MyCourseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        //停止更新最新位置
-        getMyLocation.stopLocationUpdates();
 
         //關閉搖搖註冊
         sm.unregisterListener(listener);
@@ -234,15 +233,11 @@ public class MyCourseActivity extends AppCompatActivity {
         super.onDestroy();
 
         Connect_WebSocket.disconnectServerConfirm();
-        Connect_WebSocket.connectServerWhoArround();
+        Connect_WebSocket.disconnectServerWhoArround();
         //停止更新最新位置
-        // getMyLocation.stopLocationUpdates();
-        //sm.unregisterListener(listener);
+        getMyLocation.stopLocationUpdates();
     }
 
-
-    //搖搖用參數
-    private SensorManager sm;
 
     private static final int FORCE_THRESHOLD = 350;
     private static final int TIME_THRESHOLD = 100;
@@ -280,25 +275,28 @@ public class MyCourseActivity extends AppCompatActivity {
                             if (myNearByCourseRv != null && myNearByCourseRv.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
-                                List<String> list = myNearByCourseRv.stream().map(crvo -> crvo.getCrvId()).collect(Collectors.toList());
-                                ListAdapter adapter = new ArrayAdapter<>(MyCourseActivity.this, android.R.layout.activity_list_item, (String[]) list.toArray());
-
+                                List<String> list = new ArrayList<>();
+                                for (CourseReservationVO crv : myNearByCourseRv) {
+                                    list.add(crv.getCrvId());
+                                }
+                                Object[] objs = list.toArray();
+                                String[] stringArray = Arrays.copyOf(objs, objs.length, String[].class);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
                                 builder.setTitle("請選擇要驗證的課")
-                                        .setItems((CharSequence[]) list.toArray(), new DialogInterface.OnClickListener() {
+                                        .setItems(stringArray, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
                                                 RequestDataBuilder rdb = new RequestDataBuilder();
                                                 rdb.build()
                                                         .setAction("confirm_for_course_shake")
-                                                        .setData("crvId", myNearByCourseRv.get(which).getCrvId());
-
+                                                        .setData("crvId", myNearByCourseRv.get(which).getCrvId())
+                                                        .setData("memId", user);
                                                 try {
                                                     String status = new CallServlet(MyCourseActivity.this).execute(ServerURL.IP_COURSERESERVATION, rdb.create()).get();
                                                     switch (status) {
                                                         case "success":
-                                                            Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(myNearByCourseRv.get(0)));
+                                                            Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(myNearByCourseRv.get(which)));
                                                             break;
                                                         case "wait":
                                                             Tools.Toast(MyCourseActivity.this, "等待驗證");
@@ -312,14 +310,8 @@ public class MyCourseActivity extends AppCompatActivity {
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
-
-
-
                                             }
                                         }).create().show();
-
-
-
                             }
 
 

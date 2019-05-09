@@ -25,6 +25,7 @@ public class CallServlet extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
         if(!Tools.networkConnected()){
             Tools.Toast(context,"請確認網路連線");
             return;
@@ -64,7 +65,7 @@ public class CallServlet extends AsyncTask<String, Void, String> {
                     String str;
                     while ((str = br.readLine()) != null)
                         sb.append(str);
-                   // Log.e("string from servlet", sb.toString());
+                    Log.e("string from servlet", sb.toString());
                 }
             } catch (Exception e) {
                 Log.e("connection erro", e.toString());

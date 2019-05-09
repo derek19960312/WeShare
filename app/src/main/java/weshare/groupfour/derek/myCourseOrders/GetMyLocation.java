@@ -33,8 +33,6 @@ public class GetMyLocation {
     private static final String TAG = "MainActivity";
     private static Activity activity;
     private MyCourseActivity myCourseActivity;
-    private Double MyLat;
-    private Double MyLng;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
     private SettingsClient settingsClient;
@@ -60,10 +58,10 @@ public class GetMyLocation {
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 location = locationResult.getLastLocation();
-                MyLat = location.getLatitude();
-                MyLng = location.getLongitude();
+                if (location != null){
+                    myCourseActivity.connectWS(location);
+                }
 
-                myCourseActivity.connectWS(location);
 
             }
         };
@@ -72,9 +70,9 @@ public class GetMyLocation {
     private void createLocationRequest() {
         locationRequest = new LocationRequest();
         // 10秒要一次位置資料 (但不一定, 有可能不到10秒, 也有可能超過10秒才要一次)
-        locationRequest.setInterval(30000);
+        locationRequest.setInterval(100000);
         // 若有其他app也使用了LocationServices, 就會以此時間為取得位置資料的依據
-        locationRequest.setFastestInterval(5000);
+        locationRequest.setFastestInterval(800000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
@@ -146,12 +144,5 @@ public class GetMyLocation {
         return myLatLng;
     }
 
-    public Double getMyLat(){
-        return MyLat;
-    }
-
-    public Double getMyLng(){
-        return MyLng;
-    }
 
 }

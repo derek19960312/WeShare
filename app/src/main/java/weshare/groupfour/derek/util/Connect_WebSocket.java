@@ -100,7 +100,7 @@ public class Connect_WebSocket {
         }
     }
     // 中斷WhoArroundWebSocket連線
-    public static void connectServerWhoArround() {
+    public static void disconnectServerWhoArround() {
         if (whoAroundsWebSocketClient != null) {
             whoAroundsWebSocketClient.close();
             whoAroundsWebSocketClient = null;

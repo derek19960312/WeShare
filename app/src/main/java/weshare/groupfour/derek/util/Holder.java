@@ -13,6 +13,7 @@ import weshare.groupfour.derek.goods.GoodsVO;
 
 public class Holder {
     private static Context applicationContext;
+
     private static Map<GoodsVO,Integer> cart = new HashMap<>();
 
     public static Gson gson =  new GsonBuilder()

@@ -7,6 +7,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -37,7 +39,6 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
             String data = getIntent().getStringExtra("requestData");
 
             String result = new CallServlet(this).execute(ServerURL.IP_COURSE,data).get();
-
             Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
             List<InsCourseVO> insCourseVOList = Holder.gson.fromJson(result,listType);
 

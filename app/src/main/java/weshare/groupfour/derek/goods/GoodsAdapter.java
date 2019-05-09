@@ -132,6 +132,7 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
                     Intent intent = new Intent(holder.context, GoodsDetailActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("goodsVO", goodsVO);
+                    intent.putExtra("title","商品詳情");
                     intent.putExtras(bundle);
                     holder.context.startActivity(intent);
             }
