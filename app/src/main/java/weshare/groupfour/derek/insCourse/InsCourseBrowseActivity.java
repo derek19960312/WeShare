@@ -32,32 +32,41 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
 
 
         RecyclerView recycleView = findViewById(R.id.rvGoods);
-        recycleView.setLayoutManager(new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
+        recycleView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         TextView tvNoCourse = findViewById(R.id.tvNoCourse);
 
         try {
             String data = getIntent().getStringExtra("requestData");
 
-            String result = new CallServlet(this).execute(ServerURL.IP_COURSE,data).get();
-            Type listType = new TypeToken<List<InsCourseVO>>() {}.getType();
-            List<InsCourseVO> insCourseVOList = Holder.gson.fromJson(result,listType);
+            String result = new CallServlet(this).execute(ServerURL.IP_COURSE, data).get();
+            Type listType = new TypeToken<List<InsCourseVO>>() {
+            }.getType();
+            List<InsCourseVO> insCourseVOList = Holder.gson.fromJson(result, listType);
 
-            if(insCourseVOList != null || insCourseVOList.size() != 0) {
+            if (insCourseVOList != null || insCourseVOList.size() != 0) {
                 //判斷是否為該會員所開課程
-                String teacherId = Tools.getSharePreAccount().getString("teacherId",null);
+                String teacherId = Tools.getSharePreAccount().getString("teacherId", null);
                 List<InsCourseVO> inscVO_except_mine = new ArrayList<>();
-                if(teacherId != null){
-                    for(int i = 0; i< insCourseVOList.size(); i++){
-                        if(!insCourseVOList.get(i).getTeacherId().equals(teacherId)){
+                if (teacherId != null) {
+                    for (int i = 0; i < insCourseVOList.size(); i++) {
+                        if (!insCourseVOList.get(i).getTeacherId().equals(teacherId)) {
                             inscVO_except_mine.add(insCourseVOList.get(i));
                         }
                     }
-                    recycleView.setAdapter(new CourseAdapter(inscVO_except_mine,this));
-                }else {
-                    recycleView.setAdapter(new CourseAdapter(insCourseVOList,this));
+                    if (inscVO_except_mine.size() != 0) {
+                        recycleView.setAdapter(new CourseAdapter(inscVO_except_mine, this));
+                        tvNoCourse.setVisibility(View.GONE);
+                    } else {
+                        tvNoCourse.setVisibility(View.VISIBLE);
+                    }
+
+
+                } else {
+                    recycleView.setAdapter(new CourseAdapter(insCourseVOList, this));
+                    tvNoCourse.setVisibility(View.GONE);
                 }
-                tvNoCourse.setVisibility(View.GONE);
-            }else {
+
+            } else {
                 tvNoCourse.setVisibility(View.VISIBLE);
             }
         } catch (ExecutionException e) {
