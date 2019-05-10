@@ -168,16 +168,14 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvQrcode"
+        <ImageView
+            android:id="@+id/Qrcode"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_marginStart="106dp"
             android:layout_marginEnd="106dp"
             android:gravity="center"
-            android:text="QRCODE"
-            android:textSize="50sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

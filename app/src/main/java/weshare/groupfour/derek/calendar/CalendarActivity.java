@@ -156,7 +156,7 @@ public class CalendarActivity extends AppCompatActivity {
                         }
                     }
 
-                    rvClendar.setAdapter(new ClendarAdapter(myCourseRvList, CalendarActivity.this));
+                    rvClendar.setAdapter(new ClendarAdapter(myCourseRvList, CalendarActivity.this, CalendarActivity.this));
 
 
                 }

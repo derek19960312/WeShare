@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.R;
@@ -19,6 +20,7 @@ import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.RequestDataBuilder;
+import weshare.groupfour.derek.util.Tools;
 
 public class GoodsBrowseActivity extends AppCompatActivity {
     static StaggeredGridLayoutManager staggeredGridLayoutManager;
@@ -75,5 +77,6 @@ public class GoodsBrowseActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
 }

@@ -36,6 +36,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.R;
@@ -310,6 +311,20 @@ public class GoodsCartActivity extends AppCompatActivity {
 
                         }
                     });
+
+                    //秀出已經加入收藏者
+                    String memId = Tools.getSharePreAccount().getString("memId", null);
+                    if (memId != null) {
+                        Set<String> goodsLikes = Tools.getSharePreAccount().getStringSet("goodsLikes", null);
+                        if (goodsLikes != null) {
+                            for (String goodsLike : goodsLikes) {
+                                if (goodsLike.equals(goodsVO.getGoodId())) {
+                                    holder.ivHeart.setImageResource(R.drawable.hearted);
+                                    holder.heart = 1;
+                                }
+                            }
+                        }
+                    }
 
 
                     //收藏

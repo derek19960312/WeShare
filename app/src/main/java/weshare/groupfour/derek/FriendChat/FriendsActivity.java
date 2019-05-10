@@ -62,7 +62,7 @@ public class FriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_inscourse);
         //登入驗證
         Intent intent = new Intent(FriendsActivity.this, LoginFakeActivity.class);
-        startActivityForResult(intent, 88800);
+        startActivityForResult(intent, 8880);
 
     }
 
