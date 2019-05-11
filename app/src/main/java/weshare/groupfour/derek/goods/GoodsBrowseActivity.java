@@ -47,7 +47,6 @@ public class GoodsBrowseActivity extends AppCompatActivity {
             }.getType();
             List<GoodsVO> goodsVOList = Holder.gson.fromJson(result, listType);
             if (goodsVOList != null) {
-
                 rvGoods.setAdapter(new GoodsAdapter(goodsVOList));
             }
 
