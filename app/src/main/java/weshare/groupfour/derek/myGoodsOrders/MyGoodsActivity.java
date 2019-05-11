@@ -38,7 +38,7 @@ public class MyGoodsActivity extends AppCompatActivity {
         if (memId != null) {
             List<PageVO> pageVOList = new ArrayList<>();
             pageVOList.add(new PageVO(new MyBoughtFragment(),"我訂的"));
-            //pageVOList.add(new PageVO(new MySoldFragment(),"我賣的"));
+            pageVOList.add(new PageVO(new MySoldFragment(),"我賣的"));
             vpMyGood.setAdapter(new MypagerAdapter(getSupportFragmentManager(),pageVOList));
         }
 

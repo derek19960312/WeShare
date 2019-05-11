@@ -64,7 +64,7 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
 
     @Override
     public MyGoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_my_good_order, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_my_good_order_buy, parent, false);
         return new MyGoodsAdapter.ViewHolder(view);
     }
 

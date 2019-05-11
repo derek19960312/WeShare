@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -26,8 +27,6 @@ import weshare.groupfour.derek.util.Holder;
 
 public class MyBoughtFragment extends Fragment {
     TextView tvNoData;
-
-
 
 
     @Override
@@ -46,8 +45,10 @@ public class MyBoughtFragment extends Fragment {
             Type listType = new TypeToken<List<GoodsOrderVO>>() {
             }.getType();
             List<GoodsOrderVO> myGoodsOrderRvList = Holder.gson.fromJson(result, listType);
+
+
             if (myGoodsOrderRvList != null && myGoodsOrderRvList.size() != 0) {
-                rvMyBoughtGood.setAdapter(new MyGoodsAdapter(myGoodsOrderRvList, MyGoodsAdapter.BUYER,getContext()));
+                rvMyBoughtGood.setAdapter(new MyGoodsAdapter(myGoodsOrderRvList, MyGoodsAdapter.BUYER, getContext()));
             } else {
                 tvNoData = view.findViewById(R.id.tvNoData);
                 tvNoData.setVisibility(View.VISIBLE);
