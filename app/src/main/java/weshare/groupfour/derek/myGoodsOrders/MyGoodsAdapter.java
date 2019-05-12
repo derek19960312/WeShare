@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,24 +113,25 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
 
         holder.rvOrderDetail.setLayoutManager(new LinearLayoutManager(context));
 
-        Map<String, String> requestMap = new HashMap<>();
-        requestMap.put("action", "find_good_detail_by_orderId");
-        requestMap.put("goodOrderId", myGoodsOrder.getGoodOrderId());
-        String request = Tools.RequestDataBuilder(requestMap);
-        try {
-            String result = new CallServlet(context).execute(ServerURL.IP_GOODSDETAILS, request).get();
-            Type listType = new TypeToken<List<GoodsVO>>() {
-            }.getType();
-            List<GoodsVO> GoodsVOs = Holder.gson.fromJson(result, listType);
-            if (GoodsVOs != null && GoodsVOs.size() != 0) {
-                holder.rvOrderDetail.setAdapter(new MyGoodsDetailsAdapter(GoodsVOs, context));
-            }
+//        Map<String, String> requestMap = new HashMap<>();
+//        requestMap.put("action", "find_good_detail_by_orderId");
+//        requestMap.put("goodOrderId", myGoodsOrder.getGoodOrderId());
+//        String request = Tools.RequestDataBuilder(requestMap);
+//        try {
+//            String result = new CallServlet(context).execute(ServerURL.IP_GOODSDETAILS, request).get();
+//            Type listType = new TypeToken<List<GoodsVO>>() {
+//            }.getType();
+//            List<GoodsVO> GoodsVOs = Holder.gson.fromJson(result, listType);
+//            if (GoodsVOs != null && GoodsVOs.size() != 0) {
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+                holder.rvOrderDetail.setAdapter(new MyGoodsDetailsAdapter(new ArrayList(myGoodsOrder.getGoodsDetailsVOs()), context));
+//            }
+//
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,10 +163,10 @@ class MyGoodsDetailsAdapter extends RecyclerView.Adapter<MyGoodsDetailsAdapter.V
 
     private Context context;
 
-    public List<GoodsVO> GoodsVOs = null;
+    public List<GoodsDetailsVO> GoodsDetailsVOs = null;
 
-    public MyGoodsDetailsAdapter(List<GoodsVO> GoodsVOs, Context context) {
-        this.GoodsVOs = GoodsVOs;
+    public MyGoodsDetailsAdapter(List<GoodsDetailsVO> GoodsDetailsVOs, Context context) {
+        this.GoodsDetailsVOs = GoodsDetailsVOs;
         this.context = context;
     }
 
@@ -195,21 +197,21 @@ class MyGoodsDetailsAdapter extends RecyclerView.Adapter<MyGoodsDetailsAdapter.V
 
     @Override
     public void onBindViewHolder(final MyGoodsDetailsAdapter.ViewHolder holder, int position) {
-        GoodsVO goodsVO = GoodsVOs.get(position);
+        GoodsDetailsVO goodsDetailsVO = GoodsDetailsVOs.get(position);
 
-        holder.tvGoodName.setText(goodsVO.getGoodName());
-        holder.tvGoodPrice.setText(String.valueOf(goodsVO.getGoodPrice()));
-        holder.tvGoodAmount.setText(String.valueOf(goodsVO.getGoodStatus()));
-        holder.tvGoodTotal.setText(String.valueOf(goodsVO.getGoodStatus()*goodsVO.getGoodPrice()));
+        holder.tvGoodName.setText(goodsDetailsVO.getGoodsVO().getGoodName());
+        holder.tvGoodPrice.setText(String.valueOf(goodsDetailsVO.getGoodsVO().getGoodPrice()));
+        holder.tvGoodAmount.setText(String.valueOf(goodsDetailsVO.getGoodAmount()));
+        holder.tvGoodTotal.setText(String.valueOf(goodsDetailsVO.getGoodAmount()*goodsDetailsVO.getGoodsVO().getGoodPrice()));
 
-        Join.setPicOn(holder.ivGoodPic,goodsVO.getGoodId());
+        Join.setPicOn(holder.ivGoodPic,goodsDetailsVO.getGoodsVO().getGoodId());
 
     }
 
     @Override
     public int getItemCount() {
 
-        return GoodsVOs.size();
+        return GoodsDetailsVOs.size();
     }
 }
 

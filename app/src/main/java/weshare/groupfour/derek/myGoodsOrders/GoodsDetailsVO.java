@@ -2,29 +2,36 @@ package weshare.groupfour.derek.myGoodsOrders;
 
 import java.io.Serializable;
 
+import weshare.groupfour.derek.goods.GoodsVO;
+import weshare.groupfour.derek.myGoodsOrders.GoodsOrderVO;
+
+
 public class GoodsDetailsVO implements Serializable{
 
-	private String goodOrderId;
-	private String goodId;
+	private static final long serialVersionUID = 1L;
+
+	private GoodsOrderVO goodsOrderVO;
+	private GoodsVO goodsVO;
 	private Integer goodAmount;
 	private Float goodScore;
 	private String goodRate;
-	
-	public GoodsDetailsVO() {
-		super();
+
+
+
+	public GoodsOrderVO getGoodsOrderVO() {
+		return goodsOrderVO;
 	}
-	public String getGoodOrderId() {
-		return goodOrderId;
+	public void setGoodsOrderVO(GoodsOrderVO goodsOrderVO) {
+		this.goodsOrderVO = goodsOrderVO;
 	}
-	public void setGoodOrderId(String goodOrderId) {
-		this.goodOrderId = goodOrderId;
+
+	public GoodsVO getGoodsVO() {
+		return goodsVO;
 	}
-	public String getGoodId() {
-		return goodId;
+	public void setGoodsVO(GoodsVO goodsVO) {
+		this.goodsVO = goodsVO;
 	}
-	public void setGoodId(String goodId) {
-		this.goodId = goodId;
-	}
+
 	public Integer getGoodAmount() {
 		return goodAmount;
 	}

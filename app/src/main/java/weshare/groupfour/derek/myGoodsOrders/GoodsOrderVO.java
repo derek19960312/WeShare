@@ -2,6 +2,7 @@ package weshare.groupfour.derek.myGoodsOrders;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 public class GoodsOrderVO implements Serializable{
 
@@ -13,59 +14,77 @@ public class GoodsOrderVO implements Serializable{
 	private String buyerAddress;
 	private String buyerPhone;
 	private Integer goodOrdStatus;
-	
+	private Set<GoodsDetailsVO> goodsDetailsVOs;
+
 	public String getGoodOrderId() {
 		return goodOrderId;
 	}
+
 	public void setGoodOrderId(String goodOrderId) {
 		this.goodOrderId = goodOrderId;
 	}
+
 	public String getMemId() {
 		return memId;
 	}
+
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
+
 	public Integer getGoodTotalPrice() {
 		return goodTotalPrice;
 	}
+
 	public void setGoodTotalPrice(Integer goodTotalPrice) {
 		this.goodTotalPrice = goodTotalPrice;
 	}
+
 	public Timestamp getGoodDate() {
 		return goodDate;
 	}
+
 	public void setGoodDate(Timestamp goodDate) {
 		this.goodDate = goodDate;
 	}
+
 	public String getBuyerName() {
 		return buyerName;
 	}
+
 	public void setBuyerName(String buyerName) {
 		this.buyerName = buyerName;
 	}
+
 	public String getBuyerAddress() {
 		return buyerAddress;
 	}
+
 	public void setBuyerAddress(String buyerAddress) {
 		this.buyerAddress = buyerAddress;
 	}
+
 	public String getBuyerPhone() {
 		return buyerPhone;
 	}
+
 	public void setBuyerPhone(String buyerPhone) {
 		this.buyerPhone = buyerPhone;
 	}
+
 	public Integer getGoodOrdStatus() {
 		return goodOrdStatus;
 	}
+
 	public void setGoodOrdStatus(Integer goodOrdStatus) {
 		this.goodOrdStatus = goodOrdStatus;
 	}
-	public GoodsOrderVO() {
-	
+
+	public Set<GoodsDetailsVO> getGoodsDetailsVOs() {
+		return goodsDetailsVOs;
 	}
-	
-	
-	
+
+	public void setGoodsDetailsVOs(Set<GoodsDetailsVO> goodsDetailsVOs) {
+		this.goodsDetailsVOs = goodsDetailsVOs;
+	}
 }

@@ -3,6 +3,8 @@ package weshare.groupfour.derek.goods;
 import java.io.Serializable;
 import java.util.Objects;
 
+import weshare.groupfour.derek.member.TeacherVO;
+
 public class GoodsVO implements Serializable{
 	private String goodId;
 	private String teacherId;
