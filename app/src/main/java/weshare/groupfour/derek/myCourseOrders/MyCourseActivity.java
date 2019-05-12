@@ -272,7 +272,7 @@ public class MyCourseActivity extends AppCompatActivity {
                             shakeCount = 0;
                             // shake事件確定後，要做的事在這執行
 
-                            if (myNearByCourseRv != null && myNearByCourseRv.size() == 0) {
+                            if (myNearByCourseRv != null || myNearByCourseRv.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
                                 List<String> list = new ArrayList<>();

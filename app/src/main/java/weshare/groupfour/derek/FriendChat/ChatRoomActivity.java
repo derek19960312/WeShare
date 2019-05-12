@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -75,7 +79,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
 
 
-//        getHistoryMessage();
+        getHistoryMessage();
     }
 
     private void findViews() {
@@ -83,38 +87,36 @@ public class ChatRoomActivity extends AppCompatActivity {
         rvChat = findViewById(R.id.rvChat);
     }
 
-//    private void getHistoryMessage() {
-//        ChatMessage chatMessage = new ChatMessage("history", getUserName(), friendId, "");
-//        String chatMessageJson = new Gson().toJson(chatMessage);
-//        Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
-//    }
+    private void getHistoryMessage() {
+        ChatMessage chatMessage = new ChatMessage("history", getUserName(), friendId, "");
+        String chatMessageJson = new Gson().toJson(chatMessage);
+        Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
+    }
 
     private void registerChatReceiver() {
         IntentFilter chatFilter = new IntentFilter("chat");
-//        IntentFilter historyFilter = new IntentFilter("history");
+       IntentFilter historyFilter = new IntentFilter("history");
         ChatReceiver chatReceiver = new ChatReceiver();
         broadcastManager.registerReceiver(chatReceiver, chatFilter);
-//        broadcastManager.registerReceiver(chatReceiver, historyFilter);
+        broadcastManager.registerReceiver(chatReceiver, historyFilter);
     }
 
-    // 接收到聊天訊息會在TextView呈現
     private class ChatReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
             ChatMessage chatMessage = Holder.gson.fromJson(message, ChatMessage.class);
 
-//            if ("history".equals(chatMessage.getType())) {
-//                Type type = new TypeToken<List<String>>(){}.getType();
-//                List<String> historyMsg = new Gson().fromJson(chatMessage.getMessage(), type);
-//                for (String str : historyMsg) {
-//                    ChatMessage cm = new Gson().fromJson(str, ChatMessage.class);
-//                    tvMessage.append(cm.getSender() + ": " + cm.getMessage() + "\n");
-//                }
-//            }
+            if ("history".equals(chatMessage.getType())) {
+                Type type = new TypeToken<List<String>>(){}.getType();
+                List<String> historyMsg = new Gson().fromJson(chatMessage.getMessage(), type);
+                for (String str : historyMsg) {
+                    ChatMessage cm = new Gson().fromJson(str, ChatMessage.class);
+                   // tvMessage.append(cm.getSender() + ": " + cm.getMessage() + "\n");
+                }
+            }
 
             String sender = chatMessage.getSender();
-            // 接收到聊天訊息，若發送者與目前聊天對象相同，就將訊息顯示在TextView
 
             if (sender.equals(friendId)) {
                 chatMessages.add(chatMessage);

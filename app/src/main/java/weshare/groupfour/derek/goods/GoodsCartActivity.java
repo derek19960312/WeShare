@@ -113,7 +113,7 @@ public class GoodsCartActivity extends AppCompatActivity {
                                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        finish();
+
                                     }
                                 })
                                 .setPositiveButton("確定", new DialogInterface.OnClickListener() {
@@ -243,7 +243,7 @@ public class GoodsCartActivity extends AppCompatActivity {
             AlertDialog.Builder builder  = new AlertDialog.Builder(GoodsCartActivity.this);
             String goodName = goodsVOs.get(position).getGoodName();
             String goodCount = String.valueOf(myCart.get(goodsVOs.get(position)));
-            builder.setMessage("確定要刪除 "+goodName+" X "+goodCount);
+            builder.setMessage("確定要刪除 "+goodName);
             builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

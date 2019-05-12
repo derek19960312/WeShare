@@ -2,138 +2,212 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardMe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout12"
+        <FrameLayout
+            android:id="@+id/frameLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView19"
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:text="訂單編號："
-                android:textSize="20sp" />
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="訂單編號："
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvOrderNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
+
+                    <TextView
+                        android:id="@+id/textView100"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:gravity="center_vertical"
+                        android:text="日期："
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvOrderDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:gravity="center_vertical"
+                        android:text="購買人："
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvBuyer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:gravity="center_vertical"
+                        android:text="電話："
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvBuyerPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout20"
+                    tools:layout_editor_absoluteX="16dp">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:gravity="center_vertical"
+                        android:text="地址："
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvBuyerAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout11"
+                    tools:layout_editor_absoluteX="8dp">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3.5"
+                        android:gravity="center_vertical"
+                        android:text="運送："
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvOrderType"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="更改出貨狀態"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
+
+            </android.support.constraint.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tvOrderNumber"
+                android:id="@+id/tvSomeThing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout12">
-
-            <TextView
-                android:id="@+id/textView100"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.5"
-                android:gravity="center_vertical"
-                android:text="日期："
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvOrderDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
                 android:gravity="center"
-                android:textSize="20sp" />
+                android:rotation="330"
+                android:text="TextView"
+                android:textSize="40sp"
+                tools:visibility="gone" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.5"
-                android:gravity="center"
-                android:text="狀態："
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvOrderStatus"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.5"
-                android:gravity="center_vertical"
-                android:text="總價："
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvOrderPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.5"
-                android:gravity="center"
-                android:text="運送："
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvOrderType"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
+        </FrameLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvOrderDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+            tools:layout_editor_absoluteX="8dp"
             tools:visibility="gone" />
 
     </android.support.constraint.ConstraintLayout>

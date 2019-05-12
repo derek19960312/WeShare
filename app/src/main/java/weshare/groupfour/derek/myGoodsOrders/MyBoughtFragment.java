@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -48,7 +47,7 @@ public class MyBoughtFragment extends Fragment {
 
 
             if (myGoodsOrderRvList != null && myGoodsOrderRvList.size() != 0) {
-                rvMyBoughtGood.setAdapter(new MyGoodsAdapter(myGoodsOrderRvList, MyGoodsAdapter.BUYER, getContext()));
+                rvMyBoughtGood.setAdapter(new MyBoughtGoodsAdapter(myGoodsOrderRvList, MyBoughtGoodsAdapter.BUYER, getContext()));
             } else {
                 tvNoData = view.findViewById(R.id.tvNoData);
                 tvNoData.setVisibility(View.VISIBLE);

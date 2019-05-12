@@ -6,29 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import weshare.groupfour.derek.R;
-import weshare.groupfour.derek.callServer.CallServlet;
-import weshare.groupfour.derek.callServer.ServerURL;
-import weshare.groupfour.derek.goods.GoodsVO;
-import weshare.groupfour.derek.util.Holder;
-import weshare.groupfour.derek.util.Join;
-import weshare.groupfour.derek.util.Tools;
 
 
-public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHolder> {
+public class MyBoughtGoodsAdapter extends RecyclerView.Adapter<MyBoughtGoodsAdapter.ViewHolder> {
     public final static int BUYER = 0;
     public final static int SELLER = 1;
     private int fromWhere;
@@ -37,7 +24,7 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
 
     public List<GoodsOrderVO> myGoodsOrderRvList = null;
 
-    public MyGoodsAdapter(List<GoodsOrderVO> myGoodsOrderRvList, int fromWhere, Context context) {
+    public MyBoughtGoodsAdapter(List<GoodsOrderVO> myGoodsOrderRvList, int fromWhere, Context context) {
         this.myGoodsOrderRvList = myGoodsOrderRvList;
         this.fromWhere = fromWhere;
         this.context = context;
@@ -64,13 +51,13 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
     }
 
     @Override
-    public MyGoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyBoughtGoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_my_good_order_buy, parent, false);
-        return new MyGoodsAdapter.ViewHolder(view);
+        return new MyBoughtGoodsAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final MyGoodsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final MyBoughtGoodsAdapter.ViewHolder holder, int position) {
         GoodsOrderVO myGoodsOrder = myGoodsOrderRvList.get(position);
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
@@ -156,62 +143,6 @@ public class MyGoodsAdapter extends RecyclerView.Adapter<MyGoodsAdapter.ViewHold
     public int getItemCount() {
 
         return myGoodsOrderRvList.size();
-    }
-}
-
-class MyGoodsDetailsAdapter extends RecyclerView.Adapter<MyGoodsDetailsAdapter.ViewHolder> {
-
-    private Context context;
-
-    public List<GoodsDetailsVO> GoodsDetailsVOs = null;
-
-    public MyGoodsDetailsAdapter(List<GoodsDetailsVO> GoodsDetailsVOs, Context context) {
-        this.GoodsDetailsVOs = GoodsDetailsVOs;
-        this.context = context;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView ivGoodPic;
-        private TextView tvGoodName;
-        private TextView tvGoodAmount;
-        private TextView tvGoodPrice;
-        private TextView tvGoodTotal;
-
-
-        public ViewHolder(View view) {
-            super(view);
-            ivGoodPic = view.findViewById(R.id.ivGoodPic);
-            tvGoodName = view.findViewById(R.id.tvGoodName);
-            tvGoodAmount = view.findViewById(R.id.tvGoodAmount);
-            tvGoodPrice = view.findViewById(R.id.tvGoodPrice);
-            tvGoodTotal = view.findViewById(R.id.tvGoodTotal);
-        }
-    }
-
-    @Override
-    public MyGoodsDetailsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_my_good_detail, parent, false);
-        return new MyGoodsDetailsAdapter.ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final MyGoodsDetailsAdapter.ViewHolder holder, int position) {
-        GoodsDetailsVO goodsDetailsVO = GoodsDetailsVOs.get(position);
-
-        holder.tvGoodName.setText(goodsDetailsVO.getGoodsVO().getGoodName());
-        holder.tvGoodPrice.setText(String.valueOf(goodsDetailsVO.getGoodsVO().getGoodPrice()));
-        holder.tvGoodAmount.setText(String.valueOf(goodsDetailsVO.getGoodAmount()));
-        holder.tvGoodTotal.setText(String.valueOf(goodsDetailsVO.getGoodAmount()*goodsDetailsVO.getGoodsVO().getGoodPrice()));
-
-        Join.setPicOn(holder.ivGoodPic,goodsDetailsVO.getGoodsVO().getGoodId());
-
-    }
-
-    @Override
-    public int getItemCount() {
-
-        return GoodsDetailsVOs.size();
     }
 }
 
