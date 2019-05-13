@@ -70,9 +70,16 @@ public class CheckDateFragment extends Fragment {
         btnDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Calendar c = Calendar.getInstance();
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+
                 DatePickerFragment datePickerFragment = new DatePickerFragment();
                 FragmentManager fm = getFragmentManager();
                 datePickerFragment.show(fm, "datePicker");
+
             }
         });
 

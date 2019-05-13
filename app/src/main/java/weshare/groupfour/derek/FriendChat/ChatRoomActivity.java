@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -67,11 +73,10 @@ public class ChatRoomActivity extends AppCompatActivity {
             RequestDataBuilder rdb = new RequestDataBuilder();
             rdb.build()
                     .setAction("get_member_pic_base64")
-                    .setData("memId",friendId);
+                    .setData("memId", friendId);
 
 
-
-            FriendPic = new CallServlet(this).execute(ServerURL.IP_MEMBER,rdb.create()).get();
+            FriendPic = new CallServlet(this).execute(ServerURL.IP_MEMBER, rdb.create()).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -95,39 +100,57 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     private void registerChatReceiver() {
         IntentFilter chatFilter = new IntentFilter("chat");
-        IntentFilter historyFilter = new IntentFilter("history");
+        //IntentFilter historyFilter = new IntentFilter("history");
         ChatReceiver chatReceiver = new ChatReceiver();
         broadcastManager.registerReceiver(chatReceiver, chatFilter);
-        broadcastManager.registerReceiver(chatReceiver, historyFilter);
+        //broadcastManager.registerReceiver(chatReceiver, historyFilter);
     }
 
     private class ChatReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            ChatMessage chatMessage = Holder.gson.fromJson(message, ChatMessage.class);
+            Log.e("message", message);
 
-            if ("history".equals(chatMessage.getType())) {
-                Type type = new TypeToken<List<String>>(){}.getType();
-                List<String> historyMsg = new Gson().fromJson(chatMessage.getMessage(), type);
-                for (String str : historyMsg) {
-                    ChatMessage cm = new Gson().fromJson(str, ChatMessage.class);
-                    chatMessages.add(cm);
+            JSONArray jsonArray = null;
+            try {
+                jsonArray = new JSONArray(message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            //String[] chatMessageStr = Holder.gson.fromJson(message, String[].class);
+            //ChatMessage chatMessage = Holder.gson.fromJson(message, ChatMessage.class);
+//            if ("history".equals(chatMessage.getType())) {
+//                Type type = new TypeToken<List<String>>(){}.getType();
+//                List<String> historyMsg = new Gson().fromJson(chatMessage.getMessage(), type);
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                ChatMessage cm = null;
+                try {
+                    cm = new Gson().fromJson(jsonArray.get(i).toString(), ChatMessage.class);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                rvChat.getAdapter().notifyDataSetChanged();
-            }
 
-            String sender = chatMessage.getSender();
-
-            if (sender.equals(friendId)) {
-                chatMessages.add(chatMessage);
-                rvChat.setAdapter(new ChatMessageAdapter());
-                rvChat.getAdapter().notifyDataSetChanged();
-                rvChat.scrollToPosition(chatMessages.size()-1);
+                chatMessages.add(cm);
             }
+            rvChat.setAdapter(new ChatMessageAdapter());
+            rvChat.getAdapter().notifyDataSetChanged();
+            rvChat.scrollToPosition(chatMessages.size() - 1);
+//            }
+
+            //           String sender = chatMessage.getSender();
+
+//            if (sender.equals(friendId)) {
+//                chatMessages.add(chatMessage);
+//
+//                rvChat.getAdapter().notifyDataSetChanged();
+//                rvChat.scrollToPosition(chatMessages.size()-1);
+//            }
         }
     }
-
 
 
     // user點擊發送訊息按鈕
@@ -146,10 +169,11 @@ public class ChatRoomActivity extends AppCompatActivity {
         ChatMessage chatMessage = new ChatMessage("chat", sender, friendId, message);
         String chatMessageJson = Holder.gson.toJson(chatMessage);
         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
-        chatMessages.add(chatMessage);
-        rvChat.setAdapter(new ChatMessageAdapter());
-        rvChat.getAdapter().notifyDataSetChanged();
-        rvChat.scrollToPosition(chatMessages.size()-1);
+
+        //chatMessages.add(chatMessage);
+        //rvChat.setAdapter(new ChatMessageAdapter());
+        //rvChat.getAdapter().notifyDataSetChanged();
+        //rvChat.scrollToPosition(chatMessages.size()-1);
     }
 
 
@@ -157,8 +181,8 @@ public class ChatRoomActivity extends AppCompatActivity {
 
 
         class ChatMessageViewHolder extends RecyclerView.ViewHolder {
-            TextView tvMessageR,tvMessageL;
-            CardView cardRight,cardLeft;
+            TextView tvMessageR, tvMessageL;
+            CardView cardRight, cardLeft;
             CircleImageView civFri;
 
             ChatMessageViewHolder(View itemView) {
@@ -170,9 +194,10 @@ public class ChatRoomActivity extends AppCompatActivity {
                 civFri = itemView.findViewById(R.id.civFri);
             }
         }
+
         @Override
-        public ChatMessageViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_chat_message,parent,false);
+        public ChatMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_chat_message, parent, false);
             return new ChatMessageViewHolder(view);
         }
 
@@ -180,19 +205,18 @@ public class ChatRoomActivity extends AppCompatActivity {
         public void onBindViewHolder(ChatMessageViewHolder holder, int position) {
             ChatMessage ctm = chatMessages.get(position);
 
-            if(ctm.getSender().equals(friendId)){
+            if (ctm.getSender().equals(friendId)) {
                 holder.tvMessageL.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.GONE);
                 holder.cardLeft.setVisibility(View.VISIBLE);
                 holder.civFri.setImageBitmap(Tools.getBitmapByBase64(FriendPic));
 
-            }else{
+            } else {
                 holder.tvMessageR.setText(ctm.getMessage());
                 holder.cardRight.setVisibility(View.VISIBLE);
                 holder.cardLeft.setVisibility(View.GONE);
                 holder.civFri.setVisibility(View.GONE);
             }
-
 
 
         }

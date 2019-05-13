@@ -1,5 +1,6 @@
 package weshare.groupfour.derek.home;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -34,13 +35,13 @@ public class LoginFakeActivity extends AppCompatActivity {
     TextInputLayout tilMemId;
     TextInputLayout tilMemPsw;
     Button btnLogin;
-    Button btnCancel;
+    Button btnSignUp;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_login);
+        setContentView(R.layout.activity_login);
 
         //先確認是否登入過
         String memId = new Tools().getSharePreAccount().getString("memId", null);
@@ -132,12 +133,13 @@ public class LoginFakeActivity extends AppCompatActivity {
                 }
             });
 
-            btnCancel.setOnClickListener(new View.OnClickListener() {
+            btnSignUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
                     etMemId.setText("");
                     etMemPsw.setText("");
+                    Intent intent = new Intent(LoginFakeActivity.this,SignUpActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -149,7 +151,7 @@ public class LoginFakeActivity extends AppCompatActivity {
         tilMemId = findViewById(R.id.tilMemId);
         tilMemPsw = findViewById(R.id.tilMemPsw);
         btnLogin = findViewById(R.id.btnLogin);
-        btnCancel = findViewById(R.id.btnCancel);
+        btnSignUp = findViewById(R.id.btnSignUp);
     }
 
     public boolean isAteacher(String memId) {

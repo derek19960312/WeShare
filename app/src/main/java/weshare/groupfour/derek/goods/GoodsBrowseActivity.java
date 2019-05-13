@@ -32,9 +32,17 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_goods_browse);
         rvGoods = findViewById(R.id.rvGoods);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         rvGoods.setLayoutManager(staggeredGridLayoutManager);
 
+        //載入資料
         RequestDataBuilder rdb = new RequestDataBuilder();
         rdb.build()
                 .setAction("get_all");
@@ -64,7 +72,7 @@ public class GoodsBrowseActivity extends AppCompatActivity {
         return true;
     }
 
-    public static void changeStyle(MenuItem item){
+    public static void changeStyle(MenuItem item) {
         switch (staggeredGridLayoutManager.getSpanCount()) {
             case 1:
                 item.setIcon(R.drawable.list);

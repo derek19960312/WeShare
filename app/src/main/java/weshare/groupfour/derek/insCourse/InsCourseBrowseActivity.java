@@ -23,7 +23,8 @@ import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.Tools;
 
 public class InsCourseBrowseActivity extends AppCompatActivity {
-
+    RecyclerView recycleView;
+    TextView tvNoCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +32,17 @@ public class InsCourseBrowseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inscourse_browse);
 
 
-        RecyclerView recycleView = findViewById(R.id.rvGoods);
-        recycleView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        TextView tvNoCourse = findViewById(R.id.tvNoCourse);
+        recycleView = findViewById(R.id.rvGoods);
 
+        tvNoCourse = findViewById(R.id.tvNoCourse);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //讀取資料
+        recycleView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         try {
             String data = getIntent().getStringExtra("requestData");
 

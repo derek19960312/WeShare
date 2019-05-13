@@ -25,5 +25,14 @@
         android:textSize="40sp"
         android:visibility="gone" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabScanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="32dp"
+        android:clickable="true"
+        android:src="@drawable/scan_qr_code" />
+
 
 </FrameLayout>

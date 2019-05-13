@@ -116,21 +116,8 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 //開啟QRcode掃描器
                 holder.ivQrcode.setImageResource(R.drawable.scan_qr_code);
-                holder.ivQrcode.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        IntentIntegrator integrator = IntentIntegrator.forSupportFragment(fragment);
-
-                        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                        integrator.setPrompt("Scan");       //底部提示的文字
-                        integrator.setCameraId(0);          //前面或後面的相機
-                        integrator.setBeepEnabled(false);    //掃描成功後發出 BB 聲
-                        integrator.setBarcodeImageEnabled(false);
-                        integrator.initiateScan();
-
-
-                    }
-                });
+                holder.ivQrcode.setClickable(false);
+                holder.ivQrcode.setVisibility(View.INVISIBLE);
 
                 break;
             case MEMBER:
@@ -146,7 +133,7 @@ public class MyCourseAdapter extends RecyclerView.Adapter<MyCourseAdapter.ViewHo
 
                 String QrcodeData = Holder.gson.toJson(myCourseRvVO);
                 //設定QRCODE
-                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(QrcodeData, null,
+                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(myCourseRvVO.getCrvId(), null,
                         Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
                         200);
                 Bitmap bitmap = null;

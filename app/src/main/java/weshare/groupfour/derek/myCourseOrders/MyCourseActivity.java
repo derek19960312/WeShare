@@ -167,6 +167,7 @@ public class MyCourseActivity extends AppCompatActivity {
                 case "success":
                     Tools.Toast(MyCourseActivity.this, "上課驗證成功");
                     setViewPager();
+                    vpMyInsCourse.setCurrentItem(2);
                     break;
                 case "fail":
                     Tools.Toast(MyCourseActivity.this, "上課驗證失敗");
@@ -248,7 +249,7 @@ public class MyCourseActivity extends AppCompatActivity {
     private static final int TIME_THRESHOLD = 100;
     private static final int SHAKE_TIMEOUT = 300;
     private static final int SHAKE_DURATION = 1000;
-    private static final int SHAKE_COUNT = 10;
+    private static final int SHAKE_COUNT = 5;
 
     private float lastX = -1.0f, lastY = -1.0f, lastZ = -1.0f;
     private long lastTime;
@@ -277,7 +278,7 @@ public class MyCourseActivity extends AppCompatActivity {
                             shakeCount = 0;
                             // shake事件確定後，要做的事在這執行
 
-                            if (myNearByCourseRv != null || myNearByCourseRv.size() == 0) {
+                            if (myNearByCourseRv == null || myNearByCourseRv.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
 
@@ -322,7 +323,6 @@ public class MyCourseActivity extends AppCompatActivity {
                                             }
                                         }).create().show();
                             }
-
                         }
                         lastForce = now;
                     }

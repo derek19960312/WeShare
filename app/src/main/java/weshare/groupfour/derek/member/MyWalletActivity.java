@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +45,17 @@ public class MyWalletActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        Button btnDeposit = findViewById(R.id.btnDeposit);
+        btnDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyWalletActivity.this,DepositActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         TextView tvMyMoney = findViewById(R.id.tvMyMoney);
         String memId = Tools.getSharePreAccount().getString("memId", null);

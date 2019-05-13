@@ -37,6 +37,7 @@ public class Connect_WebSocket {
     // 中斷ChatWebSocket連線
     public static void disconnectServerChat() {
         if (chatWebSocketClient != null) {
+
             chatWebSocketClient.close();
             chatWebSocketClient = null;
         }

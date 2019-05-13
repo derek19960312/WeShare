@@ -59,7 +59,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
         singlePrice = goodsVO.getGoodPrice();
 
         tvName.setText("商品名稱：  "+goodsVO.getGoodName());
-        tvPrice.setText("價錢：  "+String.valueOf(singlePrice));
+        tvPrice.setText("價錢：  "+singlePrice);
         tvDetail.setText("簡介：  "+goodsVO.getGoodInfo());
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
