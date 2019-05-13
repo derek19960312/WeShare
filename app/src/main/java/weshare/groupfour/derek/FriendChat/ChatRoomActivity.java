@@ -95,7 +95,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     private void registerChatReceiver() {
         IntentFilter chatFilter = new IntentFilter("chat");
-       IntentFilter historyFilter = new IntentFilter("history");
+        IntentFilter historyFilter = new IntentFilter("history");
         ChatReceiver chatReceiver = new ChatReceiver();
         broadcastManager.registerReceiver(chatReceiver, chatFilter);
         broadcastManager.registerReceiver(chatReceiver, historyFilter);
@@ -112,8 +112,9 @@ public class ChatRoomActivity extends AppCompatActivity {
                 List<String> historyMsg = new Gson().fromJson(chatMessage.getMessage(), type);
                 for (String str : historyMsg) {
                     ChatMessage cm = new Gson().fromJson(str, ChatMessage.class);
-                   // tvMessage.append(cm.getSender() + ": " + cm.getMessage() + "\n");
+                    chatMessages.add(cm);
                 }
+                rvChat.getAdapter().notifyDataSetChanged();
             }
 
             String sender = chatMessage.getSender();

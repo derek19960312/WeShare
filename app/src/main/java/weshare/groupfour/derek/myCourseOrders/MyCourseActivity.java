@@ -27,8 +27,10 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -169,6 +171,9 @@ public class MyCourseActivity extends AppCompatActivity {
                 case "fail":
                     Tools.Toast(MyCourseActivity.this, "上課驗證失敗");
                     break;
+                case "not_yet":
+                    Tools.Toast(MyCourseActivity.this, "尚未到可驗證時間");
+                    break;
             }
 
 
@@ -243,7 +248,7 @@ public class MyCourseActivity extends AppCompatActivity {
     private static final int TIME_THRESHOLD = 100;
     private static final int SHAKE_TIMEOUT = 300;
     private static final int SHAKE_DURATION = 1000;
-    private static final int SHAKE_COUNT = 5;
+    private static final int SHAKE_COUNT = 10;
 
     private float lastX = -1.0f, lastY = -1.0f, lastZ = -1.0f;
     private long lastTime;
@@ -275,6 +280,7 @@ public class MyCourseActivity extends AppCompatActivity {
                             if (myNearByCourseRv != null || myNearByCourseRv.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
+
                                 List<String> list = new ArrayList<>();
                                 for (CourseReservationVO crv : myNearByCourseRv) {
                                     list.add(crv.getCrvId());
@@ -282,7 +288,7 @@ public class MyCourseActivity extends AppCompatActivity {
                                 Object[] objs = list.toArray();
                                 String[] stringArray = Arrays.copyOf(objs, objs.length, String[].class);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
-                                builder.setTitle("請選擇要驗證的課")
+                                builder.setTitle("附近可供驗證的課")
                                         .setItems(stringArray, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -304,6 +310,9 @@ public class MyCourseActivity extends AppCompatActivity {
                                                         case "hadCome":
                                                             Tools.Toast(MyCourseActivity.this, "請勿重複驗證");
                                                             break;
+                                                        case "not_yet":
+                                                            Tools.Toast(MyCourseActivity.this, "尚未到可驗證時間");
+                                                            break;
                                                     }
                                                 } catch (ExecutionException e) {
                                                     e.printStackTrace();
@@ -313,7 +322,6 @@ public class MyCourseActivity extends AppCompatActivity {
                                             }
                                         }).create().show();
                             }
-
 
                         }
                         lastForce = now;

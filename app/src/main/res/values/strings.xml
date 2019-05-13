@@ -87,5 +87,6 @@
         <item>十一月</item>
         <item>十二月</item>
     </array>
+    <string name="title_activity_arround_me_map">Map</string>
 
 </resources>

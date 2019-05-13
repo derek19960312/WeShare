@@ -40,7 +40,7 @@ public class MySoldFragment extends Fragment {
         SharedPreferences spf = getActivity().getSharedPreferences("myAccount", Context.MODE_PRIVATE);
 
         String teacherId = spf.getString("teacherId",null);
-
+        tvNoData = view.findViewById(R.id.tvNoData);
         if(teacherId == null){
             tvNoData.setVisibility(View.VISIBLE);
             tvNoData.setText("您並非老師身分");
@@ -59,7 +59,7 @@ public class MySoldFragment extends Fragment {
                 if (mySold != null && mySold.size() != 0) {
                     rvMySoldGood.setAdapter(new MySoldGoodsAdapter(mySold, MyBoughtGoodsAdapter.SELLER, getContext()));
                 } else {
-                    tvNoData = view.findViewById(R.id.tvNoData);
+
                     tvNoData.setVisibility(View.VISIBLE);
                 }
             } catch (ExecutionException e) {

@@ -39,7 +39,7 @@ public class GetMyLocation {
     private LocationRequest locationRequest;
     private LocationSettingsRequest locationSettingsRequest;
     private LocationCallback locationCallback;
-    private Location location;
+    public static Location location;
 
 
     public GetMyLocation(Activity activity, MyCourseActivity myCourseActivity) {
