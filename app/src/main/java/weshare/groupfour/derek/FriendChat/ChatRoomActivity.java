@@ -137,53 +137,21 @@ public class ChatRoomActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            Log.e("message", message);
 
-            JSONArray jsonArray = null;
-            try {
-                jsonArray = new JSONArray(message);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            //String[] chatMessageStr = Holder.gson.fromJson(message, String[].class);
-            //ChatMessage chatMessage = Holder.gson.fromJson(message, ChatMessage.class);
-//            if ("history".equals(chatMessage.getType())) {
-//                Type type = new TypeToken<List<String>>(){}.getType();
-//                List<String> historyMsg = new Gson().fromJson(chatMessage.getMessage(), type);
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                ChatMessage cm = null;
-                try {
-                    cm = new Gson().fromJson(jsonArray.get(i).toString(), ChatMessage.class);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+            ChatMessage cm = Holder.gson.fromJson(message, ChatMessage.class);
+            if (cm != null) {
                 chatMessages.add(cm);
             }
-            rvChat.setAdapter(new ChatMessageAdapter());
-            rvChat.getAdapter().notifyDataSetChanged();
-            rvChat.scrollToPosition(chatMessages.size() - 1);
-//            }
 
-            //           String sender = chatMessage.getSender();
-
-//            if (sender.equals(friendId)) {
-//                chatMessages.add(chatMessage);
-//
-//                rvChat.getAdapter().notifyDataSetChanged();
-//                rvChat.scrollToPosition(chatMessages.size()-1);
-//            }
-
-
-            //我原始版本
+            if (chatMessages != null && chatMessages.size() != 0) {
+                rvChat.setAdapter(new ChatMessageAdapter());
+                rvChat.getAdapter().notifyDataSetChanged();
+                rvChat.scrollToPosition(chatMessages.size() - 1);
+            }
 
 
         }
     }
-
 
     // user點擊發送訊息按鈕
     public void clickSend(View view) {
@@ -209,7 +177,8 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
     Intent intent;
-    public void cilckCamera(View view){
+
+    public void cilckCamera(View view) {
         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         file = new File(file, "picture.jpg");
@@ -224,9 +193,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     }
 
-    public void cilckPicture(View view){
-
-
+    public void cilckPicture(View view) {
 
         intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -256,9 +223,10 @@ public class ChatRoomActivity extends AppCompatActivity {
                                 getContentResolver().openInputStream(croppedImageUri));
                         Bitmap downsizedImage = Tools.downSize(bitmap, newSize);
                         String sender = getUserName();
-                        //showImage(sender, downsizedImage, false);
+//                        showImage(sender, downsizedImage, false);
                         // 將欲傳送的對話訊息轉成JSON後送出
                         String message = Base64.encodeToString(bitmapToPNG(downsizedImage), Base64.DEFAULT);
+                        Log.e("toopanIN", message);
                         ChatMessage chatMessage = new ChatMessage("chat", sender, friendId, message, "image");
                         String chatMessageJson = new Gson().toJson(chatMessage);
                         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
@@ -270,6 +238,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         }
     }
+
     private void crop(Uri sourceImageUri) {
         File file = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         file = new File(file, "picture_cropped.jpg");
@@ -324,6 +293,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     REQ_PERMISSIONS_STORAGE);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions,
@@ -401,7 +371,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             ChatMessage ctm = chatMessages.get(position);
-            switch (ctm.getType()) {
+            switch (ctm.gettOrm()) {
                 case "image":
                     if (ctm.getSender().equals(friendId)) {
                         ((ChatImageViewHolder) holder).ivMessageL.setImageBitmap(Tools.getBitmapByBase64(ctm.getMessage()));
@@ -410,6 +380,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                         ((ChatImageViewHolder) holder).civFri.setImageBitmap(Tools.getBitmapByBase64(FriendPic));
 
                     } else {
+                        Log.e("toopanIN", ctm.getMessage());
                         ((ChatImageViewHolder) holder).ivMessageR.setImageBitmap(Tools.getBitmapByBase64(ctm.getMessage()));
                         ((ChatImageViewHolder) holder).cardRight.setVisibility(View.VISIBLE);
                         ((ChatImageViewHolder) holder).cardLeft.setVisibility(View.GONE);

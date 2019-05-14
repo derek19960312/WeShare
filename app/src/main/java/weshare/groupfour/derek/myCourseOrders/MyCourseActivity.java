@@ -51,11 +51,11 @@ import weshare.groupfour.derek.util.Tools;
 
 public class MyCourseActivity extends AppCompatActivity {
     ViewPager vpMyInsCourse;
-    Set<String> nearbyme;
     GetMyLocation getMyLocation;
     String user;
     //搖搖用參數
     SensorManager sm;
+    static Map<String, MyLocationVO> nearbyme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,7 @@ public class MyCourseActivity extends AppCompatActivity {
         vpMyInsCourse.setAdapter(new MypagerAdapter(getSupportFragmentManager(), pageVOList));
     }
 
-    List<CourseReservationVO> myNearByCourseRv;
+    public static List<CourseReservationVO> myNearByCourseTeach,myNearByCourseRvLearn;
 
     private class NearByReceiver extends BroadcastReceiver {
         @Override
@@ -124,14 +124,13 @@ public class MyCourseActivity extends AppCompatActivity {
             Type setType = new TypeToken<Set<MyLocationVO>>() {
             }.getType();
             Set<MyLocationVO> myLocationVOS = Holder.gson.fromJson(message, setType);
-            nearbyme = new HashSet<>();
+            nearbyme = new HashMap<>();
             for (MyLocationVO myLocationVO : myLocationVOS) {
                 if (!myLocationVO.getMemberId().equals(Connect_WebSocket.getUserName()) && distance(myLocationVO) < 500f) {
-                    if (nearbyme.contains(myLocationVO.getMemberId())) {
+                    if (nearbyme.keySet().contains(myLocationVO.getMemberId())) {
 
                     } else {
-                        nearbyme.add(myLocationVO.getMemberId());
-                        Log.e("CourseReservationVO", myLocationVO.getMemberId());
+                        nearbyme.put(myLocationVO.getMemberId(),myLocationVO);
                         refreshMyNearBYCourse();
                     }
                 }
@@ -141,22 +140,25 @@ public class MyCourseActivity extends AppCompatActivity {
 
     private void refreshMyNearBYCourse() {
 
-        myNearByCourseRv = new ArrayList<>();
+        myNearByCourseTeach = new ArrayList<>();
+        myNearByCourseRvLearn = new ArrayList<>();
         if (MyTeachFragment.myTeachRvList != null) {
             for (CourseReservationVO crVO : MyTeachFragment.myTeachRvList) {
-                if (crVO.getClassStatus() != 1 && nearbyme.contains(crVO.getMemId())) {
-                    myNearByCourseRv.add(crVO);
+                if (crVO.getClassStatus() != 1 && nearbyme.keySet().contains(crVO.getMemId())) {
+                    myNearByCourseTeach.add(crVO);
                 }
             }
         }
         if (MyCourseFragment.myCourseRvList != null) {
             for (CourseReservationVO crVO : MyCourseFragment.myCourseRvList) {
                 MemberVO MemVO = new Join().getMemberbyteacherId(crVO.getTeacherId(), MyCourseActivity.this);
-                if (crVO.getClassStatus() != 1 && nearbyme.contains(MemVO.getMemId())) {
-                    myNearByCourseRv.add(crVO);
+                if (crVO.getClassStatus() != 1 && nearbyme.keySet().contains(MemVO.getMemId())) {
+                    myNearByCourseRvLearn.add(crVO);
                 }
             }
         }
+
+
     }
 
     private class ConfirmCourseReceiver extends BroadcastReceiver {
@@ -278,7 +280,7 @@ public class MyCourseActivity extends AppCompatActivity {
                             shakeCount = 0;
                             // shake事件確定後，要做的事在這執行
 
-                            if (myNearByCourseRv == null || myNearByCourseRv.size() == 0) {
+                            if (nearbyme == null || nearbyme.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
 

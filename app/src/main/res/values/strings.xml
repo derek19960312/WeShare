@@ -88,5 +88,6 @@
         <item>十二月</item>
     </array>
     <string name="title_activity_arround_me_map">Map</string>
+    <string name="title_activity_my_course_map">Map</string>
 
 </resources>

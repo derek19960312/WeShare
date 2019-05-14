@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity  extends AppCompatActivity implements OnMapReadyCallback  {
-    private final static String TAG = "GeocoderActivity";
+    private final static String TAG = "MapsActivity";
     private GoogleMap mMap;
     private UiSettings uiSettings;
     @Override

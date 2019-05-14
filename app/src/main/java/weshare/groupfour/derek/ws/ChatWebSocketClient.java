@@ -14,6 +14,7 @@ import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.nio.ByteBuffer;
 import java.util.Locale;
 
 public class ChatWebSocketClient extends WebSocketClient {
@@ -39,18 +40,20 @@ public class ChatWebSocketClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        try{
             JsonObject jsonObject = gson.fromJson(message, JsonObject.class);
             // type: 訊息種類，有open(有user連線), close(有user離線), chat(其他user傳送來的聊天訊息)
             String type = jsonObject.get("type").getAsString();
             sendMessageBroadcast(type, message);
-        }catch (Exception e){
-            sendMessageBroadcast("chat", message);
-        }
 
 
 
         Log.d(TAG, "onMessage: " + message);
+    }
+
+    @Override
+    public void onMessage(ByteBuffer bytes) {
+        String str = new String(bytes.array());
+        onMessage(str);
     }
 
     @Override

@@ -42,9 +42,7 @@
                     android:id="@+id/ivMessageL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="TextView"
-                    android:textSize="20sp" />
+                    app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
             </android.support.v7.widget.CardView>
 
@@ -71,9 +69,8 @@
                     android:id="@+id/ivMessageR"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="TextView"
-                    android:textSize="20sp" />
+                    app:srcCompat="@drawable/camera" />
+
             </android.support.v7.widget.CardView>
 
         </android.support.constraint.ConstraintLayout>
