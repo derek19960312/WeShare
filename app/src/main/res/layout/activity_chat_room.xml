@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,29 +41,57 @@
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="#fff"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/etMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:inputType="text" />
+        <ImageView
+            android:id="@+id/ivCamara"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="cilckCamera"
+            android:padding="5dp"
+            app:srcCompat="@drawable/camera" />
 
-        <Button
-            android:id="@+id/btSend"
+        <ImageView
+            android:id="@+id/ivPicture"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="cilckPicture"
+            android:padding="5dp"
+            app:srcCompat="@drawable/picture" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="clickSend"
-            android:text="@string/text_Send" />
+            android:layout_alignParentBottom="false"
+            android:layout_weight="1"
+            android:background="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout14">
+
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickSend"
+                android:text="@string/text_Send" />
+        </LinearLayout>
     </LinearLayout>
 
 

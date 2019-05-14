@@ -85,15 +85,14 @@ public class CourseReservationActivity extends AppCompatActivity {
     private class GrabCourseReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String message = intent.getStringExtra("message");
+            String inscTimeIdIn = intent.getStringExtra("message");
 
-            InsCourseTimeVO inscTimeVO = Holder.gson.fromJson(message, InsCourseTimeVO.class);
 
             RadioGroup rgDate = CheckDateFragment.rgDate;
             for(int i=0; i<rgDate.getChildCount(); i++){
                 RadioButton rb = (RadioButton) rgDate.getChildAt(i);
                 String inscTimeId = rb.getTag().toString();
-                if(inscTimeVO.getInscTimeId().equals(inscTimeId)){
+                if(inscTimeIdIn.equals(inscTimeId)){
                     rb.setClickable(false);
                     rb.setTextColor(Color.GRAY);
                 }else{

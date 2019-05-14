@@ -94,36 +94,20 @@ public class MyBoughtGoodsAdapter extends RecyclerView.Adapter<MyBoughtGoodsAdap
 
 
         //強迫關閉
-        if(holder.rvOrderDetail.getVisibility() != View.GONE ){
+        if (holder.rvOrderDetail.getVisibility() != View.GONE) {
             holder.rvOrderDetail.setVisibility(View.GONE);
         }
 
         holder.rvOrderDetail.setLayoutManager(new LinearLayoutManager(context));
 
-//        Map<String, String> requestMap = new HashMap<>();
-//        requestMap.put("action", "find_good_detail_by_orderId");
-//        requestMap.put("goodOrderId", myGoodsOrder.getGoodOrderId());
-//        String request = Tools.RequestDataBuilder(requestMap);
-//        try {
-//            String result = new CallServlet(context).execute(ServerURL.IP_GOODSDETAILS, request).get();
-//            Type listType = new TypeToken<List<GoodsVO>>() {
-//            }.getType();
-//            List<GoodsVO> GoodsVOs = Holder.gson.fromJson(result, listType);
-//            if (GoodsVOs != null && GoodsVOs.size() != 0) {
 
-                holder.rvOrderDetail.setAdapter(new MyGoodsDetailsAdapter(new ArrayList(myGoodsOrder.getGoodsDetailsVOs()), context));
-//            }
-//
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        holder.rvOrderDetail.setAdapter(new MyGoodsDetailsAdapter(new ArrayList(myGoodsOrder.getGoodsDetailsVOs()), context));
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(holder.rvOrderDetail.getVisibility()){
+                switch (holder.rvOrderDetail.getVisibility()) {
                     case View.VISIBLE:
                         holder.rvOrderDetail.setVisibility(View.GONE);
                         break;

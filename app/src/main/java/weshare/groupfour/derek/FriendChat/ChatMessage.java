@@ -6,15 +6,25 @@ public class ChatMessage {
     private String sender;
     private String receiver;
     private String message;
+    private String tOrm;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(String type, String sender, String receiver, String message) {
+    public ChatMessage(String type, String sender, String receiver, String message, String tOrm) {
         this.type = type;
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
+        this.tOrm = tOrm;
+    }
+
+    public String gettOrm() {
+        return tOrm;
+    }
+
+    public void settOrm(String tOrm) {
+        this.tOrm = tOrm;
     }
 
     public String getType() {

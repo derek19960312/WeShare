@@ -206,8 +206,7 @@ public class CheckDateFragment extends Fragment {
                                     @Override
                                     public void onClick(View v) {
 
-                                        String inscTimeVOJson = Holder.gson.toJson(inscTime);
-                                        Connect_WebSocket.grabCourseWebSocketClient.send(inscTimeVOJson);
+                                        Connect_WebSocket.grabCourseWebSocketClient.send(inscTime.getInscId());
                                     }
                                 });
 
