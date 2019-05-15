@@ -41,9 +41,7 @@ public class GrabCourseWebSocketClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        JsonObject jsonObject = gson.fromJson(message, JsonObject.class);
-        String inscId = jsonObject.get("inscId").getAsString();
-        sendMessageBroadcast(inscId, message);
+        sendMessageBroadcast("inscTimeId", message);
         Log.d(TAG, "onMessage: " + message);
     }
 

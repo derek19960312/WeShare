@@ -110,6 +110,7 @@ public class MyTeachFragment extends Fragment {
                 if (result.getContents().substring(0, 2).trim().equals("CR")) {
                     for (CourseReservationVO crVO : myTeachRvList) {
                         if (result.getContents().equals(crVO.getCrvId())) {
+
                             Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(crVO));
                             break;
                         }

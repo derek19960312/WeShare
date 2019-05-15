@@ -206,7 +206,7 @@ public class CheckDateFragment extends Fragment {
                                     @Override
                                     public void onClick(View v) {
 
-                                        Connect_WebSocket.grabCourseWebSocketClient.send(inscTime.getInscId());
+                                        Connect_WebSocket.grabCourseWebSocketClient.send(inscTime.getInscTimeId());
                                     }
                                 });
 

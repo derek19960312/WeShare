@@ -1,17 +1,12 @@
 package weshare.groupfour.derek.myCourseOrders;
 
 import android.annotation.SuppressLint;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,9 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -88,13 +81,13 @@ public class MyCourseMapActivity extends FragmentActivity implements OnMapReadyC
         // 註冊OnInfoWindowClickListener，當標記訊息視窗被點擊時會自動呼叫該Listener的方法
         mMap.setOnInfoWindowClickListener(listener);
         // 註冊OnMarkerDragListener，當標記被拖曳時會自動呼叫該Listener的方法
-        mMap.setOnMarkerDragListener(listener);
+        //mMap.setOnMarkerDragListener(listener);
 
-
+        setMarker();
     }
 
     // 將地名或地址轉成位置後在地圖打上對應標記
-    private void locationNameToMarker() {
+    private void setMarker() {
         // 增加新標記前，先清除舊有標記
         mMap.clear();
         markerMap = new HashMap<>();
@@ -110,6 +103,7 @@ public class MyCourseMapActivity extends FragmentActivity implements OnMapReadyC
                     .title("老師： " + teacherName)
                     .snippet("點擊驗證"));
             markerMap.put(marker, crVO);
+            marker.showInfoWindow();
         }
         for (CourseReservationVO crVO : MyCourseActivity.myNearByCourseTeach) {
             MemberVO memVO = new Join().getMemberbyMemId(crVO.getMemId(), this);
@@ -121,9 +115,11 @@ public class MyCourseMapActivity extends FragmentActivity implements OnMapReadyC
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title("學生： " + MemName)
-                    .snippet("點擊驗證"));
-            markerMap.put(marker, crVO);
+                    .snippet("點擊驗證")
+            );
 
+            markerMap.put(marker, crVO);
+             marker.showInfoWindow();
         }
 
         Location location = GetMyLocation.location;
@@ -195,9 +191,11 @@ public class MyCourseMapActivity extends FragmentActivity implements OnMapReadyC
                 switch (status) {
                     case "success":
                         Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(crVO));
+                        finish();
                         break;
                     case "wait":
                         Tools.Toast(MyCourseMapActivity.this, "等待驗證");
+                        finish();
                         break;
                     case "hadCome":
                         Tools.Toast(MyCourseMapActivity.this, "請勿重複驗證");

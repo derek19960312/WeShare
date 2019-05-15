@@ -45,12 +45,14 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import weshare.groupfour.derek.R;
 import weshare.groupfour.derek.callServer.CallServlet;
 import weshare.groupfour.derek.callServer.ServerURL;
+import weshare.groupfour.derek.myCourseOrders.MyLocationVO;
 import weshare.groupfour.derek.util.Connect_WebSocket;
 import weshare.groupfour.derek.util.Holder;
 import weshare.groupfour.derek.util.RequestDataBuilder;
@@ -137,17 +139,36 @@ public class ChatRoomActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
+            try {
+                ChatMessage cm = Holder.gson.fromJson(message, ChatMessage.class);
+                if (cm != null) {
+                    chatMessages.add(cm);
+                }
 
-            ChatMessage cm = Holder.gson.fromJson(message, ChatMessage.class);
-            if (cm != null) {
-                chatMessages.add(cm);
+                if (chatMessages != null && chatMessages.size() != 0) {
+                    rvChat.setAdapter(new ChatMessageAdapter());
+                    rvChat.getAdapter().notifyDataSetChanged();
+                    rvChat.scrollToPosition(chatMessages.size() - 1);
+                }
+            }catch (Exception e){
+                Type listType = new TypeToken<List<String>>() {
+                }.getType();
+                List<String> strs = Holder.gson.fromJson(message, listType);
+                for(String str : strs){
+                    ChatMessage cm = Holder.gson.fromJson(str, ChatMessage.class);
+                    if (cm != null) {
+                        chatMessages.add(cm);
+                    }
+                }
+
+
+                if (chatMessages != null && chatMessages.size() != 0) {
+                    rvChat.setAdapter(new ChatMessageAdapter());
+                    rvChat.getAdapter().notifyDataSetChanged();
+                    rvChat.scrollToPosition(chatMessages.size() - 1);
+                }
             }
 
-            if (chatMessages != null && chatMessages.size() != 0) {
-                rvChat.setAdapter(new ChatMessageAdapter());
-                rvChat.getAdapter().notifyDataSetChanged();
-                rvChat.scrollToPosition(chatMessages.size() - 1);
-            }
 
 
         }
@@ -226,7 +247,6 @@ public class ChatRoomActivity extends AppCompatActivity {
 //                        showImage(sender, downsizedImage, false);
                         // 將欲傳送的對話訊息轉成JSON後送出
                         String message = Base64.encodeToString(bitmapToPNG(downsizedImage), Base64.DEFAULT);
-                        Log.e("toopanIN", message);
                         ChatMessage chatMessage = new ChatMessage("chat", sender, friendId, message, "image");
                         String chatMessageJson = new Gson().toJson(chatMessage);
                         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
@@ -241,6 +261,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     private void crop(Uri sourceImageUri) {
         File file = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
         file = new File(file, "picture_cropped.jpg");
         croppedImageUri = Uri.fromFile(file);
         // take care of exceptions
@@ -257,13 +278,13 @@ public class ChatRoomActivity extends AppCompatActivity {
             cropIntent.putExtra("aspectX", 0); // this sets the max width
             cropIntent.putExtra("aspectY", 0); // this sets the max height
             // output with and height, 0 keeps original size
-            cropIntent.putExtra("outputX", 0);
-            cropIntent.putExtra("outputY", 0);
+            cropIntent.putExtra("outputX", 1080);
+            cropIntent.putExtra("outputY", 810);
             // whether keep original aspect ratio
             cropIntent.putExtra("scale", true);
             cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, croppedImageUri);
             // whether return data by the intent
-            cropIntent.putExtra("return-data", true);
+            cropIntent.putExtra("return-data", false);
             // start the activity - we handle returning in onActivityResult
             startActivityForResult(cropIntent, REQ_CROP_PICTURE);
         }
@@ -282,7 +303,8 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     private void requestPermission_Storage() {
         String[] permissions = {
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
         };
 
         int result = ContextCompat.checkSelfPermission(this, permissions[0]);

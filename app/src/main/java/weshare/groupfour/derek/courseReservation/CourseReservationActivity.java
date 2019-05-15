@@ -64,7 +64,7 @@ public class CourseReservationActivity extends AppCompatActivity {
         //註冊
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         //判斷進來的訊息
-        IntentFilter lockCourseFilter = new IntentFilter(insCourseVO.getInscId());
+        IntentFilter lockCourseFilter = new IntentFilter("inscTimeId");
         GrabCourseReceiver grabCourseReceiver = new GrabCourseReceiver();
         broadcastManager.registerReceiver(grabCourseReceiver, lockCourseFilter);
 

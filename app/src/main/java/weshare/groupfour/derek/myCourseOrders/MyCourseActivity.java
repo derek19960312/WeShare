@@ -224,7 +224,7 @@ public class MyCourseActivity extends AppCompatActivity {
         mylVO.setMemberId(user);
         mylVO.setLat(location.getLatitude());
         mylVO.setLng(location.getLongitude());
-        Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
+        //Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
     }
 
     @Override
@@ -241,7 +241,7 @@ public class MyCourseActivity extends AppCompatActivity {
         super.onDestroy();
 
         Connect_WebSocket.disconnectServerConfirm();
-        Connect_WebSocket.disconnectServerWhoArround();
+       //Connect_WebSocket.disconnectServerWhoArround();
         //停止更新最新位置
         getMyLocation.stopLocationUpdates();
     }

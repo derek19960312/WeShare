@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -41,6 +42,7 @@
 
         <activity
             android:name=".myCourseOrders.MyCourseMapActivity"
+            android:theme="@style/AppTheme.Dialog"
             android:label="@string/title_activity_my_course_map"></activity>
 
         <provider
