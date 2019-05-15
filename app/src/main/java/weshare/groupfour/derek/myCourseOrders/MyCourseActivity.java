@@ -115,7 +115,7 @@ public class MyCourseActivity extends AppCompatActivity {
         vpMyInsCourse.setAdapter(new MypagerAdapter(getSupportFragmentManager(), pageVOList));
     }
 
-    public static List<CourseReservationVO> myNearByCourseTeach,myNearByCourseRvLearn;
+    public static List<CourseReservationVO> myNearByCourseTeach, myNearByCourseRvLearn;
 
     private class NearByReceiver extends BroadcastReceiver {
         @Override
@@ -130,7 +130,7 @@ public class MyCourseActivity extends AppCompatActivity {
                     if (nearbyme.keySet().contains(myLocationVO.getMemberId())) {
 
                     } else {
-                        nearbyme.put(myLocationVO.getMemberId(),myLocationVO);
+                        nearbyme.put(myLocationVO.getMemberId(), myLocationVO);
                         refreshMyNearBYCourse();
                     }
                 }
@@ -201,8 +201,8 @@ public class MyCourseActivity extends AppCompatActivity {
         super.onResume();
 
         user = Connect_WebSocket.getUserName();
-        //開啟搖搖功能
 
+        //開啟搖搖功能
 
         //搖搖
         // 註冊監聽器，若是行動裝置有對應的感應器則回傳true，反之為false
@@ -284,46 +284,21 @@ public class MyCourseActivity extends AppCompatActivity {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
 
-                                List<String> list = new ArrayList<>();
-                                for (CourseReservationVO crv : myNearByCourseRv) {
-                                    list.add(crv.getCrvId());
-                                }
-                                Object[] objs = list.toArray();
-                                String[] stringArray = Arrays.copyOf(objs, objs.length, String[].class);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
-                                builder.setTitle("附近可供驗證的課")
-                                        .setItems(stringArray, new DialogInterface.OnClickListener() {
+                                builder.setTitle("是否進入搖搖驗證")
+                                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-                                                RequestDataBuilder rdb = new RequestDataBuilder();
-                                                rdb.build()
-                                                        .setAction("confirm_for_course_shake")
-                                                        .setData("crvId", myNearByCourseRv.get(which).getCrvId())
-                                                        .setData("memId", user);
-                                                try {
-                                                    String status = new CallServlet(MyCourseActivity.this).execute(ServerURL.IP_COURSERESERVATION, rdb.create()).get();
-                                                    switch (status) {
-                                                        case "success":
-                                                            Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(myNearByCourseRv.get(which)));
-                                                            break;
-                                                        case "wait":
-                                                            Tools.Toast(MyCourseActivity.this, "等待驗證");
-                                                            break;
-                                                        case "hadCome":
-                                                            Tools.Toast(MyCourseActivity.this, "請勿重複驗證");
-                                                            break;
-                                                        case "not_yet":
-                                                            Tools.Toast(MyCourseActivity.this, "尚未到可驗證時間");
-                                                            break;
-                                                    }
-                                                } catch (ExecutionException e) {
-                                                    e.printStackTrace();
-                                                } catch (InterruptedException e) {
-                                                    e.printStackTrace();
-                                                }
                                             }
-                                        }).create().show();
+                                        }).setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent(MyCourseActivity.this,MyCourseMapActivity.class);
+                                        startActivity(intent);
+                                    }
+                                })
+                                        .create().show();
                             }
                         }
                         lastForce = now;
