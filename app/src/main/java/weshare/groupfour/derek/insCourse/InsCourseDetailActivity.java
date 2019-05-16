@@ -77,7 +77,11 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        rbCourse.setRating((float) Double.parseDouble(result));
+
+        if(!result.equals("")){
+            rbCourse.setRating((float) Double.parseDouble(result));
+        }
+
 
 
         //撈老師資料

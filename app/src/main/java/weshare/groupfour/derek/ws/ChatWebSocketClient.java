@@ -17,6 +17,8 @@ import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 
+import weshare.groupfour.derek.util.Connect_WebSocket;
+
 public class ChatWebSocketClient extends WebSocketClient {
     private static final String TAG = "ChatWebSocketClient";
     private LocalBroadcastManager broadcastManager;
@@ -63,6 +65,10 @@ public class ChatWebSocketClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+//        if(code != 1000){
+//            Connect_WebSocket.chatWebSocketClient.connect();
+//        }
+
         String text = String.format(Locale.getDefault(),
                 "code = %d, reason = %s, remote = %b",
                 code, reason, remote);

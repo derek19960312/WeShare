@@ -55,7 +55,6 @@ public class ReservationConfirmFragment extends Fragment {
         TextView tvPrice = view.findViewById(R.id.tvPrice);
         TextView tvFee = view.findViewById(R.id.tvFee);
         TextView tvTotalPrice = view.findViewById(R.id.tvTotalPrice);
-        EditText etMore = view.findViewById(R.id.etMore);
         Button btnSubmit = view.findViewById(R.id.btnSubmit);
 
         tvInscName.setText(insCourseVO.getCourseId());

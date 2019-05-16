@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
+
     <application
         android:name=".util.App"
         android:allowBackup="true"
@@ -55,7 +56,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".member.DepositActivity" />
+        <activity android:name=".member.DepositActivity" android:hardwareAccelerated="true" />
         <activity android:name=".home.SignUpActivity" />
         <activity android:name=".mapNavActivity_test" />
         <activity

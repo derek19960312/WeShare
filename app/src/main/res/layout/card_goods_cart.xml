@@ -85,12 +85,37 @@
                     android:gravity="center"
                     android:text="數量" />
 
-                <Spinner
-                    android:id="@+id/spCount"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:entries="@array/goodsCount" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivLeft"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        card_view:srcCompat="@drawable/back" />
+
+                    <TextView
+                        android:id="@+id/tvCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom|center_horizontal"
+                        android:text="1"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/ivRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        card_view:srcCompat="@drawable/right_arrow" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

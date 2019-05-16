@@ -125,7 +125,7 @@ public class ClendarAdapter extends RecyclerView.Adapter<ClendarAdapter.ViewHold
 
                 String QrcodeData = Holder.gson.toJson(myCourseRvVO);
                 //設定QRCODE
-                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(QrcodeData, null,
+                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(myCourseRvVO.getCrvId(), null,
                         Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(),
                         200);
                 Bitmap bitmap = null;

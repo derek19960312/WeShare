@@ -17,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -397,13 +398,55 @@ public class ChatRoomActivity extends AppCompatActivity {
                 case "image":
                     if (ctm.getSender().equals(friendId)) {
                         ((ChatImageViewHolder) holder).ivMessageL.setImageBitmap(Tools.getBitmapByBase64(ctm.getMessage()));
+                        ((ChatImageViewHolder) holder).ivMessageL.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                View view = LayoutInflater.from(ChatRoomActivity.this).inflate(R.layout.dialog_image,null);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoomActivity.this);
+
+                                AlertDialog alertDialog = builder.setView(view).create();
+                                alertDialog.show();
+
+                                ImageView ivPic = view.findViewById(R.id.ivPic);
+                                ImageView ivCancel = view.findViewById(R.id.ivCancel);
+                                ivPic.setImageBitmap(Tools.UpSize(Tools.getBitmapByBase64(ctm.getMessage()),getWindowManager()));
+                                ivCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+                            }
+                        });
                         ((ChatImageViewHolder) holder).cardRight.setVisibility(View.GONE);
                         ((ChatImageViewHolder) holder).cardLeft.setVisibility(View.VISIBLE);
                         ((ChatImageViewHolder) holder).civFri.setImageBitmap(Tools.getBitmapByBase64(FriendPic));
 
                     } else {
-                        Log.e("toopanIN", ctm.getMessage());
                         ((ChatImageViewHolder) holder).ivMessageR.setImageBitmap(Tools.getBitmapByBase64(ctm.getMessage()));
+                        ((ChatImageViewHolder) holder).ivMessageR.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                View view = LayoutInflater.from(ChatRoomActivity.this).inflate(R.layout.dialog_image,null);
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoomActivity.this);
+
+                                AlertDialog alertDialog = builder.setView(view).create();
+                                alertDialog.show();
+
+                                ImageView ivPic = view.findViewById(R.id.ivPic);
+                                ImageView ivCancel = view.findViewById(R.id.ivCancel);
+                                ivPic.setImageBitmap(Tools.UpSize(Tools.getBitmapByBase64(ctm.getMessage()),getWindowManager()));
+                                ivCancel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        alertDialog.dismiss();
+                                    }
+                                });
+                            }
+                        });
+
                         ((ChatImageViewHolder) holder).cardRight.setVisibility(View.VISIBLE);
                         ((ChatImageViewHolder) holder).cardLeft.setVisibility(View.GONE);
                         ((ChatImageViewHolder) holder).civFri.setVisibility(View.GONE);

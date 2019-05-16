@@ -84,15 +84,17 @@ public class Connect_WebSocket {
 
 
         if (confirmCourseWebSocketClient == null) {
-            reconnectionServerConfirmWSThread = new ReconnectionServerConfirmWSThread(uri, context);
-            new Thread(reconnectionServerConfirmWSThread).start();
+            confirmCourseWebSocketClient = new ConfirmCourseWebSocketClient(uri, context);
+            confirmCourseWebSocketClient.connect();
+//            reconnectionServerConfirmWSThread = new ReconnectionServerConfirmWSThread(uri, context);
+//            new Thread(reconnectionServerConfirmWSThread).start();
         }
     }
 
     // 中斷ConfirmWebSocket連線
     public static void disconnectServerConfirm() {
         if (confirmCourseWebSocketClient != null) {
-            reconnectionServerConfirmWSThread.isStop = true;
+            //reconnectionServerConfirmWSThread.isStop = true;
             confirmCourseWebSocketClient.close();
             confirmCourseWebSocketClient = null;
         }
@@ -137,8 +139,10 @@ public class Connect_WebSocket {
 
             uri = new URI(ws + "/" + userName);
             if (whoAroundsWebSocketClient == null) {
-                reconnectionWhoArroundWSThread = new ReconnectionWhoArroundWSThread(uri, context);
-                new Thread(reconnectionWhoArroundWSThread).start();
+                whoAroundsWebSocketClient = new WhoAroundsWebSocketClient(uri, context);
+                whoAroundsWebSocketClient.connect();
+//                reconnectionWhoArroundWSThread = new ReconnectionWhoArroundWSThread(uri, context);
+//                new Thread(reconnectionWhoArroundWSThread).start();
             }
         } catch (URISyntaxException e) {
             Log.e(TAG, e.toString());
@@ -149,7 +153,7 @@ public class Connect_WebSocket {
     // 中斷WhoArroundWebSocket連線
     public static void disconnectServerWhoArround() {
         if (whoAroundsWebSocketClient != null) {
-            reconnectionWhoArroundWSThread.isStop = true;
+           // reconnectionWhoArroundWSThread.isStop = true;
             whoAroundsWebSocketClient.close();
             whoAroundsWebSocketClient = null;
         }

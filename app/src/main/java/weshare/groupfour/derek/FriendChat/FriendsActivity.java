@@ -168,7 +168,7 @@ public class FriendsActivity extends AppCompatActivity {
 //                        if (!friendList.contains(friend)) {
 //                            friendList.add(friend);
 //                        }
-                        Connect_WebSocket.showToast(FriendsActivity.this, friend + " is online");
+                     //   Connect_WebSocket.showToast(FriendsActivity.this, friend + " is online");
                     }
                     // 重刷聊天清單
                     rvFriendsOnline.getAdapter().notifyDataSetChanged();
@@ -188,7 +188,7 @@ public class FriendsActivity extends AppCompatActivity {
                     }
                     rvFriendsOnline.getAdapter().notifyDataSetChanged();
                     rvFriendsOffLine.getAdapter().notifyDataSetChanged();
-                    Connect_WebSocket.showToast(FriendsActivity.this, friend + " is offline");
+                   // Connect_WebSocket.showToast(FriendsActivity.this, friend + " is offline");
             }
             Log.d(TAG, message);
         }

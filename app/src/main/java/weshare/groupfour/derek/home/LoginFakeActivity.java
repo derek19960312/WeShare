@@ -52,6 +52,7 @@ public class LoginFakeActivity extends AppCompatActivity {
 
             //設定畫面寬高
             Window win = getWindow();
+
             WindowManager.LayoutParams lp = win.getAttributes();
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;

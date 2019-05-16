@@ -13,7 +13,7 @@
         android:layout_height="120dp"
         android:layout_gravity="center"
         android:text="Button"
-        android:textSize="26sp"
+        android:textSize="22sp"
         android:textStyle="bold"
 
         android:theme="@style/button_style" />

@@ -102,7 +102,7 @@ public class MapsActivity  extends AppCompatActivity implements OnMapReadyCallba
             mMap.addMarker(new MarkerOptions()
                     .position(latLng)
                     .title(code + locationName)
-                    .snippet(snippet));
+                    .snippet(snippet)).showInfoWindow();
 
             // 將鏡頭焦點設定在使用者輸入的地點上
             CameraPosition cameraPosition = new CameraPosition.Builder()

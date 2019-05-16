@@ -6,17 +6,26 @@
     android:layout_height="wrap_content"
     tools:context=".courseReservation.ReservationConfirmFragment">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
             android:id="@+id/textView50"
@@ -40,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Teacher"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvTeacherName"
@@ -56,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="@string/InscLoc"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvInscLoc"
@@ -72,7 +81,7 @@
             android:layout_height="wrap_content"
             android:text="@string/date"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDateTime"
@@ -88,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="@string/price"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvPrice"
@@ -104,7 +113,7 @@
             android:layout_height="wrap_content"
             android:text="@string/handling"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvFee"
@@ -120,7 +129,7 @@
             android:layout_height="wrap_content"
             android:text="@string/total"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvTotalPrice"
@@ -129,21 +138,6 @@
             android:layout_marginLeft="10dp"
             android:text="1520"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/remarks"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/etMore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/btnSubmit"

@@ -107,7 +107,7 @@ public class GoodsCartActivity extends AppCompatActivity {
                     final String memId = Tools.getSharePreAccount().getString("memId",null);
                     if(memId != null){
                         AlertDialog.Builder builder = new AlertDialog.Builder(GoodsCartActivity.this);
-                        builder.setTitle("確認付款")
+                        AlertDialog alertDialog = builder.setTitle("確認付款")
                                 .setCancelable(false)
                                 .setMessage("共：  NT "+totalPrice)
                                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -124,57 +124,70 @@ public class GoodsCartActivity extends AppCompatActivity {
                                         goodsOrderVO.setMemId(memId);
                                         goodsOrderVO.setGoodTotalPrice(totalPrice);
                                         goodsOrderVO.setGoodDate(new Timestamp(new GregorianCalendar().getTimeInMillis()));
-
-                                        Map<String,String> requestMap = new HashMap<>();
-                                        Gson gson = new GsonBuilder()
-                                                .enableComplexMapKeySerialization()
-                                                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                                                .create();
-
-                                        requestMap.put("action","add_new_good_order");
-                                        requestMap.put("myCart",gson.toJson(myCart));
-                                        requestMap.put("goodsOrderVO",gson.toJson(goodsOrderVO));
-                                        String request = Tools.RequestDataBuilder(requestMap);
-                                        Log.e("request",request);
-                                        String result = null;
-                                        try {
-                                            result = new CallServlet(GoodsCartActivity.this).execute(ServerURL.IP_GOODSORDER,request).get();
-                                        } catch (ExecutionException e) {
-                                            e.printStackTrace();
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                                        Map<GoodsVO,Integer> myCart1 = new HashMap<>();
+                                        for(GoodsVO gvo : myCart.keySet()){
+                                            if(myCart.get(gvo) != 0){
+                                                myCart1.put(gvo,myCart.get(gvo));
+                                            }
                                         }
-
-                                        if (result.equals("Insufficient_account_balance")){
-                                            Tools.Toast(GoodsCartActivity.this,"餘額不足，請先儲值");
-                                            AlertDialog.Builder builderSuccess = new AlertDialog.Builder(GoodsCartActivity.this);
-                                            builderSuccess
-                                                    .setMessage("餘額不足是否前往儲值頁面")
-                                                    .setCancelable(false)
-                                                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            //Intent intent = new Intent(GoodsCartActivity.this,);
-                                                            //startActivity(intent);
-                                                            //finish();
-                                                        }
-                                                    })
-                                                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    }).create().show();
-
-                                        }else{
-                                            Tools.Toast(GoodsCartActivity.this,"訂購成功，請靜候賣家出貨");
+                                        if (myCart1.size() == 0){
+                                            Tools.Toast(GoodsCartActivity.this,"商品數量請勿為零，刪除請將商品向左滑動");
                                             myCart.clear();
-                                            finish();
-                                        }
+                                            dialog.dismiss();
+                                        }else {
 
+
+                                            Map<String, String> requestMap = new HashMap<>();
+                                            Gson gson = new GsonBuilder()
+                                                    .enableComplexMapKeySerialization()
+                                                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                                                    .create();
+
+                                            requestMap.put("action", "add_new_good_order");
+                                            requestMap.put("myCart", gson.toJson(myCart1));
+                                            requestMap.put("goodsOrderVO", gson.toJson(goodsOrderVO));
+                                            String request = Tools.RequestDataBuilder(requestMap);
+                                            Log.e("request", request);
+                                            String result = null;
+                                            try {
+                                                result = new CallServlet(GoodsCartActivity.this).execute(ServerURL.IP_GOODSORDER, request).get();
+                                            } catch (ExecutionException e) {
+                                                e.printStackTrace();
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            if (result.equals("Insufficient_account_balance")) {
+                                                Tools.Toast(GoodsCartActivity.this, "餘額不足，請先儲值");
+                                                AlertDialog.Builder builderSuccess = new AlertDialog.Builder(GoodsCartActivity.this);
+                                                builderSuccess
+                                                        .setMessage("餘額不足是否前往儲值頁面")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                //Intent intent = new Intent(GoodsCartActivity.this,);
+                                                                //startActivity(intent);
+                                                                //finish();
+                                                            }
+                                                        })
+                                                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                            }
+                                                        }).create().show();
+
+                                            } else {
+                                                Tools.Toast(GoodsCartActivity.this, "訂購成功，請靜候賣家出貨");
+                                                myCart.clear();
+                                                finish();
+                                            }
+                                        }
                                     }
                                 })
-                                .create().show();
+                                .create();
+                        alertDialog.show();
 
 
                     }else{
@@ -215,21 +228,24 @@ public class GoodsCartActivity extends AppCompatActivity {
         }
 
         private class ViewHolder extends RecyclerView.ViewHolder{
-            ImageView ivIcon, ivHeart;
-            TextView tvName, tvPrice;
-            Spinner spCount;
+            ImageView ivIcon, ivHeart, ivRight, ivLeft;
+            TextView tvName, tvPrice, tvCount;
             int heart;
             Context context;
+            int count;
 
             public ViewHolder(View view) {
                 super(view);
                 ivIcon = view.findViewById(R.id.ivIcon);
                 tvName = view.findViewById(R.id.tvName);
                 tvPrice = view.findViewById(R.id.tvPrice);
-                spCount = view.findViewById(R.id.spCount);
+                tvCount = view.findViewById(R.id.tvCount);
                 ivHeart = view.findViewById(R.id.ivHeart);
+                ivRight = view.findViewById(R.id.ivRight);
+                ivLeft = view.findViewById(R.id.ivLeft);
                 heart = 0;
                 context = view.getContext();
+                count = 0;
             }
         }
 
@@ -281,34 +297,44 @@ public class GoodsCartActivity extends AppCompatActivity {
             if(myCart.size() != 0){
 
                 try {
-                    int count = myCart.get(goodsVO)-1;
-                    if(count > 8){
-                        count = 8;
-                    }
+                    holder.count = myCart.get(goodsVO);
+
                     holder.tvName.setText(goodsVO.getGoodName());
                     holder.tvPrice.setText(String.valueOf(goodsVO.getGoodPrice()));
-                    holder.spCount.setSelection(count,true);
+                    holder.tvCount.setText(String.valueOf(holder.count));
 
-                    holder.spCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    holder.ivLeft.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if(position < 9 ){
-                                myCart.put(goodsVO,++position);
+                        public void onClick(View v) {
+                            if(holder.count > 0){
+                                holder.count -= 1;
+                                holder.tvCount.setText(String.valueOf(holder.count));
+                                myCart.put(goodsVO,holder.count);
                                 int total = 0;
                                 for(GoodsVO gvo : myCart.keySet()){
                                     total += myCart.get(gvo)*gvo.getGoodPrice();
                                 }
                                 tvTotalPrice.setText(String.valueOf(total));
                                 totalPrice = total;
-                            }else{
-
                             }
 
+
                         }
+                    });
 
+                    holder.ivRight.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
+                        public void onClick(View v) {
 
+                            holder.count += 1;
+                            holder.tvCount.setText(String.valueOf(holder.count));
+                            myCart.put(goodsVO,holder.count);
+                            int total = 0;
+                            for(GoodsVO gvo : myCart.keySet()){
+                                total += myCart.get(gvo)*gvo.getGoodPrice();
+                            }
+                            tvTotalPrice.setText(String.valueOf(total));
+                            totalPrice = total;
                         }
                     });
 

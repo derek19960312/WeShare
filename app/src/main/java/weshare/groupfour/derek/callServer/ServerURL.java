@@ -6,10 +6,10 @@ public class ServerURL {
 //  final public static String IP = "34.80.204.33:8081";
 
     //迎刃
-  final public static String IP = "ca107g4.ga";
+    final public static String IP = "ca107g4.ga";
 
     //陳義
-// final public static String IP = "10.120.26.4:8081";
+//final public static String IP = "10.120.26.4:8081";
 
 // final public static String IP = "localhost:8081";
 
@@ -17,7 +17,7 @@ public class ServerURL {
 //  final public static String IP = "192.168.168.123:8081";
 
     //資策會
- //final public static String IP = "10.120.26.19:8081";
+// final public static String IP = "10.120.26.19:8081";
 
     //桃園家
 //  final public static String IP = "192.168.1.108:8081";
@@ -27,7 +27,7 @@ public class ServerURL {
 
 
 // final public static String PROJECT_WEB = "/WeShare_web";
-   final public static String PROJECT_WEB = "/CA107G4";
+  final public static String PROJECT_WEB = "/CA107G4";
 
     final public static String WS = "ws://";
     final public static String HTTP = "https://";

@@ -15,6 +15,8 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.util.Locale;
 
+import weshare.groupfour.derek.util.Connect_WebSocket;
+
 public class WhoAroundsWebSocketClient extends WebSocketClient {
     private static final String TAG = "ChatWebSocketClient";
     private LocalBroadcastManager broadcastManager;
@@ -49,7 +51,9 @@ public class WhoAroundsWebSocketClient extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
 
-
+//        if(code != 1000){
+//            Connect_WebSocket.whoAroundsWebSocketClient.connect();
+//        }
 
 
 

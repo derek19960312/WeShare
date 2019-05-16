@@ -8,7 +8,10 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -85,6 +88,21 @@ public class Tools {
             text = "\nscale = " + scale + "\nscaled image size = " +
                     srcBitmap.getWidth() + "x" + srcBitmap.getHeight();
         }
+        return srcBitmap;
+    }
+    public static Bitmap UpSize(Bitmap srcBitmap, WindowManager windowManager) {
+
+        int srcWidth = srcBitmap.getWidth();
+        int srcHeight = srcBitmap.getHeight();
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+            double scale = srcWidth/srcHeight;
+            int dstWidth = (int) (metrics.widthPixels);
+            int dstHeight = (int) (metrics.widthPixels * scale);
+
+            srcBitmap = Bitmap.createScaledBitmap(srcBitmap,dstWidth , dstHeight, false);
+            System.gc();
+
         return srcBitmap;
     }
 

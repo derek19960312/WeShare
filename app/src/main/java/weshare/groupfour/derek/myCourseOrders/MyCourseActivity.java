@@ -167,10 +167,15 @@ public class MyCourseActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
             switch (message) {
-                case "success":
+                case "successTeach":
                     Tools.Toast(MyCourseActivity.this, "上課驗證成功");
                     setViewPager();
                     vpMyInsCourse.setCurrentItem(2);
+                    break;
+                case "successStu":
+                    Tools.Toast(MyCourseActivity.this, "上課驗證成功");
+                    setViewPager();
+                    vpMyInsCourse.setCurrentItem(1);
                     break;
                 case "fail":
                     Tools.Toast(MyCourseActivity.this, "上課驗證失敗");
