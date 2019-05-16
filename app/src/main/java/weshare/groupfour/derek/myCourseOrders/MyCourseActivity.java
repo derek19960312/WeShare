@@ -98,6 +98,7 @@ public class MyCourseActivity extends AppCompatActivity {
 
             //驗證上課聊天室
             Connect_WebSocket.connectServerConfirm(this, user, ServerURL.WS_CONFIRMCOURSE);
+
             Connect_WebSocket.connectServerWhoArround(this, user, ServerURL.WS_AROUNDS);
 
             //更新最新位置
@@ -177,6 +178,9 @@ public class MyCourseActivity extends AppCompatActivity {
                 case "not_yet":
                     Tools.Toast(MyCourseActivity.this, "尚未到可驗證時間");
                     break;
+                case "had_success":
+                    Tools.Toast(MyCourseActivity.this, "該課程已經驗證過");
+                    break;
             }
 
 
@@ -224,7 +228,7 @@ public class MyCourseActivity extends AppCompatActivity {
         mylVO.setMemberId(user);
         mylVO.setLat(location.getLatitude());
         mylVO.setLng(location.getLongitude());
-        //Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
+        Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
     }
 
     @Override
@@ -241,7 +245,7 @@ public class MyCourseActivity extends AppCompatActivity {
         super.onDestroy();
 
         Connect_WebSocket.disconnectServerConfirm();
-       //Connect_WebSocket.disconnectServerWhoArround();
+       Connect_WebSocket.disconnectServerWhoArround();
         //停止更新最新位置
         getMyLocation.stopLocationUpdates();
     }

@@ -36,15 +36,6 @@ public class ServerURL {
 
 
 
-
-
-
-
-
-
-
-
-
     final public static String PROJECT_ANDROID = PROJECT_WEB+"/android";
 
 

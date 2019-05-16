@@ -48,6 +48,11 @@ public class WhoAroundsWebSocketClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+
+
+
+
+
         String text = String.format(Locale.getDefault(),
                 "code = %d, reason = %s, remote = %b",
                 code, reason, remote);
@@ -64,4 +69,5 @@ public class WhoAroundsWebSocketClient extends WebSocketClient {
         intent.putExtra("message", message);
         broadcastManager.sendBroadcast(intent);
     }
+
 }
