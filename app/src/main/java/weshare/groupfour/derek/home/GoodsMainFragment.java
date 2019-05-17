@@ -37,7 +37,7 @@ public class GoodsMainFragment extends Fragment {
         videoView = view.findViewById(R.id.videoView);
 
         videoView.setMediaController(new MediaController(getContext()));
-        videoView.setVideoPath(ServerURL.IP_WEBMDB+"?lsId=LV00001");
+        videoView.setVideoPath(ServerURL.IP_WEBMDB+"?lsId=LV00003");
 
 
 

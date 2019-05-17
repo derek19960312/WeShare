@@ -230,7 +230,7 @@ public class CheckDateFragment extends Fragment {
             DatePicker dp = dpd.getDatePicker();
 
             Calendar gc = GregorianCalendar.getInstance();
-            //dp.setMinDate(gc.getTimeInMillis());
+            dp.setMinDate(gc.getTimeInMillis());
             gc.add(Calendar.DATE,20);
             dp.setMaxDate(gc.getTimeInMillis());
 
