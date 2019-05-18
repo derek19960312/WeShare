@@ -22,7 +22,7 @@ public class CallServlet extends AsyncTask<String, Void, String> {
         this.context = context;
     }
 
-    ProgressDialog progressDialog;
+//    ProgressDialog progressDialog;
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -34,13 +34,13 @@ public class CallServlet extends AsyncTask<String, Void, String> {
 
 
 
-        try{
-            progressDialog = new ProgressDialog(context);
-            progressDialog.setMessage("請稍等");
-            progressDialog.show();
-        }catch (Exception e){
-
-        }
+//        try{
+//            progressDialog = new ProgressDialog(context);
+//            progressDialog.setMessage("請稍等");
+//            progressDialog.show();
+//        }catch (Exception e){
+//
+//        }
 
     }
 
@@ -79,9 +79,9 @@ public class CallServlet extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        if (progressDialog != null){
-            progressDialog.dismiss();
-        }
+//        if (progressDialog != null){
+//            progressDialog.dismiss();
+//        }
 
     }
 }

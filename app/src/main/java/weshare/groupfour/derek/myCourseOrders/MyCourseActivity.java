@@ -233,6 +233,7 @@ public class MyCourseActivity extends AppCompatActivity {
         mylVO.setMemberId(user);
         mylVO.setLat(location.getLatitude());
         mylVO.setLng(location.getLongitude());
+
         Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
     }
 
@@ -260,7 +261,7 @@ public class MyCourseActivity extends AppCompatActivity {
     private static final int TIME_THRESHOLD = 100;
     private static final int SHAKE_TIMEOUT = 300;
     private static final int SHAKE_DURATION = 1000;
-    private static final int SHAKE_COUNT = 5;
+    private static final int SHAKE_COUNT = 10;
 
     private float lastX = -1.0f, lastY = -1.0f, lastZ = -1.0f;
     private long lastTime;
@@ -294,7 +295,7 @@ public class MyCourseActivity extends AppCompatActivity {
                             } else {
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
-                                builder.setTitle("是否進入搖搖驗證")
+                                builder.setTitle("偵測到附近有"+nearbyme.size()+"門課可以驗證，是否進入搖搖驗證")
                                         .setNegativeButton("否", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {

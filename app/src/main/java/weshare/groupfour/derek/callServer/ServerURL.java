@@ -27,7 +27,8 @@ public class ServerURL {
 
 
 // final public static String PROJECT_WEB = "/WeShare_web";
-  final public static String PROJECT_WEB = "/CA107G4";
+
+    final public static String PROJECT_WEB = "/CA107G4";
 
     final public static String WS = "ws://";
     final public static String HTTP = "http://";
