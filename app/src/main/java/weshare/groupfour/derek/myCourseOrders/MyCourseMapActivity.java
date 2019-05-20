@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -191,6 +192,7 @@ public class MyCourseMapActivity extends FragmentActivity implements OnMapReadyC
                 switch (status) {
                     case "success":
                         Connect_WebSocket.confirmCourseWebSocketClient.send(Holder.gson.toJson(crVO));
+                        Log.d("send","00000000000000000000000000000000000000");
                         finish();
                         break;
                     case "wait":
@@ -199,9 +201,11 @@ public class MyCourseMapActivity extends FragmentActivity implements OnMapReadyC
                         break;
                     case "hadCome":
                         Tools.Toast(MyCourseMapActivity.this, "請勿重複驗證");
+                        finish();
                         break;
                     case "not_yet":
                         Tools.Toast(MyCourseMapActivity.this, "尚未到可驗證時間");
+                        finish();
                         break;
                 }
             } catch (ExecutionException e) {

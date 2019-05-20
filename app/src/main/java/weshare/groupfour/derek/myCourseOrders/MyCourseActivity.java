@@ -21,6 +21,7 @@ import android.util.Log;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -35,6 +36,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import weshare.groupfour.derek.CourseSuccessActivity;
 import weshare.groupfour.derek.MypagerAdapter;
 import weshare.groupfour.derek.PageVO;
 import weshare.groupfour.derek.R;
@@ -104,6 +106,9 @@ public class MyCourseActivity extends AppCompatActivity {
             //更新最新位置
             getMyLocation = new GetMyLocation(this, this);
             getMyLocation.startLocationUpdates();
+        }else if(requestCode == 1012){
+            successed = false;
+            setViewPager();
         }
 
 
@@ -161,21 +166,19 @@ public class MyCourseActivity extends AppCompatActivity {
 
 
     }
-
+    boolean successed = false;
     private class ConfirmCourseReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
             switch (message) {
-                case "successTeach":
-                    Tools.Toast(MyCourseActivity.this, "上課驗證成功");
-                    setViewPager();
-                    vpMyInsCourse.setCurrentItem(2);
-                    break;
-                case "successStu":
-                    Tools.Toast(MyCourseActivity.this, "上課驗證成功");
-                    setViewPager();
-                    vpMyInsCourse.setCurrentItem(1);
+                case "success":
+                    if(!successed){
+                        Intent intent1 = new Intent(MyCourseActivity.this,CourseSuccessActivity.class);
+                        successed = true;
+                        startActivityForResult(intent1,1012);
+                    }
+
                     break;
                 case "fail":
                     Tools.Toast(MyCourseActivity.this, "上課驗證失敗");
@@ -199,8 +202,13 @@ public class MyCourseActivity extends AppCompatActivity {
     public float distance(MyLocationVO myLocationVO) {
         float[] results = new float[1];
         // 計算自己位置與使用者輸入地點，此2點間的距離(公尺)，結果會存入results[0]
-        Location.distanceBetween(location.getLatitude(), location.getLongitude(),
-                myLocationVO.getLat(), myLocationVO.getLng(), results);
+        try {
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                    myLocationVO.getLat(), myLocationVO.getLng(), results);
+        }catch (Exception e){
+            Location.distanceBetween(24.967644, 121.1913516,
+                    myLocationVO.getLat(), myLocationVO.getLng(), results);
+        }
         return results[0];
 
     }
@@ -233,8 +241,12 @@ public class MyCourseActivity extends AppCompatActivity {
         mylVO.setMemberId(user);
         mylVO.setLat(location.getLatitude());
         mylVO.setLng(location.getLongitude());
+        try{
+            Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
+        }catch (Exception e){
+            Tools.Toast(MyCourseActivity.this,"請重新進入此頁面");
+        }
 
-        Connect_WebSocket.whoAroundsWebSocketClient.send(Holder.gson.toJson(mylVO));
     }
 
     @Override
@@ -268,7 +280,7 @@ public class MyCourseActivity extends AppCompatActivity {
     private int shakeCount;
     private long lastShake;
     private long lastForce;
-
+    AlertDialog alertDialog = null;
     //搖搖感應
     SensorEventListener listener = new SensorEventListener() {
         @Override
@@ -293,22 +305,23 @@ public class MyCourseActivity extends AppCompatActivity {
                             if (nearbyme == null || nearbyme.size() == 0) {
                                 Tools.Toast(MyCourseActivity.this, "沒有可驗證課程");
                             } else {
+                                if(alertDialog == null){
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
+                                    AlertDialog alertDialog  = builder.setTitle("偵測到附近有"+nearbyme.size()+"門課可以驗證，是否進入搖搖驗證")
+                                            .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
 
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MyCourseActivity.this);
-                                builder.setTitle("偵測到附近有"+nearbyme.size()+"門課可以驗證，是否進入搖搖驗證")
-                                        .setNegativeButton("否", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                            }
-                                        }).setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent(MyCourseActivity.this,MyCourseMapActivity.class);
-                                        startActivity(intent);
-                                    }
-                                })
-                                        .create().show();
+                                                }
+                                            }).setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(MyCourseActivity.this,MyCourseMapActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                            }).create();
+                                    alertDialog.show();
+                                }
                             }
                         }
                         lastForce = now;
