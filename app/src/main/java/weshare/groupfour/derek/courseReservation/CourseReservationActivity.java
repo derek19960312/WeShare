@@ -28,6 +28,8 @@ import weshare.groupfour.derek.util.Holder;
 
 
 public class CourseReservationActivity extends AppCompatActivity {
+    GrabCourseReceiver grabCourseReceiver;
+    LocalBroadcastManager broadcastManager;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_reservation);
@@ -62,10 +64,10 @@ public class CourseReservationActivity extends AppCompatActivity {
         String user = Connect_WebSocket.getUserName();
 
         //註冊
-        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+        broadcastManager = LocalBroadcastManager.getInstance(this);
         //判斷進來的訊息
         IntentFilter lockCourseFilter = new IntentFilter("inscTimeId");
-        GrabCourseReceiver grabCourseReceiver = new GrabCourseReceiver();
+        grabCourseReceiver = new GrabCourseReceiver();
         broadcastManager.registerReceiver(grabCourseReceiver, lockCourseFilter);
 
         Connect_WebSocket.connectServerGrab(this, user, ServerURL.WS_GRABCOURSE);
@@ -112,6 +114,7 @@ public class CourseReservationActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Connect_WebSocket.disconnectServerGrab();
+        broadcastManager.unregisterReceiver(grabCourseReceiver);
     }
 
 }

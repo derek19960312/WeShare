@@ -69,8 +69,9 @@ public class MyCourseActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
 
     }
-
-
+    ConfirmCourseReceiver confirmCourseReceiver;
+    NearByReceiver nearByReceiver;
+    LocalBroadcastManager broadcastManager;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -86,13 +87,13 @@ public class MyCourseActivity extends AppCompatActivity {
 
 
             //註冊廣播接收
-            LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+            broadcastManager = LocalBroadcastManager.getInstance(this);
             //判斷進來的訊息
             IntentFilter CourseComFilter = new IntentFilter("check");
             IntentFilter NearByFilter = new IntentFilter("nearby");
 
-            ConfirmCourseReceiver confirmCourseReceiver = new ConfirmCourseReceiver();
-            NearByReceiver nearByReceiver = new NearByReceiver();
+            confirmCourseReceiver = new ConfirmCourseReceiver();
+            nearByReceiver = new NearByReceiver();
 
             broadcastManager.registerReceiver(confirmCourseReceiver, CourseComFilter);
             broadcastManager.registerReceiver(nearByReceiver, NearByFilter);
@@ -263,9 +264,12 @@ public class MyCourseActivity extends AppCompatActivity {
         super.onDestroy();
 
         Connect_WebSocket.disconnectServerConfirm();
-       Connect_WebSocket.disconnectServerWhoArround();
+        Connect_WebSocket.disconnectServerWhoArround();
         //停止更新最新位置
         getMyLocation.stopLocationUpdates();
+
+        broadcastManager.unregisterReceiver(confirmCourseReceiver);
+        broadcastManager.unregisterReceiver(nearByReceiver);
     }
 
 
@@ -273,7 +277,7 @@ public class MyCourseActivity extends AppCompatActivity {
     private static final int TIME_THRESHOLD = 100;
     private static final int SHAKE_TIMEOUT = 300;
     private static final int SHAKE_DURATION = 1000;
-    private static final int SHAKE_COUNT = 10;
+    private static final int SHAKE_COUNT = 5;
 
     private float lastX = -1.0f, lastY = -1.0f, lastZ = -1.0f;
     private long lastTime;

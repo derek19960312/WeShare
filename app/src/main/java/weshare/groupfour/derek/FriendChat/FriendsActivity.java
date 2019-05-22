@@ -119,12 +119,12 @@ public class FriendsActivity extends AppCompatActivity {
 
 
 
-
+    FriendStateReceiver friendStateReceiver;
     // 攔截user連線或斷線的Broadcast
     private void registerFriendStateReceiver() {
         IntentFilter openFilter = new IntentFilter("open");
         IntentFilter closeFilter = new IntentFilter("close");
-        FriendStateReceiver friendStateReceiver = new FriendStateReceiver();
+        friendStateReceiver = new FriendStateReceiver();
         broadcastManager.registerReceiver(friendStateReceiver, openFilter);
         broadcastManager.registerReceiver(friendStateReceiver, closeFilter);
     }
@@ -270,6 +270,7 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Connect_WebSocket.disconnectServerChat();
+        broadcastManager.unregisterReceiver(friendStateReceiver);
     }
 
 

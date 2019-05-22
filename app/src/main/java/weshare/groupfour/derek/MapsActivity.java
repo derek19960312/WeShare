@@ -101,7 +101,7 @@ public class MapsActivity  extends AppCompatActivity implements OnMapReadyCallba
             // 將地名或地址轉成位置後在地圖打上對應標記
             mMap.addMarker(new MarkerOptions()
                     .position(latLng)
-                    .title(code + locationName)
+                    .title(locationName)
                     .snippet(snippet)).showInfoWindow();
 
             // 將鏡頭焦點設定在使用者輸入的地點上

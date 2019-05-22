@@ -127,11 +127,11 @@ public class ChatRoomActivity extends AppCompatActivity {
         String chatMessageJson = new Gson().toJson(chatMessage);
         Connect_WebSocket.chatWebSocketClient.send(chatMessageJson);
     }
-
+    ChatReceiver chatReceiver;
     private void registerChatReceiver() {
         IntentFilter chatFilter = new IntentFilter("chat");
         //IntentFilter historyFilter = new IntentFilter("history");
-        ChatReceiver chatReceiver = new ChatReceiver();
+        chatReceiver = new ChatReceiver();
         broadcastManager.registerReceiver(chatReceiver, chatFilter);
         //broadcastManager.registerReceiver(chatReceiver, historyFilter);
     }
@@ -488,5 +488,11 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             return super.getItemViewType(position);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        broadcastManager.unregisterReceiver(chatReceiver);
     }
 }

@@ -218,6 +218,7 @@ public class InsCourseDetailActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final InscAdpter.ViewHolder holder, int position) {
             final InsCourseVO insCourseVO = insCourseVOS.get(position);
+            holder.touchToShow.setVisibility(View.GONE);
             if (insCourseVO.getInscId().equals(MinsCourseVO.getInscId())) {
                 holder.touchToShow.setVisibility(View.VISIBLE);
             }

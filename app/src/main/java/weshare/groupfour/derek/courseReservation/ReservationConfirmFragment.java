@@ -61,7 +61,7 @@ public class ReservationConfirmFragment extends Fragment {
         tvTeacherName.setText(TeaMemVO.getMemName());
         tvInscLoc.setText(insCourseVO.getInscLoc());
 
-        SimpleDateFormat sdfMFD = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+        SimpleDateFormat sdfMFD = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         SimpleDateFormat sdfEXP = new SimpleDateFormat("kk:mm");
         tvDateTime.setText(sdfMFD.format(crVO.getCrvMFD())+" ~ "+sdfEXP.format((crVO.getCrvEXP())));
 

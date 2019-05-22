@@ -196,7 +196,7 @@ public class CheckDateFragment extends Fragment {
                                 RadioButton radioButton = new RadioButton(getContext());
                                 radioButton.setTextSize(25);
                                 final InsCourseTimeVO inscTime = inscTimes.get(i);
-                                SimpleDateFormat sdf = new SimpleDateFormat("kk:mm");
+                                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                                 radioButton.setText(sdf.format(inscTime.getInscMFD())+"-"+sdf.format(inscTime.getInscEXP()));
                                 //放入timeId
                                 radioButton.setTag(inscTime.getInscTimeId());

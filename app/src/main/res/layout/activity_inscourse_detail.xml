@@ -18,7 +18,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment3">
 
         <LinearLayout
@@ -66,14 +69,13 @@
 
                             <RatingBar
                                 android:id="@+id/rbCourse"
+                                style="@style/Widget.AppCompat.RatingBar.Indicator"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                style="@style/Widget.AppCompat.RatingBar.Indicator"
-                                android:numStars = "5"
                                 android:layout_gravity="center"
                                 android:layout_margin="3dp"
                                 android:layout_weight="1"
-                                 />
+                                android:numStars="5" />
 
                             <LinearLayout
                                 android:id="@+id/linearLayout8"

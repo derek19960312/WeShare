@@ -17,7 +17,7 @@ public class Holder {
     private static Map<GoodsVO,Integer> cart = new HashMap<>();
 
     public static Gson gson =  new GsonBuilder()
-                        .setDateFormat("yyyy-MM-dd hh:mm:ss")
+                        .setDateFormat("yyyy-MM-dd HH:mm:ss")
                         .create();
 
     public static void initial(Context context){
